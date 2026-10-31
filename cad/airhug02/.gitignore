@@ -1,0 +1,3 @@
+__pycache__/
+# G-code is already embedded in the committed sliced 3MF projects.
+slicer/*/plate_*.gcode

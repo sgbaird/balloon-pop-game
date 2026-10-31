@@ -1,0 +1,34 @@
+{
+  "watertight_print_meshes": true,
+  "thread_interference_mm3": 0.0,
+  "camera_interference_mm3": 0.0,
+  "slices": {
+    "mount": {
+      "grams": 99.22,
+      "estimated_seconds": 13053,
+      "slicer_warning": ""
+    },
+    "fit-check": {
+      "grams": 18.32,
+      "estimated_seconds": 3734,
+      "slicer_warning": ""
+    }
+  },
+  "not_validated": [
+    "physical fit",
+    "print quality",
+    "PLA creep",
+    "clamp holding force",
+    "camera view on site"
+  ],
+  "artifact_sha256": {
+    "slicer/fit-check/fit-check-a1mini-pla.3mf": "283893af9c75b3c319e34da4153ae3bbdc30be48257ac2bb3cc21bc87352d54e",
+    "slicer/mount/mount-a1mini-pla.3mf": "c22d90d72fc2f2ae4b86a976135ff146b9636ec5bdb168a94cd992e86e940e89",
+    "stl/camera.stl": "15b1ab26f7511115719b4a991c154c9433df7d0f2fc23d0e55d66f9df1d0d806",
+    "stl/clamp.stl": "d9acd07579dcf9cac7e26425e93036ecb451a75c46df9e21912e438b76f29cf0",
+    "stl/coupon.stl": "bb0411e9696c722c7dd4665d557532ecb73bbc00d693f720c613566070b21d30",
+    "stl/key.stl": "50cbfc20255ece81718bb3d6b5415e92cb0a9540b10d30ec9c5b07b76defd21e",
+    "stl/pad.stl": "adb4463445ada5ce3327e10b2c0fd2729a605ba434109013f03fddd77956a92e",
+    "stl/screw.stl": "4f7c8e21ab1d5508134b81733ab4206856ae00642026e54825964dd21d5db104"
+  }
+}

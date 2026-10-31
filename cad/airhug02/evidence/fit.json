@@ -1,0 +1,122 @@
+{
+  "method": "Manual visible capsule silhouette landmarks; width fixed from tape; square pixels; centred principal point; zero distortion assumed.",
+  "frame_size": [
+    1080,
+    1920
+  ],
+  "K_assumed": [
+    [
+      1400,
+      0,
+      540
+    ],
+    [
+      0,
+      1400,
+      960
+    ],
+    [
+      0,
+      0,
+      1
+    ]
+  ],
+  "baseline_height_mm": 19,
+  "baseline_refit_rms_px": 2.8022869976949507,
+  "sensitivity": [
+    {
+      "focal_px_assumed": 900,
+      "height_mm_fit": 16.04,
+      "landmark_rms_px": 1.89,
+      "poses": [
+        {
+          "rotvec": [
+            0.5111802647504666,
+            0.30821405661824613,
+            0.9508032186288591
+          ],
+          "translation_mm": [
+            0.003039025501528585,
+            9.340585504251461,
+            142.42878344767502
+          ]
+        },
+        {
+          "rotvec": [
+            -0.06846245172696976,
+            -0.02341181995243077,
+            1.5398244874941471
+          ],
+          "translation_mm": [
+            4.575125225943974,
+            14.54798379067546,
+            119.95134444614897
+          ]
+        }
+      ]
+    },
+    {
+      "focal_px_assumed": 1400,
+      "height_mm_fit": 16.11,
+      "landmark_rms_px": 2.1,
+      "poses": [
+        {
+          "rotvec": [
+            0.5381490131943086,
+            0.2966016849361131,
+            0.9591910887521414
+          ],
+          "translation_mm": [
+            0.15027539812152346,
+            9.396838699526867,
+            221.76750138998824
+          ]
+        },
+        {
+          "rotvec": [
+            0.03029768223507752,
+            0.08570219365129919,
+            1.537766784615715
+          ],
+          "translation_mm": [
+            4.526749259240063,
+            14.651541478550987,
+            186.7183290107528
+          ]
+        }
+      ]
+    },
+    {
+      "focal_px_assumed": 2200,
+      "height_mm_fit": 16.01,
+      "landmark_rms_px": 2.05,
+      "poses": [
+        {
+          "rotvec": [
+            0.54452800692492,
+            0.28732879719257176,
+            0.963980788805014
+          ],
+          "translation_mm": [
+            0.27963257206575853,
+            9.410310555828865,
+            348.26791400559523
+          ]
+        },
+        {
+          "rotvec": [
+            -0.13529243475476158,
+            0.14220813700477658,
+            1.5357686465676523
+          ],
+          "translation_mm": [
+            4.5235243343212055,
+            14.516416205160617,
+            293.67719959024515
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": "Focal length is NOT identified: equally plausible poses fit multiple focal lengths. Distances scale with focal prior. Not AIRHUG intrinsics; this is the recording phone. Width/depth and hidden hinge remain approximate. Manual landmarks and occlusion limit accuracy."
+}
