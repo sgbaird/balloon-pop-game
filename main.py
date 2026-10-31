@@ -3,6 +3,7 @@ import numpy as np
 import threading
 import time
 import os
+from camera_select import camera_index
 import yaml
 import pygame
 import logging
@@ -161,13 +162,14 @@ class BallTracker:
 def initialize_camera():
     """Attempts to find and initialize an available camera with error handling and retries."""
     max_attempts = 3
+    cam = camera_index()
     
     for read_attempt in range(1, max_attempts + 1):
         logger.info(f"Camera initialization attempt {read_attempt}/{max_attempts}")
         
-        cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+        cap = cv2.VideoCapture(cam, cv2.CAP_DSHOW)
         if not cap.isOpened():
-            logger.warning(f"Camera 0 with backend CAP_DSHOW failed to open")
+            logger.warning(f"Camera {cam} with backend CAP_DSHOW failed to open")
             cap.release()
             continue
         # Verify frame capture with multiple attempts
@@ -177,7 +179,7 @@ def initialize_camera():
                 ret, frame = cap.read()
                 
                 if ret and frame is not None and frame.size > 0:
-                    logger.info(f"Successfully opened camera at index 0 with backend CAP_DSHOW")
+                    logger.info(f"Successfully opened camera at index {cam} with backend CAP_DSHOW")
                     
                     # Get actual properties
                     actual_width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -185,7 +187,7 @@ def initialize_camera():
                     actual_fps = cap.get(cv2.CAP_PROP_FPS)
                     
                     logger.info(f"Camera resolution: {actual_width}x{actual_height} @ {actual_fps} FPS")
-                    return cap, 0
+                    return cap, cam
                 
                 time.sleep(0.1)
             except Exception as read_e:

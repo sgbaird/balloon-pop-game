@@ -135,6 +135,7 @@ The game uses YAML files for configuration:
 - Ensure your camera is properly connected
 - Try a different USB port
 - Run `python CalibrationWizard.py` to test the camera
+- With more than one camera, pick one by index: `python main.py --camera 1` (or `python CalibrationWizard.py --camera 1`, or set `BALLOON_CAMERA=1`). The default is 0. Recalibrate after switching cameras.
 
 ### Poor ball detection
 - Adjust lighting conditions
