@@ -1750,8 +1750,11 @@ class Game:
                     # Check for restart button
                     restart_rect = pygame.Rect(WIDTH//2 - 150, HEIGHT//2 + 150, 300, 60)
                     if restart_rect.collidepoint(pos):
-                        # Reset the game
+                        # Reset the game. __init__ clears event_queue, which main.py
+                        # sets once; keep it or the camera's hits are never read.
+                        event_queue = self.event_queue
                         self.__init__()
+                        self.event_queue = event_queue
                         self.game_state = "mode_select"
                         # Play sound
                         self.sound_manager.play("sound/pop_balloon.wav", "ui")
@@ -2791,7 +2794,7 @@ class Game:
             balloon.twirl(-1 if dx > 0 else 1)
             pushed = True
         if pushed:
-            self.sound_manager.play(NUDGE_SOUND, "ui", volume_scale=1.2)
+            self.sound_manager.play(NUDGE_SOUND, "ui", volume_scale=0.6)
 
     def pop_balloon_at_point(self, event):
             """
