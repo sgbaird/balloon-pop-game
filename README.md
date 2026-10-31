@@ -145,6 +145,8 @@ By default (`--beach-mode loose`) a ball pressed onto the wall or landing right 
 
 A hit that misses but lands near a balloon pushes the balloon away (no points).
 
+Play with the room lights off. The detector relies on the ball's shadow on the projection being much darker than the wall; with the lights on, shadows wash out and lit clothing or hair near the wall can be mistaken for the ball and its shadow.
+
 ### Poor ball detection
 - Adjust lighting conditions
 - Recalibrate the color detection system
