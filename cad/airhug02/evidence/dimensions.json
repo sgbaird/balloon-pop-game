@@ -1,0 +1,214 @@
+{
+  "method": "Robust joint 3D capsule front/rear rim fit; continuous point-to-segment residuals; 21 per-frame initial normal/tilt guesses, lettering feature correspondences; shared height/depth; width=65 mm scale assumption. Holdout changes only pose.",
+  "acceptance": "DIAGNOSTIC ONLY: not accepted as replacement CAD dimensions. Assess held-out error and leave-one-view-out sensitivity before use.",
+  "source_sha256": "4aad00adbea9a0274d47ce30d57445edf6e88d474903fc04145fe845be1eb336",
+  "frame_size": [
+    1080,
+    1920
+  ],
+  "width_mm_assumed": 65,
+  "train_seconds": [
+    36,
+    39,
+    45,
+    57
+  ],
+  "sensitivity": [
+    {
+      "focal_px_assumed": 900,
+      "height_mm": 12.540363863262353,
+      "depth_mm": 19.096549201446685,
+      "frame_rms_px": [
+        2.446842614029473,
+        5.298996766608125,
+        2.01853748092175,
+        11.344247998820622
+      ],
+      "poses": [
+        [
+          -2.732400096591226,
+          -1.4712821339038848,
+          0.13998920740078863,
+          0.01893775619833823,
+          8.727463734036327,
+          142.03359653824506
+        ],
+        [
+          -3.2417925470002786,
+          4.534652040400646,
+          -1.5441293653259003,
+          30.108353858006332,
+          15.991390993979971,
+          133.00991346882714
+        ],
+        [
+          -0.2004390615868098,
+          -0.3970150038505805,
+          -1.542674404510323,
+          5.619413344824821,
+          -4.14516953655497,
+          78.50768163704507
+        ],
+        [
+          2.209354322660459,
+          -2.7005347036211864,
+          1.2045655766831063,
+          25.614995812768953,
+          2.0326664438309043,
+          109.14152664345131
+        ]
+      ]
+    },
+    {
+      "focal_px_assumed": 1400,
+      "height_mm": 12.912751950493046,
+      "depth_mm": 20.151529938400394,
+      "frame_rms_px": [
+        2.4752339173044238,
+        4.766756367631768,
+        1.4319942120333413,
+        10.844050987597432
+      ],
+      "poses": [
+        [
+          -2.660254244515598,
+          -1.3345238891316415,
+          0.6472664221324314,
+          -0.5493459129344332,
+          7.49643822644902,
+          211.3387554733777
+        ],
+        [
+          -3.317082133922562,
+          4.506060307376036,
+          -1.4241360170943542,
+          30.156973939629783,
+          16.51369660059006,
+          214.10042374756594
+        ],
+        [
+          -0.3468180198028846,
+          0.06121358882429202,
+          1.5546469210126792,
+          6.987757123959155,
+          -0.9535862590834157,
+          129.54767336176013
+        ],
+        [
+          2.1670317640347063,
+          -2.876899206200439,
+          1.2956061285987173,
+          25.585204395456,
+          3.017266869726867,
+          168.4883166037682
+        ]
+      ]
+    },
+    {
+      "focal_px_assumed": 2200,
+      "height_mm": 13.823232926003655,
+      "depth_mm": 20.370971957607697,
+      "frame_rms_px": [
+        9.199021350128431,
+        5.84743808202301,
+        2.6144291888587077,
+        10.241365047748765
+      ],
+      "poses": [
+        [
+          -2.6016239104557792,
+          -1.1903375050944152,
+          1.0685330425954866,
+          -0.5571380575951945,
+          4.887153139187119,
+          290.15818729500927
+        ],
+        [
+          -3.4446112058192964,
+          -0.19315724466531223,
+          0.8697042546060241,
+          29.839687223477565,
+          17.730039953578544,
+          357.45833279462516
+        ],
+        [
+          2.3601643072629845,
+          2.2465693717420843,
+          -0.5533161092183156,
+          10.497594748783879,
+          7.374009749839536,
+          254.32082576137032
+        ],
+        [
+          2.1382372979110045,
+          -3.0274086968224814,
+          1.3555368024940209,
+          24.78321388549661,
+          4.6687947373848235,
+          257.48718475426506
+        ]
+      ]
+    }
+  ],
+  "leave_one_view_out": [
+    {
+      "omitted_second": 36,
+      "height_mm": 12.564840365856883,
+      "depth_mm": 21.661317845880106
+    },
+    {
+      "omitted_second": 39,
+      "height_mm": 13.315031733382973,
+      "depth_mm": 19.869191464343505
+    },
+    {
+      "omitted_second": 45,
+      "height_mm": 12.912827949096531,
+      "depth_mm": 20.151487036293616
+    },
+    {
+      "omitted_second": 57,
+      "height_mm": 12.543938530550989,
+      "depth_mm": 24.3150614842614
+    }
+  ],
+  "baseline_dimensions_mm": [
+    65,
+    16.1,
+    10
+  ],
+  "baseline_frame_rms_px": [
+    11.14697046307848,
+    12.695025215695399,
+    2.409052861806778,
+    18.48339551508376
+  ],
+  "holdout_seconds": [
+    18
+  ],
+  "holdout_frame_rms_px": [
+    17.937060875078316
+  ],
+  "baseline_holdout_frame_rms_px": [
+    30.213790753868906
+  ],
+  "limitations": [
+    "Manual outlines and ideal extruded capsule; real bevels and cover differ.",
+    "Width and focal length are assumptions; all lengths scale linearly with width.",
+    "Rim labels do not solve the clip, hinge or housing-to-tape plane offset.",
+    "RMS is annotation agreement, not a physical measurement tolerance."
+  ],
+  "accepted_for_cad": false,
+  "rejection_reasons": [
+    "No independently measured housing depth or clip envelope.",
+    "Partial rims, bevels and planar pose ambiguity remain; diagnostic fit is not a measured tolerance.",
+    "Removing one training view changes fitted depth by more than 2 mm."
+  ],
+  "leave_one_view_out_note": "Warm-started local refits at 1400 px; sensitivity diagnostic, not confidence intervals.",
+  "matched_rear_feature_counts": {
+    "39": 16,
+    "57": 57,
+    "18": 26
+  },
+  "positive_camera_depths": true
+}

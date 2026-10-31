@@ -1,5 +1,10 @@
 # AIRHUG 02 camera and corner-ledge mount
 
+> **Camera dimensions are unverified.** The original two-view face fit did not
+> validate housing depth or clip clearance. See the [new dimension audit](DIMENSIONS.md)
+> before printing the full mount; its existing STL/3MF files retain the original
+> prototype dimensions and have not been corrected from measurements.
+
 A video-derived **prototype**, with editable OpenSCAD, exported meshes,
 matched-view silhouette comparisons, and **sliced Bambu Studio projects for an
 A1 mini, 0.4 mm nozzle, Generic PLA, Textured PEI plate**. No metal hardware is
@@ -8,8 +13,8 @@ The real camera and its original clip are retained intact.
 
 ![Assembly; grey is the example ledge](previews/assembly.png)
 
-Print [the fit-check plate](slicer/fit-check/fit-check-a1mini-pla.3mf) first, then
-[the complete mount](slicer/mount/mount-a1mini-pla.3mf).
+For the original prototype, [the fit-check plate](slicer/fit-check/fit-check-a1mini-pla.3mf) checks its assumed openings;
+[the complete mount](slicer/mount/mount-a1mini-pla.3mf) remains unverified against the camera.
 Bambu estimates about **99 g / 3 h 37 min** for the mount plate and
 **18 g / 1 h 2 min** for the fit-check plate, including its reusable screw.
 Both contain sliced G-code. Open in Bambu Studio to inspect the plate and confirm
@@ -17,6 +22,10 @@ your nozzle, PLA and plate match before printing. The camera STL is a reference
 model and is **not** on either print plate.
 
 ## Evidence and dimensions
+
+The figures in this section describe the **original hypothesis**. They are
+superseded as fit evidence by the [dimension audit](DIMENSIONS.md); the quoted
+uncertainties were rough guesses and were not validated tolerances.
 
 Source: [issue video](https://github.com/user-attachments/assets/1d63d449-cc8f-4f6c-bea5-ee4ea75b9208),
 61.24 seconds, decoded as 1080 × 1920 after display rotation.
@@ -44,6 +53,9 @@ visible clearly enough to locate it or establish the cover mechanism. This is
 an exterior fit model, not a manufacturer-exact replica.
 
 ## Rotations and intrinsics
+
+This is the historical face-only fit, retained for traceability. Its training
+error does not validate the depth or absolute dimensions.
 
 ![Matched video views: face cyan, assumed depth orange, landmarks pink](previews/video-fit.png)
 

@@ -1,4 +1,5 @@
 // Millimetres. Camera front is -Y; ledge enters from +Y.
+// Original unverified prototype dimensions; see DIMENSIONS.md before printing.
 // CAD reconstruction/prototype, not a measured manufacturer model.
 part = "assembly"; // camera, clamp, screw, pad, coupon, assembly
 $fn=64;

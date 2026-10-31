@@ -1,0 +1,38 @@
+{
+  "method": "Manual metric centimetre ticks on tape edge; 1D projective ruler fitted along its image axis. Housing rear long axis nearly parallel to ruler. Endpoints approximate because hand touches upper cap. Plane offset and foreshortening NOT corrected by this 1D fit.",
+  "apparent_width_mm": 64.6175765249973,
+  "endpoint_ruler_reads_mm": [
+    154.9564566689105,
+    90.3388801439132
+  ],
+  "ruler_tick_rms_mm": 0.05699926327472617,
+  "leave_one_tick_out_error_mm": [
+    -0.23425885546367908,
+    0.10814577201415432,
+    0.09718133625023029,
+    -0.11445279944430808,
+    0.024381213482257635,
+    -0.03762091089232911,
+    -0.032398709180895935,
+    0.11561832568109764
+  ],
+  "width_scale_scenarios_mm": [
+    58.155818872497576,
+    64.6175765249973,
+    71.07933417749705
+  ],
+  "scenario_note": "\u00b110% systematic scale scenarios, NOT a measured confidence interval; hand contact at upper cap, depth mismatch and camera-axis tilt remain.",
+  "coefficients": [
+    38.32673212447871,
+    124.86469324666096,
+    -0.010206441945059147
+  ],
+  "ruler_axis": [
+    -0.010600738229056942,
+    -0.9999438105958749
+  ],
+  "ruler_origin": [
+    415.875,
+    1000.5
+  ]
+}
