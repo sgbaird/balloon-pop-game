@@ -36,6 +36,7 @@ jobs:
           {"type":"item.completed","item":{"id":"i1","type":"command_execution","command":"/bin/bash -lc 'gh issue view 5 --comments'","aggregated_output":"COMMAND OUTPUT","exit_code":0,"status":"completed"}}
           {"type":"item.completed","item":{"id":"i2","type":"agent_message","text":"Read the issue.\nNext: frames.\n\n"}}
           {"type":"item.completed","item":{"id":"i2b","type":"command_execution","command":"/bin/bash -lc \"curl -L 'https://x/y' -o /tmp/v.mp4\"","aggregated_output":"","exit_code":0,"status":"completed"}}
+          {"type":"item.completed","item":{"id":"i2c","type":"command_execution","command":"/bin/bash -lc \"python -c 'print(\\\"ok\\\")'\"","aggregated_output":"","exit_code":0,"status":"completed"}}
           not json
           {"type":"item.completed","item":{"id":"i3","type":"command_execution","command":"/bin/bash -lc 'python - <<\"PY\"\nimport `x`\nPY'","aggregated_output":"","exit_code":1,"status":"failed"}}
           {"type":"item.updated","item":{"id":"i0","type":"todo_list","items":[{"text":"Read the issue","completed":true},{"text":"Build the model","completed":false}]}}
@@ -54,11 +55,10 @@ jobs:
           expect "- ⬜ Build the model"
           expect "> Read the issue."
           expect "> Next: frames."
-          expect "(3 commands so far)"
+          expect "(4 commands so far)"
+          expect "- ✅ \`python -c 'print(\"ok\")'\`"
           expect "- ✅ \`curl -L 'https://x/y' -o /tmp/v.mp4\`"
           reject '"curl'
-          reject ">
-          "
           grep -q '^> Next: frames\.$' <<<"$out" && ! grep -q '^> *$' <<<"$out" || { echo "::error::blank quote line"; exit 1; }
           expect '- ✅ `gh issue view 5 --comments`'
           expect "- ❌ \`python - <<\"PY\"\`"
