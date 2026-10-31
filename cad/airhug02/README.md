@@ -109,8 +109,9 @@ support material from the openings first.
 The width and depth openings each have **0.6 mm total nominal clearance**, not
 0.6 mm per side. These gauges do **not** check the 16.1 mm housing height,
 cover motion, folded clip clearance, keeper retention, ledge fit or holding force.
-The housing dimensions came from video; passing these checks is a reason to
-try the full prototype, not confirmation of its complete fit.
+The housing dimensions came from video. Passing these checks still leaves height
+and clip clearance unresolved; review the [dimension audit](DIMENSIONS.md) before
+printing the full mount.
 
 If something binds, stop and record **which piece**, where it catches, the real
 housing width/height/depth, and the printed opening if you have calipers. A photo
