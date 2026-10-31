@@ -2,6 +2,7 @@
 # Local runtime files
 *.avi
 game.log
+calibration.log
 __pycache__/
 out.txt
 err.txt
