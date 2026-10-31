@@ -81,6 +81,13 @@ does not establish the filming phone's intrinsics or the mount dimensions.
 
 ## Printing and assembly
 
+![Animated assembly: screw, pressure pad, ledge, camera and keeper wedges](previews/assembly.gif)
+
+The animation uses the CAD parts and an example 20 mm ledge with a left jamb.
+It starts with cleaned printed parts and shows the original camera clip already
+folded. Motions illustrate the assembly sequence; they do not validate physical
+fit, clamping force or cover clearance. Follow the checks below before use.
+
 1. Print the fit-check plate: short female thread, housing width/depth gauges
    and the full screw, which can be reused. Remove supports and brims. Check
    the 65.6 mm width opening and 10.6 mm depth opening against the **main housing**,
@@ -130,6 +137,7 @@ python cad/airhug02/build.py /tmp/squashfs-root/AppRun
 python cad/airhug02/fit_video.py /path/to/video.mp4
 python cad/airhug02/validate.py
 python cad/airhug02/preview_toolpaths.py
+python cad/airhug02/animate_assembly.py  # OpenSCAD + Xvfb + Pillow; no slicer needed
 python -m py_compile *.py cad/airhug02/*.py
 ```
 
