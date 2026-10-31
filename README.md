@@ -145,6 +145,10 @@ The game uses YAML files for configuration:
 - Enable frame skipping in settings
 - Close other resource-intensive applications
 
+## Flashlight cover prototypes
+
+Video-derived CAD, printable aperture covers, one-layer diffuser faces, and fitting instructions are in [hardware/flashlight](hardware/flashlight/README.md). These are experimental accessories for the flashlight player-ID idea in issue #5.
+
 ## Development
 
 To modify the game or contribute:
