@@ -103,7 +103,8 @@ The game features several power-ups that appear during gameplay:
 ## Controls
 
 - Physical balls are the main control method
-- **ESC**: Quit game
+- **ESC**: Leave fullscreen; in a window, pause/resume during play and quit from menus and results (close the window to quit mid-game; `q` in the camera window stops ball detection but leaves the game running)
+- **F11**: Toggle fullscreen
 - **P**: Pause/unpause game
 - Mouse can be used to navigate menus and manually pop balloons
 
@@ -134,6 +135,17 @@ The game uses YAML files for configuration:
 - Ensure your camera is properly connected
 - Try a different USB port
 - Run `python CalibrationWizard.py` to test the camera
+- With more than one camera, pick one by index: `python main.py --camera 1` (or `python CalibrationWizard.py --camera 1`, or set `BALLOON_CAMERA=1`). The default is 0. Recalibrate after switching cameras.
+
+### Playing with a beach ball
+
+`python main.py --ball beach` (or `BALLOON_BALL=beach`) replaces the blue/yellow colour trackers with `beach_ball.py`, which detects the moment a pale or banded ball (e.g. a white/yellow beach ball) hits the wall: the ball and its shadow on the projection meet only at the wall. Only the projector calibration is needed, not the colour or ball-size calibration. All balls count as one player. It was tuned on one room and one camera position, so expect to adjust the constants at the top of `beach_ball.py`.
+
+By default (`--beach-mode loose`) a ball pressed onto the wall or landing right next to someone counts, at the cost of some pops while the ball is carried near the wall. `--beach-mode strict` ignores a ball joined to a person, which suits players throwing from a line a metre or two from the wall.
+
+A hit that misses but lands near a balloon pushes the balloon away (no points).
+
+Play with the room lights off. The detector relies on the ball's shadow on the projection being much darker than the wall; with the lights on, shadows wash out and lit clothing or hair near the wall can be mistaken for the ball and its shadow.
 
 ### Poor ball detection
 - Adjust lighting conditions

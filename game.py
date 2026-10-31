@@ -33,6 +33,17 @@ GOLD = (255, 215, 0)
 PURPLE = (128, 0, 128)
 PINK = (255, 105, 180)
 BALLOON_SIZE = 200
+# A hit that misses but lands within NUDGE_REACH x a balloon's hit radius pushes it away
+NUDGE_REACH = 2.2
+NUDGE_SPEED = 30.0   # initial push, px/frame (total drift ~ NUDGE_SPEED / (1 - NUDGE_DECAY))
+NUDGE_DECAY = 0.9
+NUDGE_SOUND = "sound/nudge_whee.wav"
+TWIRL_TURNS = 1.5    # a pushed balloon spins this many turns and lands upside down...
+TWIRL_EASE = 0.12    # ...easing in at this rate per frame (about 0.8 s at 60 FPS)
+TWIRL_HOLD = 1.5     # seconds it floats upside down before flipping back upright
+# Occasional big, slower balloons: easier targets for younger players
+BIG_BALLOON_CHANCE = 0.15
+BIG_BALLOON_SCALE = 1.6
 GAME_DURATION = 120  # seconds
 POP_DURATION = 8  # frames
 
@@ -46,8 +57,9 @@ DIFFICULTY_SETTINGS = {
 # Initialize pygame
 pygame.init()
 pygame.mixer.init()
-# Set the SDL window position to the projector monitor (adjust as needed)
-if os.name == 'nt':
+# Put the window on the projector when it is a second monitor (adjust as needed).
+# With a single or mirrored display, x=2000 would be off-screen, so leave it alone.
+if os.name == 'nt' and pygame.display.get_num_displays() > 1:
     os.environ['SDL_VIDEO_WINDOW_POS'] = "2000,0"
 
 # Load sound effects
@@ -58,7 +70,7 @@ try:
     POWERUP_SOUND = pygame.mixer.Sound("sound/pop_balloon.wav")  # Reuse existing sound
     COMBO_SOUND = pygame.mixer.Sound("sound/pop_red_ballon.wav")  # Reuse existing sound
     PENALTY_SOUND = pygame.mixer.Sound("sound/penalty_balloon.wav")  # Reuse existing sound
-except pygame.error as e:
+except (pygame.error, FileNotFoundError) as e:
     logger.error(f"Failed to load sound: {e}")
     # Create silent sound as fallback
     POP_GREEN = pygame.mixer.Sound(buffer=bytearray(44100))  # 1 second of silence
@@ -91,7 +103,7 @@ class SoundManager:
             sound = pygame.mixer.Sound(sound_file)
             self.sounds[sound_file] = sound
             return sound
-        except pygame.error as e:
+        except (pygame.error, FileNotFoundError) as e:
             logger.error(f"Could not load sound {sound_file}: {e}")
             # Create silent sound as fallback
             fallback = pygame.mixer.Sound(buffer=bytearray(22050))  # 0.5 seconds of silence
@@ -427,7 +439,7 @@ class PowerUp(pygame.sprite.Sprite):
             hourglass_img = pygame.transform.scale(hourglass_img, (icon_size, icon_size))
             icon_pos = (center[0] - icon_size // 2, center[1] - icon_size // 2)
             self.image.blit(hourglass_img, icon_pos)
-        except pygame.error:
+        except (pygame.error, FileNotFoundError):
             # Fallback to drawing clock hands
             # Hour hand
             hour_angle = math.pi / 6  # 30 degrees
@@ -484,7 +496,7 @@ class PowerUp(pygame.sprite.Sprite):
             magnet_img = pygame.transform.scale(magnet_img, (icon_size, icon_size))
             icon_pos = (center[0] - icon_size // 2, center[1] - icon_size // 2)
             self.image.blit(magnet_img, icon_pos)
-        except pygame.error:
+        except (pygame.error, FileNotFoundError):
             # Fallback to drawing a simple magnet
             # Draw magnet body
             magnet_width = self.size // 3
@@ -594,7 +606,7 @@ class PowerUp(pygame.sprite.Sprite):
             snowflake_img = pygame.transform.scale(snowflake_img, (icon_size, icon_size))
             icon_pos = (center[0] - icon_size // 2, center[1] - icon_size // 2)
             self.image.blit(snowflake_img, icon_pos)
-        except pygame.error:
+        except (pygame.error, FileNotFoundError):
             # Fallback to drawing snowflake
             for i in range(6):
                 angle = math.pi/3 * i
@@ -634,7 +646,7 @@ class PowerUp(pygame.sprite.Sprite):
             chain_img = pygame.transform.scale(chain_img, (icon_size, icon_size))
             icon_pos = (center[0] - icon_size // 2, center[1] - icon_size // 2)
             self.image.blit(chain_img, icon_pos)
-        except pygame.error:
+        except (pygame.error, FileNotFoundError):
             # Fallback to drawing chain links
             # Draw two interlocking circles as chain links
             link1_rect = pygame.Rect(
@@ -723,8 +735,11 @@ class Balloon(pygame.sprite.Sprite):
                 self.image, 
                 (BALLOON_SIZE, BALLOON_SIZE)
             )
-        except pygame.error as e:
-            logger.error(f"Failed to load balloon image: {e}")
+        except (pygame.error, FileNotFoundError) as e:
+            # Log once, not for every balloon (the png/ images are not in the repo)
+            if not getattr(Balloon, "_image_warning_logged", False):
+                logger.warning(f"Balloon image missing, drawing plain circles: {e}")
+                Balloon._image_warning_logged = True
             # Create a fallback balloon if image loading fails
             self.image = pygame.Surface(
                 (BALLOON_SIZE, BALLOON_SIZE), 
@@ -828,10 +843,34 @@ class Balloon(pygame.sprite.Sprite):
         
         # Frozen state for freeze powerup
         self.frozen = False
+        # Push from a near miss (Game.nudge_nearby_balloons); decays to zero
+        self.nudge_vx = 0.0
+        self.nudge_vy = 0.0
+        # Twirl after a near miss (degrees; eases from angle toward target_angle)
+        self.angle = 0.0
+        self.target_angle = 0.0
+        self.spin_dir = 1
+        self.upside_timer = 0
+        self.size_scale = 1.0
         self.original_speed = self.speed
         # Store a copy of the original image for scaling effects
         self.original_image = self.image.copy()
         
+    def make_big(self):
+        """Turn this into a big, slower balloon (easier to hit)."""
+        self.size_scale = BIG_BALLOON_SCALE
+        self.speed *= 0.8
+        self.original_speed = self.speed
+
+    def twirl(self, direction):
+        """Spin away from a near miss and land upside down; flips back upright later."""
+        self.spin_dir = 1 if direction >= 0 else -1
+        if self.upside_timer > 0:
+            self.target_angle += self.spin_dir * 360  # already twirling: one more turn
+        else:
+            self.target_angle = self.angle + self.spin_dir * 360 * TWIRL_TURNS
+        self.upside_timer = int(FPS * (0.8 + TWIRL_HOLD))
+
     def update(self, powerups=None):
         # Skip update if frozen
         if self.frozen:
@@ -851,6 +890,14 @@ class Balloon(pygame.sprite.Sprite):
         # Apply horizontal wobble
         self.time += self.wobble_speed * slow_factor
         self.rect.x = self.start_x + int(math.sin(self.time) * self.wobble)
+
+        # Near-miss push: drift away from the hit, then settle back into rising
+        if abs(self.nudge_vx) > 0.3 or abs(self.nudge_vy) > 0.3:
+            self.start_x += self.nudge_vx
+            self.rect.x += int(self.nudge_vx)
+            self.rect.y += int(self.nudge_vy)
+            self.nudge_vx *= NUDGE_DECAY
+            self.nudge_vy *= NUDGE_DECAY
         
         # Apply balloon magnet effect if active
         if powerups and 'magnet' in powerups:
@@ -880,18 +927,22 @@ class Balloon(pygame.sprite.Sprite):
                 # Override normal wobble to create a direct path
                 self.start_x = self.rect.x
 
-        # ---  Apply giant effect to visually scale the balloon ---
-        if 'giant' in powerups:
-            scale = 1.5  # or a higher value if desired
-            new_size = int(BALLOON_SIZE * scale)
-            # Use the original image to avoid cumulative distortion
-            self.image = pygame.transform.scale(self.original_image, (new_size, new_size))
-            # Re-center the balloon so it doesn't jump around
-            self.rect = self.image.get_rect(center=self.rect.center)
-        else:
-            # Optional: Reset to normal size if the giant powerup is not active.
-            self.image = pygame.transform.scale(self.original_image, (BALLOON_SIZE, BALLOON_SIZE))
-            self.rect = self.image.get_rect(center=self.rect.center)
+        # --- Size (big balloons, giant powerup) and twirl, from the original image ---
+        size = int(BALLOON_SIZE * self.size_scale * (1.5 if 'giant' in powerups else 1.0))
+        image = pygame.transform.scale(self.original_image, (size, size))
+        if self.angle != self.target_angle:
+            self.angle += (self.target_angle - self.angle) * TWIRL_EASE
+            if abs(self.target_angle - self.angle) < 1.0:
+                self.angle = self.target_angle
+        if self.upside_timer > 0:
+            self.upside_timer -= 1
+            if self.upside_timer == 0:
+                self.target_angle += self.spin_dir * 180  # flip back upright
+        if self.angle % 360 != 0:
+            image = pygame.transform.rotozoom(image, self.angle, 1.0)
+        self.image = image
+        # Re-center so the balloon doesn't jump around
+        self.rect = self.image.get_rect(center=self.rect.center)
     
         
         # Remove if it goes off screen
@@ -1347,6 +1398,8 @@ class Game:
                 logger.critical(f"Failed to create display surface: {window_e}")
                 raise
         
+        self.fullscreen = bool(self.actual_surface.get_flags() & pygame.FULLSCREEN)
+
         # Set window caption
         pygame.display.set_caption("Balloon Pop Game")
         
@@ -1395,7 +1448,7 @@ class Game:
             pygame.mixer.music.load("sound/background_sound.mp3")  # Use your audio file here
             pygame.mixer.music.set_volume(0.04)  # Adjust volume (0.0 to 1.0)
             pygame.mixer.music.play(-1)  # -1 means loop indefinitely
-        except pygame.error as e:
+        except (pygame.error, FileNotFoundError) as e:
             logger.error(f"Could not load background music: {e}")
 
         # Ball detection tracking
@@ -1526,6 +1579,8 @@ class Game:
                 )
                 
                 balloon = Balloon(RED, adjusted_speed, balloon_type)
+                if balloon_type == "normal" and random.random() < BIG_BALLOON_CHANCE:
+                    balloon.make_big()
                 
             self.balloons.add(balloon)
                 
@@ -1550,12 +1605,22 @@ class Game:
                 )
                 
                 balloon = Balloon(GREEN, adjusted_speed, balloon_type)
+                if balloon_type == "normal" and random.random() < BIG_BALLOON_CHANCE:
+                    balloon.make_big()
                 
             self.balloons.add(balloon)
             
         # Occasionally spawn powerups - managed by PowerupManager
         if self.powerup_manager:
             self.powerup_manager.update(self)
+
+    def set_fullscreen(self, enabled):
+        """Switch between fullscreen and a resizable window (rendering scales to the surface)."""
+        if enabled:
+            self.actual_surface = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+        else:
+            self.actual_surface = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
+        self.fullscreen = enabled
 
     def handle_events(self): 
         """
@@ -1566,13 +1631,24 @@ class Game:
         if not pygame.get_init():
             pygame.init()
         for event in pygame.event.get():
-            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            if event.type == pygame.QUIT:
                 return False
-            
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
+                self.set_fullscreen(not self.fullscreen)
+                continue
+            # ESC leaves fullscreen first. In a window it pauses/resumes during play;
+            # elsewhere (menus, results) it quits.
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                if self.fullscreen:
+                    self.set_fullscreen(False)
+                    continue
+                if self.game_state not in ("playing", "paused"):
+                    return False
+
             # Pause event handling
             if event.type == pygame.KEYDOWN:
                 # Pause toggle
-                if event.key == pygame.K_p:
+                if event.key in (pygame.K_p, pygame.K_ESCAPE):
                     if self.game_state == "playing":
                         self.game_state = "paused"
                     elif self.game_state == "paused":
@@ -1674,8 +1750,11 @@ class Game:
                     # Check for restart button
                     restart_rect = pygame.Rect(WIDTH//2 - 150, HEIGHT//2 + 150, 300, 60)
                     if restart_rect.collidepoint(pos):
-                        # Reset the game
+                        # Reset the game. __init__ clears event_queue, which main.py
+                        # sets once; keep it or the camera's hits are never read.
+                        event_queue = self.event_queue
                         self.__init__()
+                        self.event_queue = event_queue
                         self.game_state = "mode_select"
                         # Play sound
                         self.sound_manager.play("sound/pop_balloon.wav", "ui")
@@ -2696,13 +2775,38 @@ class Game:
         else:  # "end" state
             self.Draw_Game_Over_Screen(surface)
 
+    def nudge_nearby_balloons(self, x, y, ball_radius):
+        """Push balloons near (x, y) away from it with a twirl and a sound; stronger the closer the miss."""
+        pushed = False
+        for balloon in self.balloons:
+            cx, cy = balloon.rect.center
+            dx, dy = cx - x, cy - y
+            dist = math.hypot(dx, dy) or 1.0
+            hit_radius = (balloon.rect.width + balloon.rect.height) / 4 + ball_radius + 15
+            reach = hit_radius * NUDGE_REACH
+            if dist > reach:
+                continue
+            closeness = 1.0 - max(0.0, dist - hit_radius) / (reach - hit_radius)
+            push = NUDGE_SPEED * (0.4 + 0.6 * closeness)
+            balloon.nudge_vx += dx / dist * push
+            balloon.nudge_vy += dy / dist * push
+            # Spin clockwise when pushed right, counter-clockwise when pushed left
+            balloon.twirl(-1 if dx > 0 else 1)
+            pushed = True
+        if pushed:
+            self.sound_manager.play(NUDGE_SOUND, "ui", volume_scale=0.6)
+
     def pop_balloon_at_point(self, event):
             """
-            Expects event to be a tuple: (ball_color, x, y, detected_radius, frame_number, is_back)
+            Expects event to be a tuple: (ball_color, x, y, detected_radius, frame_number, is_back[, confirmed])
             Checks if the detected ball's radius is within tolerance of the calibrated radius
-            for the corresponding screen region before registering a balloon pop.
+            for the corresponding screen region before registering a balloon pop. A
+            confirmed event (beach-ball impact detector) skips that check.
             """
-            ball_color, x, y, detected_radius, frame_number, is_back = event
+            ball_color, x, y, detected_radius, frame_number, is_back = event[:6]
+            confirmed = len(event) > 6 and bool(event[6])
+            if confirmed:
+                detected_radius = calibrated_radius = float(detected_radius)
     
             # Determine the nearest calibration region
             min_dist = float('inf')
@@ -2714,7 +2818,8 @@ class Game:
                     nearest_region = region
 
             # Retrieve the expected calibrated radius for this region and color
-            calibrated_radius = self.ball_calibration.get(ball_color, {}).get(nearest_region)
+            if not confirmed:
+                calibrated_radius = self.ball_calibration.get(ball_color, {}).get(nearest_region)
             if calibrated_radius is None:
                 logger.warning(f"No calibration data for {ball_color} in region {nearest_region}")
                 return
@@ -2728,7 +2833,7 @@ class Game:
             RADIUS_TOLERANCE = 2.5
 
             # Check if the detected ball radius is expected and the ball is not returning from the wall
-            if (abs(detected_radius - calibrated_radius) > RADIUS_TOLERANCE) or (is_back):
+            if not confirmed and ((abs(detected_radius - calibrated_radius) > RADIUS_TOLERANCE) or is_back):
                 logger.debug(f"Ball detection skipped: radius mismatch or ball returning from wall")
                 return
             
@@ -2802,6 +2907,10 @@ class Game:
                         if not is_multiball:
                             break # Only pop one balloon per hit
                             
+            # A near miss still gets a reaction: nearby balloons are pushed away (no points)
+            if not popped_balloons:
+                self.nudge_nearby_balloons(x, y, calibrated_radius)
+
             # Pop all the balloons that were hit
             for balloon in popped_balloons:
                 self.pop_balloon(balloon, "camera")

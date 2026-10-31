@@ -3,6 +3,8 @@ import numpy as np
 import threading
 import time
 import os
+from camera_select import camera_index, ball_type, beach_mode
+from beach_ball import BeachBallImpactDetector, DebugRecorder
 import yaml
 import pygame
 import logging
@@ -161,13 +163,14 @@ class BallTracker:
 def initialize_camera():
     """Attempts to find and initialize an available camera with error handling and retries."""
     max_attempts = 3
+    cam = camera_index()
     
     for read_attempt in range(1, max_attempts + 1):
         logger.info(f"Camera initialization attempt {read_attempt}/{max_attempts}")
         
-        cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+        cap = cv2.VideoCapture(cam, cv2.CAP_DSHOW)
         if not cap.isOpened():
-            logger.warning(f"Camera 0 with backend CAP_DSHOW failed to open")
+            logger.warning(f"Camera {cam} with backend CAP_DSHOW failed to open")
             cap.release()
             continue
         # Verify frame capture with multiple attempts
@@ -177,7 +180,7 @@ def initialize_camera():
                 ret, frame = cap.read()
                 
                 if ret and frame is not None and frame.size > 0:
-                    logger.info(f"Successfully opened camera at index 0 with backend CAP_DSHOW")
+                    logger.info(f"Successfully opened camera at index {cam} with backend CAP_DSHOW")
                     
                     # Get actual properties
                     actual_width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -185,7 +188,7 @@ def initialize_camera():
                     actual_fps = cap.get(cv2.CAP_PROP_FPS)
                     
                     logger.info(f"Camera resolution: {actual_width}x{actual_height} @ {actual_fps} FPS")
-                    return cap, 0
+                    return cap, cam
                 
                 time.sleep(0.1)
             except Exception as read_e:
@@ -525,6 +528,17 @@ def camera_processing(game_instance, event_queue):
     blue_tracker = BallTracker(calibration_data["blue"], init_frame)
     yellow_tracker = BallTracker(calibration_data["yellow"], init_frame)
 
+    # --ball beach: one pale/banded ball, detected by its impact with the wall
+    beach_detector = None
+    if ball_type() == "beach" and SCREEN_COORDS is not None:
+        strict = beach_mode() != "loose"
+        beach_detector = BeachBallImpactDetector(SCREEN_COORDS, init_frame.shape, strict=strict)
+        logger.info(f"Ball type: beach ({'strict' if strict else 'loose'}; blue/yellow trackers off)")
+    beach_debug = None
+    if beach_detector is not None and os.environ.get("BALLOON_DEBUG_DIR"):
+        beach_debug = DebugRecorder(os.environ["BALLOON_DEBUG_DIR"])
+        logger.info(f"Beach debug recording to {os.environ['BALLOON_DEBUG_DIR']}")
+
     try:
         logger.info("Starting main processing loop")
         last_gc_time = time.time()
@@ -556,8 +570,25 @@ def camera_processing(game_instance, event_queue):
             M = get_projector_screen_transform(frame_display, WIDTH, HEIGHT)
 
             # Use the enhanced ball trackers
-            blue_result = blue_tracker.update(frame, frame_number)
-            yellow_result = yellow_tracker.update(frame, frame_number)
+            if beach_detector is not None:
+                blue_result = yellow_result = None
+                impact = beach_detector.update(frame, current_time)
+                # Only record during play, not menus, results or the desktop after the game.
+                if beach_debug is not None and getattr(game_instance, "game_state", "") == "playing":
+                    beach_debug.record(frame, current_time, impact)
+                if impact is not None and M is not None:
+                    ix, iy, ir = impact
+                    cv2.circle(frame_display, (int(ix), int(iy)), int(ir) + 4, (0, 255, 255), 2)
+                    warped = cv2.perspectiveTransform(np.array([[[ix, iy]]], dtype=np.float32), M)[0][0]
+                    # Ball radius in game pixels (the quad spans the full game width)
+                    screen_r = ir * WIDTH / max(1.0, float(np.ptp(SCREEN_COORDS[:, 0])))
+                    logger.info(f"Beach ball impact at ({int(warped[0])}, {int(warped[1])}), r={screen_r:.0f}")
+                    # 7th field True = confirmed impact: the game skips its radius check
+                    event_queue.put(("yellow", int(warped[0]), int(warped[1]), screen_r,
+                                     frame_number, False, True))
+            else:
+                blue_result = blue_tracker.update(frame, frame_number)
+                yellow_result = yellow_tracker.update(frame, frame_number)
             
             # Process blue ball detection result
             if blue_result:
@@ -804,13 +835,9 @@ def camera_processing(game_instance, event_queue):
             video_recorder_contour.stop()
         
         logger.info("Camera resources released")
-
-    # Run the game
-    try:
-        logger.info("Starting game in main thread")
-        game_instance.run()
-    except Exception as e:
-        logger.error(f"Error running game: {e}", exc_info=True)
+    # The game loop already runs in the main thread (start_game_and_camera).
+    # Starting a second game_instance.run() here, in the camera thread, made two
+    # loops draw at once and crashed with "Surfaces must not be locked during blit".
 
 
 def start_game_and_camera():

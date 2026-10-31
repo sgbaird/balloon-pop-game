@@ -4,6 +4,7 @@ import pygame
 import time
 import yaml
 import os
+from camera_select import camera_index
 import logging
 from typing import Dict, List, Tuple, Optional, Any
 
@@ -76,13 +77,14 @@ class CalibrationWizard:
     def initialize_camera(self) -> bool:
         """Attempts to find and initialize an available camera with error handling and retries."""
         max_attempts = 3
+        cam = camera_index()
         
         for read_attempt in range(1, max_attempts + 1):
             self.logger.info(f"Camera initialization attempt {read_attempt}/{max_attempts}")
             
-            cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+            cap = cv2.VideoCapture(cam, cv2.CAP_DSHOW)
             if not cap.isOpened():
-                self.logger.warning(f"Camera 0 with backend CAP_DSHOW failed to open")
+                self.logger.warning(f"Camera {cam} with backend CAP_DSHOW failed to open")
                 cap.release()
                 continue
             # Verify frame capture with multiple attempts
@@ -92,7 +94,7 @@ class CalibrationWizard:
                     ret, frame = cap.read()
                     
                     if ret and frame is not None and frame.size > 0:
-                        self.logger.info(f"Successfully opened camera at index 0 with backend CAP_DSHOW")
+                        self.logger.info(f"Successfully opened camera at index {cam} with backend CAP_DSHOW")
                         
                         # Get actual properties
                         actual_width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -100,7 +102,7 @@ class CalibrationWizard:
                         actual_fps = cap.get(cv2.CAP_PROP_FPS)
                         
                         self.logger.info(f"Camera resolution: {actual_width}x{actual_height} @ {actual_fps} FPS")
-                        return cap, 0
+                        return cap, cam
                     
                     time.sleep(0.1)
                 except Exception as read_e:
@@ -132,8 +134,8 @@ class CalibrationWizard:
     def get_camera_frame(self) -> Optional[np.ndarray]:
         """Get a frame from the camera with error handling"""
         if self.camera is None:
-            # Retry initializing camera
-            self.initialize_camera()
+            # Retry initializing camera (keep the handle it returns)
+            self.camera, self.camera_index = self.initialize_camera()
             
         if self.camera is None:
             return None
@@ -343,7 +345,11 @@ class CalibrationWizard:
         # Test camera button
         test_rect = pygame.Rect(self.width//2 - 220, self.height - 100, 200, 60)
         if self.draw_button(test_rect, "Test Camera", active=True):
-            self.initialize_camera()
+            # Release the current handle before reopening; a second open of the
+            # same device takes it over and the old handle stops returning frames.
+            if self.camera is not None:
+                self.camera.release()
+            self.camera, self.camera_index = self.initialize_camera()
             
         # Next button
         next_rect = pygame.Rect(self.width//2 + 20, self.height - 100, 200, 60)
