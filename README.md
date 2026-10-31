@@ -6,8 +6,7 @@ An interactive augmented reality game where players use physical balls to pop vi
 
 Balloon Pop Game combines a projector and camera setup to create an engaging physical gaming experience. Players throw or roll colored balls (blue and yellow) at a projection surface to pop virtual balloons (red and green). The game features multiple modes, difficulty levels, and power-ups to enhance gameplay.
 
-
-![alt text](ball_game.webp)
+This is Sterling Baird's fork of [nachman8/balloon-pop-game](https://github.com/nachman8/balloon-pop-game).
 
 ## Features
 
@@ -31,7 +30,7 @@ Balloon Pop Game combines a projector and camera setup to create an engaging phy
 
 1. Clone this repository:
    ```
-   git clone https://github.com/yourusername/balloon-pop-game.git
+   git clone https://github.com/sgbaird/balloon-pop-game.git
    cd balloon-pop-game
    ```
 
@@ -50,6 +49,11 @@ Balloon Pop Game combines a projector and camera setup to create an engaging phy
    python main.py
    ```
 
+> **Status on `main`:** the game does not start as committed. `game.py` loads its sounds from `sound/` and its
+> balloon images from `png/`, but the sounds are at the top level and the images were never committed, and `main.py`
+> imports `video_recorder`, which was also never committed. Pull request
+> [#10](https://github.com/sgbaird/balloon-pop-game/pull/10) adds the missing files and moves the sounds.
+
 ## System Requirements
 
 - **Projector**: Any projector with sufficient brightness for your environment
@@ -59,6 +63,9 @@ Balloon Pop Game combines a projector and camera setup to create an engaging phy
   - 8GB RAM recommended
   - Intel Core i5 or equivalent processor
   - Dedicated GPU recommended but not required
+- **Windows-specific defaults**: the game and the calibration wizard open camera 0 through DirectShow, and on Windows
+  the game window is placed at x = 2000 px, i.e. on a projector set up as a second display to the right of the
+  main one (`SDL_VIDEO_WINDOW_POS` near the top of `game.py`)
 
 ## Calibration
 
@@ -106,6 +113,14 @@ The game features several power-ups that appear during gameplay:
 - **ESC**: Quit game
 - **P**: Pause/unpause game
 - Mouse can be used to navigate menus and manually pop balloons
+- **Q** (Survival mode): end the run and show the results
+
+In the camera window opened by `main.py`:
+
+- **q**: stop ball detection
+- **d**: toggle the debug overlay
+- **r** / **c**: start or stop recording the raw camera feed (`clean_video.avi`) or the feed with detection overlays
+  (`contour_video.avi`)
 
 ## Project Structure
 
@@ -114,10 +129,15 @@ The game features several power-ups that appear during gameplay:
 - `CalibrationWizard.py` - Calibration tool for camera and projector
 - `Kalman_filter.py` - Ball trajectory prediction
 - `enhanced_effects.py` - Visual effects system
-- `game_analytics.py` - Player statistics and achievements
-- `config-system.py` - Configuration management
-- `menu_system.py` - UI menu system
-- `video_recorder.py` - Utility for recording gameplay
+- `game_analytics.py` - Player statistics and achievements (saved to `game_stats.json`)
+- `remove_color_overlap.py` - Optional calibration helper: samples the red balloon's colours and narrows the yellow
+  ball's colour range in `calibration.yaml` so red balloons are not detected as yellow balls
+- `config-system.py` - Configuration manager for `game_config.yaml`; not used by the game (the hyphen in its name
+  also keeps it from being imported)
+- `menu_system.py` - UI menu system; not used by the game, which draws its own menus in `game.py`
+- `video_recorder.py` - Recording utility imported by `main.py`; not in the repository (see the status note above)
+- `AGENTS.md` - Notes for coding agents working on this fork, including the `@codex` setup
+- `.github/` - The `@codex` GitHub Actions workflows (see [Development](#development))
 
 ## Configuration Files
 
@@ -126,7 +146,9 @@ The game uses YAML files for configuration:
 - `calibration.yaml` - Color calibration for ball detection
 - `ball_calibration.yaml` - Ball size calibration
 - `projector_calibration.yaml` - Projector boundaries
-- `game_config.yaml` - Game settings (optional)
+- `game_config.yaml` - Read only by `config-system.py`, which the game does not use
+
+The game also writes `game_stats.json` (player statistics).
 
 ## Troubleshooting
 
@@ -141,19 +163,32 @@ The game uses YAML files for configuration:
 - Use balls with more vibrant colors
 
 ### Performance issues
-- Lower the camera resolution in `config-system.py`
-- Enable frame skipping in settings
+- Enable frame skipping with `USE_FRAME_SKIP` and `FRAME_SKIP_COUNT` near the top of `main.py` (the other
+  detection settings, such as `USE_BACKGROUND_SUBTRACTION` and `SHOW_DEBUG_INFO`, are there too)
+- The camera runs at its default resolution; `main.py` does not set one
 - Close other resource-intensive applications
 
 ## Development
 
-To modify the game or contribute:
+Branches, issues and pull requests for this fork go to `sgbaird/balloon-pop-game`, not upstream. There are no
+automated tests: the game needs a camera, a projector and a display. Check changes with `python -m py_compile *.py`
+and by playing.
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+### `@codex` on GitHub
+
+Anyone with write access to this repository can mention `@codex` in an issue (title or body) or in an issue or pull
+request comment to start a Codex session on GitHub Actions (`.github/workflows/codex.yml`).
+
+- **Model and effort:** `@codex+<model>:<effort>`, e.g. `@codex:low`; a bare `@codex` uses the defaults.
+- **Issues:** a session that changes files works on a new `codex/issue-<n>-<run>` branch and opens a pull request
+  whose description holds the write-up; the reply on the issue is one sentence linking it.
+- **Pull requests:** the session pushes to the pull request's branch.
+- **Progress:** while it runs, its "working on this" comment shows the plan, the latest message and recent
+  commands, so anything a session writes there is public.
+- **Parallel runs:** every mention starts at once; sessions check for others on the same thread.
+
+`AGENTS.md` has the details, including how the shared Codex login is kept fresh (`codex-keepalive.yml`) and how to
+reseed it.
 
 ## License
 
