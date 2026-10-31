@@ -1566,13 +1566,17 @@ class Game:
         if not pygame.get_init():
             pygame.init()
         for event in pygame.event.get():
-            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            if event.type == pygame.QUIT:
                 return False
-            
+            # ESC pauses/resumes during play; elsewhere (menus, results) it quits
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                if self.game_state not in ("playing", "paused"):
+                    return False
+
             # Pause event handling
             if event.type == pygame.KEYDOWN:
                 # Pause toggle
-                if event.key == pygame.K_p:
+                if event.key in (pygame.K_p, pygame.K_ESCAPE):
                     if self.game_state == "playing":
                         self.game_state = "paused"
                     elif self.game_state == "paused":

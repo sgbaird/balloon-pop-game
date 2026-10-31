@@ -103,7 +103,7 @@ The game features several power-ups that appear during gameplay:
 ## Controls
 
 - Physical balls are the main control method
-- **ESC**: Quit game
+- **ESC**: Pause/resume during play; quit from menus and results (close the window or press `q` in the camera window to quit mid-game)
 - **P**: Pause/unpause game
 - Mouse can be used to navigate menus and manually pop balloons
 
