@@ -4,7 +4,7 @@ import threading
 import time
 import os
 from camera_select import camera_index, ball_type
-from beach_ball import BeachBallImpactDetector
+from beach_ball import BeachBallImpactDetector, DebugRecorder
 import yaml
 import pygame
 import logging
@@ -533,6 +533,10 @@ def camera_processing(game_instance, event_queue):
     if ball_type() == "beach" and SCREEN_COORDS is not None:
         beach_detector = BeachBallImpactDetector(SCREEN_COORDS, init_frame.shape)
         logger.info("Ball type: beach (impact detector; blue/yellow trackers off)")
+    beach_debug = None
+    if beach_detector is not None and os.environ.get("BALLOON_DEBUG_DIR"):
+        beach_debug = DebugRecorder(os.environ["BALLOON_DEBUG_DIR"])
+        logger.info(f"Beach debug recording to {os.environ['BALLOON_DEBUG_DIR']}")
 
     try:
         logger.info("Starting main processing loop")
@@ -568,6 +572,8 @@ def camera_processing(game_instance, event_queue):
             if beach_detector is not None:
                 blue_result = yellow_result = None
                 impact = beach_detector.update(frame, current_time)
+                if beach_debug is not None:
+                    beach_debug.record(frame, current_time, impact)
                 if impact is not None and M is not None:
                     ix, iy, ir = impact
                     cv2.circle(frame_display, (int(ix), int(iy)), int(ir) + 4, (0, 255, 255), 2)
