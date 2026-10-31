@@ -9,6 +9,7 @@ cradle_floor=70;
 side_lip_height=10; // outer ends only; central 62 mm stays clear
 print_offset=41; // maximum left/right clamp extent for optional side orientation
 print_orientation="front"; // front down reduces support; "side" reproduces earlier orientation
+sculpted=true; // curved jaw footprints and twin spine ribs; false reproduces solid study
 corner_side=-1; // -1: left jamb stop; +1: right jamb; 0: no side stop
 clearance=0.6; // total clearance of the optional nominal-body gauges
 ledge_gap=30; jaw=10; throat=38; clamp_w=44; // CalculiX/slicer comparison: original 48, selected 44 mm
@@ -62,21 +63,49 @@ module cradle() {
         // Open top preserves drop-in assembly; these are bump stops, not latches.
         if(side_lip_height>0) translate([31,-19,cradle_floor-1]) cube([10,3,side_lip_height+1]);
         translate([23,18,cradle_floor-4]) cube([18,3,28]); // rear guide
-        translate([38,-19,cradle_floor-4]) cube([3,40,24]); // end stop
+        difference() {
+            translate([38,-19,cradle_floor-4]) cube([3,40,24]); // end stop
+            // Keep a closed side frame: a 7 mm opening cannot pass the
+            // smallest modeled 16 mm housing by straight lateral translation.
+            if(sculpted) translate([37,0,0]) rotate([0,90,0]) linear_extrude(5)
+                hull() for(y=[-7,9]) translate([-(cradle_floor+10),y]) circle(r=3.5);
+        }
     }
+}
+// Rounded footprint keeps a broad bending root and material around the screw,
+// tapering away the unused jaw corners. Extrusion preserves flat ledge contact.
+module jaw_footprint() {
+    linear_extrude(jaw) hull() {
+        for(x=[-clamp_w/2+3,clamp_w/2-3]) translate([x,2]) circle(r=3);
+        translate([0,24]) circle(r=14);
+    }
+}
+module spine_window() {
+    // A smooth-ended opening leaves two continuous side ribs and solid roots.
+    translate([0,1,15]) rotate([90,0,0]) linear_extrude(jaw+4)
+        hull() for(z=[-2,2]) translate([0,z]) circle(r=5);
 }
 module clamp_raw() {
     difference() {
         union() {
-            translate([-clamp_w/2,0,-jaw]) cube([clamp_w,throat,jaw]);
-            translate([-clamp_w/2,-jaw,-jaw]) cube([clamp_w,jaw,ledge_gap+2*jaw]);
-            translate([-clamp_w/2,0,ledge_gap]) cube([clamp_w,throat,jaw]);
+            if(sculpted) translate([0,0,-jaw]) jaw_footprint();
+            else translate([-clamp_w/2,0,-jaw]) cube([clamp_w,throat,jaw]);
+            translate([-clamp_w/2,-jaw-(sculpted?2:0),-jaw]) cube([clamp_w,jaw+(sculpted?2:0),ledge_gap+2*jaw]);
+            if(sculpted) translate([0,0,ledge_gap]) jaw_footprint();
+            else translate([-clamp_w/2,0,ledge_gap]) cube([clamp_w,throat,jaw]);
             if(corner_side!=0) translate([corner_side<0?-41:23,0,ledge_gap]) cube([18,28,15]);
             // Cantilevers connect the wide end saddles to the upper jaw.
             translate([-camera_w/2-2,-10,ledge_gap]) cube([camera_w+4,18,8]);
             for(s=[-1,1]) translate([s*(camera_w/2-7)-8,-12,ledge_gap]) cube([16,8,40]);
         }
         translate([0,24,-jaw-1]) thread(jaw+2,thread_slack);
+        if(sculpted) {
+            spine_window();
+            // Rounded lightening windows split each camera upright into ribs.
+            for(s=[-1,1]) translate([s*(camera_w/2-7),-3,0])
+                rotate([90,0,0]) linear_extrude(10)
+                    hull() for(z=[48,58]) translate([0,z]) circle(r=3);
+        }
     }
     cradle();
 }

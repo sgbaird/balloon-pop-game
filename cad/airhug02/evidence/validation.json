@@ -4,8 +4,8 @@
   "camera_interference_mm3": 0.0,
   "slices": {
     "mount": {
-      "grams": 96.68,
-      "estimated_seconds": 13361,
+      "grams": 93.13,
+      "estimated_seconds": 13569,
       "slicer_warning": ""
     },
     "fit-check": {
@@ -282,9 +282,9 @@
   ],
   "artifact_sha256": {
     "slicer/fit-check/fit-check-a1mini-pla.3mf": "7b961990ac7b552bd08ff839617b4c4340a16b36fa6ee1a7884efcc989a91775",
-    "slicer/mount/mount-a1mini-pla.3mf": "50524d4b0df769897d97ccf3ad053a28caedb8ab7b712194449998dfb869fbca",
+    "slicer/mount/mount-a1mini-pla.3mf": "3639e00b85a45c78556c30e42ccb72a2a68632bf1a96085cd40a8670672f2510",
     "stl/camera.stl": "dd974b5827002b4d849d883132df6e6f1caaa55ac15e189d6b3b84bdbf12080a",
-    "stl/clamp.stl": "7122ae6fbaa5dd4140137f68f9ec8b601d538d42f82f9a8a80eb624cc8552a1f",
+    "stl/clamp.stl": "9078fc71ed83a6e90fb205e6ddbdd571a95663e40c4937e7ae8f59584b5728c4",
     "stl/coupon.stl": "e4594c6cbb3553a73ae80574d4ec161ab7452bcaa9b59a268b60cc4fbd9f1243",
     "stl/key.stl": "14128c20e8c916fb06af480cb88838674ae8b57581985a0e726998ad1fd0bbe4",
     "stl/pad.stl": "f9007206684c5cb07bf129fac2442280ac12d7df60eb756c74be5a2e6f77af2c",

@@ -19,6 +19,10 @@
       "height": 16,
       "depth": 23,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        276.7863276614019,
+        276.7863278836291
+      ],
       "forward_crossing_interference_mm3": 58.81041264528176,
       "approximate_lift_to_clear_mm": 7.291502622129181
     },
@@ -27,6 +31,10 @@
       "height": 16,
       "depth": 25,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        296.21087461249164,
+        296.21087466342095
+      ],
       "forward_crossing_interference_mm3": 58.81041264528176,
       "approximate_lift_to_clear_mm": 7.291502622129181
     },
@@ -35,6 +43,10 @@
       "height": 16,
       "depth": 28,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        358.6363644482869,
+        358.63636514630826
+      ],
       "forward_crossing_interference_mm3": 58.81041264528176,
       "approximate_lift_to_clear_mm": 7.291502622129181
     },
@@ -43,6 +55,10 @@
       "height": 18,
       "depth": 23,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        284.4330242410385,
+        284.4330235622244
+      ],
       "forward_crossing_interference_mm3": 50.15762039425317,
       "approximate_lift_to_clear_mm": 6.656854249492381
     },
@@ -51,6 +67,10 @@
       "height": 18,
       "depth": 25,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        304.13215132056456,
+        304.1321506268093
+      ],
       "forward_crossing_interference_mm3": 50.15762039425317,
       "approximate_lift_to_clear_mm": 6.656854249492381
     },
@@ -59,6 +79,10 @@
       "height": 18,
       "depth": 28,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        370.55201910449733,
+        370.55201878640946
+      ],
       "forward_crossing_interference_mm3": 50.15762039425317,
       "approximate_lift_to_clear_mm": 6.656854249492381
     },
@@ -67,6 +91,10 @@
       "height": 20,
       "depth": 23,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        311.83941251459936,
+        311.83941214284397
+      ],
       "forward_crossing_interference_mm3": 40.84590548177948,
       "approximate_lift_to_clear_mm": 6.0
     },
@@ -75,6 +103,10 @@
       "height": 20,
       "depth": 25,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        333.8020408947996,
+        333.80204053889855
+      ],
       "forward_crossing_interference_mm3": 40.84590548177948,
       "approximate_lift_to_clear_mm": 6.0
     },
@@ -83,6 +115,10 @@
       "height": 20,
       "depth": 28,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        404.8189958388187,
+        404.8189954573706
+      ],
       "forward_crossing_interference_mm3": 40.84590548177948,
       "approximate_lift_to_clear_mm": 6.0
     },
@@ -91,6 +127,10 @@
       "height": 16,
       "depth": 23,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        507.4544450569395,
+        507.45444537760824
+      ],
       "forward_crossing_interference_mm3": 131.59782747208374,
       "approximate_lift_to_clear_mm": 8.928203230275509
     },
@@ -99,6 +139,10 @@
       "height": 16,
       "depth": 25,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        546.2420263270538,
+        546.242026593775
+      ],
       "forward_crossing_interference_mm3": 131.59782747208374,
       "approximate_lift_to_clear_mm": 8.928203230275509
     },
@@ -107,6 +151,10 @@
       "height": 16,
       "depth": 28,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        645.6493614892988,
+        645.6493614370908
+      ],
       "forward_crossing_interference_mm3": 131.59782747208374,
       "approximate_lift_to_clear_mm": 8.928203230275509
     },
@@ -115,6 +163,10 @@
       "height": 18,
       "depth": 23,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        577.2200072621308,
+        577.2200072621308
+      ],
       "forward_crossing_interference_mm3": 118.63986307237064,
       "approximate_lift_to_clear_mm": 8.483314773547882
     },
@@ -123,6 +175,10 @@
       "height": 18,
       "depth": 25,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        622.0907150298444,
+        622.0907150298444
+      ],
       "forward_crossing_interference_mm3": 118.63986307237064,
       "approximate_lift_to_clear_mm": 8.483314773547882
     },
@@ -131,6 +187,10 @@
       "height": 18,
       "depth": 28,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        730.6412807675588,
+        730.6412807675588
+      ],
       "forward_crossing_interference_mm3": 118.63986307237064,
       "approximate_lift_to_clear_mm": 8.483314773547882
     },
@@ -139,6 +199,10 @@
       "height": 20,
       "depth": 23,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        642.5655431703453,
+        642.5655431703453
+      ],
       "forward_crossing_interference_mm3": 104.78131868183846,
       "approximate_lift_to_clear_mm": 8.0
     },
@@ -147,6 +211,10 @@
       "height": 20,
       "depth": 25,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        693.1184714518167,
+        693.1184714518167
+      ],
       "forward_crossing_interference_mm3": 104.78131868183846,
       "approximate_lift_to_clear_mm": 8.0
     },
@@ -155,6 +223,10 @@
       "height": 20,
       "depth": 28,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        810.1923679601678,
+        810.1923679601678
+      ],
       "forward_crossing_interference_mm3": 104.78131868183846,
       "approximate_lift_to_clear_mm": 8.0
     },
@@ -163,6 +235,10 @@
       "height": 16,
       "depth": 23,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        647.2216712443587,
+        647.2216712443587
+      ],
       "forward_crossing_interference_mm3": 213.51932922526854,
       "approximate_lift_to_clear_mm": 9.745966692414834
     },
@@ -171,6 +247,10 @@
       "height": 16,
       "depth": 25,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        698.1794802279182,
+        698.1794802279182
+      ],
       "forward_crossing_interference_mm3": 213.51932922526854,
       "approximate_lift_to_clear_mm": 9.745966692414834
     },
@@ -179,6 +259,10 @@
       "height": 16,
       "depth": 28,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        815.8606977894015,
+        815.8606977894015
+      ],
       "forward_crossing_interference_mm3": 213.51932922526854,
       "approximate_lift_to_clear_mm": 9.745966692414834
     },
@@ -187,6 +271,10 @@
       "height": 18,
       "depth": 23,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        742.9062436504719,
+        742.9062436504719
+      ],
       "forward_crossing_interference_mm3": 198.09550976360333,
       "approximate_lift_to_clear_mm": 9.48528137423857
     },
@@ -195,6 +283,10 @@
       "height": 18,
       "depth": 25,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        802.184450234563,
+        802.184450234563
+      ],
       "forward_crossing_interference_mm3": 198.09550976360333,
       "approximate_lift_to_clear_mm": 9.48528137423857
     },
@@ -203,6 +295,10 @@
       "height": 18,
       "depth": 28,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        932.3462641968435,
+        932.3462641968435
+      ],
       "forward_crossing_interference_mm3": 198.09550976360333,
       "approximate_lift_to_clear_mm": 9.48528137423857
     },
@@ -211,6 +307,10 @@
       "height": 20,
       "depth": 23,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        831.0934568457269,
+        831.0934568457269
+      ],
       "forward_crossing_interference_mm3": 181.0384012387949,
       "approximate_lift_to_clear_mm": 9.16515138991168
     },
@@ -219,6 +319,10 @@
       "height": 20,
       "depth": 25,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        898.0401167511445,
+        898.0401167511445
+      ],
       "forward_crossing_interference_mm3": 181.0384012387949,
       "approximate_lift_to_clear_mm": 9.16515138991168
     },
@@ -227,6 +331,10 @@
       "height": 20,
       "depth": 28,
       "seated_interference_mm3": 0.0,
+      "lateral_crossing_interference_mm3": [
+        1039.7046106954149,
+        1039.7046106954149
+      ],
       "forward_crossing_interference_mm3": 181.0384012387949,
       "approximate_lift_to_clear_mm": 9.16515138991168
     }
@@ -242,8 +350,8 @@
     "No friction, preload, deformation, impact or holding-force model"
   ],
   "mesh_sha256": {
-    "clamp.stl": "7122ae6fbaa5dd4140137f68f9ec8b601d538d42f82f9a8a80eb624cc8552a1f",
-    "camera.stl": "dd974b5827002b4d849d883132df6e6f1caaa55ac15e189d6b3b84bdbf12080a",
+    "clamp.stl": "9078fc71ed83a6e90fb205e6ddbdd571a95663e40c4937e7ae8f59584b5728c4",
+    "camera.stl": "d67a4a80075da31591a2b08bdeadf0788a581e0c79eec53348f3033e0feb016e",
     "key.stl": "14128c20e8c916fb06af480cb88838674ae8b57581985a0e726998ad1fd0bbe4"
   }
 }

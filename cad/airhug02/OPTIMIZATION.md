@@ -1,4 +1,115 @@
-# CalculiX and print-cost study
+# Curved-frame revision: topology lessons plus side retention
+
+The [current sliced 3MF](slicer/mount/mount-a1mini-pla.3mf) combines the **10 mm
+side lips and 62 mm central opening** with curved jaw footprints, rounded windows
+in the spine and both camera uprights, and closed side frames around the saddles.
+It is **93.13 g / 3 h 46 min**, including supports, brims, screw, pad and two keepers,
+on one A1 mini plate. The unchanged print profile uses a 0.4 mm nozzle, PLA,
+0.20 mm layers, five walls, 30% gyroid and normal supports with detected bridges
+left unsupported.
+
+![Actual CAD comparison](previews/sculpted-frame.png)
+
+| Complete five-part print | Filament including supports | Estimated time |
+| --- | ---: | ---: |
+| Original side-lip / 48 mm / side down | 118.00 g | 4 h 16 min |
+| Previous selected solid / 44 mm / front down | 96.68 g | 3 h 43 min |
+| **Current curved frame / 44 mm / front down** | **93.13 g** | **3 h 46 min** |
+
+The new shape saves **3.7% filament** against the immediately preceding file but
+adds **207 seconds (1.6%)** of estimated print time. Against the original side-lip
+plate it saves **21.1% filament and 11.8% time**. Support extrusion is about
+**13.1 g** versus the previous solid frame's **11.3 g**; the model saving still
+wins on total filament. These are slicer estimates, not measured print results.
+The extra side-wall perimeters and supports are an explicit tradeoff for the
+more open geometry. The previous numerical study below remains historical.
+
+## Geometry and structural screening
+
+This is a **parametric shape refinement informed by the earlier topology search**,
+not a new global density optimizer or an unconstrained organic topology optimum.
+The earlier search showed that the spine roots carry the clamp preload and that
+holes can increase support costs. This revision keeps those roots, moves more
+material to the spine, and removes jaw corners and smaller interior regions:
+
+- Taper the 44 mm wide jaws to **28 mm diameter rounded ends**, leaving at least
+  **5.75 mm radial material** around the maximum modeled female thread radius.
+  Both jaws retain their 10 mm thickness and flat bearing faces.
+- Increase spine depth from 10 to **12 mm**, toward the rear of the clamp rather
+  than into the 30 mm ledge opening. A **10 × 14 mm rounded opening** leaves two
+  17 mm wide side ribs and 18 mm of material to each outside jaw surface.
+- Add **6 × 16 mm rounded upright windows**, retaining 5 mm side ribs.
+- Open **7 × 23 mm side-wall windows** within the 3 mm thick end walls. A closed
+  perimeter remains, with 6.5 mm above/below each window. The floors, keeper
+  guides, lip dimensions, locating stop and moving parts retain their dimensions.
+
+An initial aggressive **16 × 25.3 mm spine opening in a 10 mm spine** failed:
+**10.11 MPa** peak combined stress at 1 mm. It was rejected. Reducing the opening
+and thickening the spine brought the final shape below the same **8 MPa assumed
+screening limit** without reverting to the rectangular jaw ends.
+
+The final exported STL was solved with the existing CalculiX C3D8 procedure,
+upper-jaw restraint, E = 1,200 MPa, ν = 0.35, 100 N clamp preload and two 5 N
+camera/cable load cases plus preload superpositions. Load totals remain the same;
+the tapered jaw's contact area and distributed load node counts follow its actual
+geometry. See the historical assumptions below for the limitations of this
+bonded-contact, isotropic model.
+
+| Final voxel pitch | Elements | Peak combined stress | Preload displacement | Camera-only displacement |
+| --- | ---: | ---: | ---: | ---: |
+| 1.5 mm | 22,769 | 6.01 MPa | 1.52 mm | 0.112 mm |
+| 1.0 mm | 76,411 | **6.60 MPa** | **1.45 mm** | **0.141 mm** |
+
+Energy/work relative errors are below 1 × 10⁻⁸; no disconnected voxels were
+discarded. These two pitches provide mesh sensitivity, not proof of convergence
+or a validated safety factor. Compared with the prior solid frame's 6.88 MPa,
+1.67 mm preload displacement and 0.121 mm camera-only displacement at 1 mm, the
+new frame has lower simulated preload deformation but somewhat higher camera-only
+movement. Its exact solid volume is recorded in [the new report](optimization/sculpted.json).
+
+## Retention and print checks
+
+The independent 27-housing sweep still clears the seated body and keeper
+adjustment. Forward crossings remain blocked by the side lips until **6.0–9.7 mm
+of straight lift**. New checks translate each housing **8 mm left and right**:
+all 54 lateral crossing poses intersect the retained side frames. This checks
+centred, unrotated translations, not every combined or rotated escape path.
+The open top still permits lift-out. The camera/cover illustration and clip
+keepout, screw rotation/travel and seated pad pass the existing interference
+checks. Print meshes are watertight; the clamp is one connected solid. All five
+parts fit one plate, and Bambu Studio reports no geometry warnings.
+
+**Not tested:** physical printing, supports/bridge quality, camera or ledge fit,
+real cover motion or camera view, friction, holding force, impacts, layer strength,
+fatigue, PLA creep or the game. The simulation does not establish a tested load
+rating or physical retention performance.
+
+## Reproduce the current revision
+
+[sculpted.json](optimization/sculpted.json) stores final and rejected solver
+results, complete-plate slicing metrics and artifact hashes. The new compressed
+[decks and solver logs](optimization/decks) use the `sculpted-` prefix. The earlier
+`run.json`, `structural.json`, `slicing.json` and optimization image describe the
+historical study below and are preserved as evidence.
+
+```bash
+python cad/airhug02/build.py /tmp/squashfs-root/AppRun
+python cad/airhug02/structural_fem.py cad/airhug02/stl/clamp.stl /tmp/sculpted-fe --pitch 1.0
+python cad/airhug02/validate.py
+python cad/airhug02/check_retention.py
+python cad/airhug02/preview_sculpted.py
+python cad/airhug02/preview_toolpaths.py
+python -m unittest discover -s cad/airhug02 -p 'test_*.py'
+python -m py_compile *.py cad/airhug02/*.py
+```
+
+For the previous solid CAD, set `-D 'sculpted=false'`. Add that override to the
+historical OpenSCAD commands below to reproduce their original geometry. Use
+the committed STL for the analyzed final shape; reslice any modified geometry.
+
+---
+
+# Earlier CalculiX and print-cost study
 
 The supplied [single-plate 3MF](slicer/mount/mount-a1mini-pla.3mf) uses a **44 mm
 solid clamp body**, front down, with normal removable supports and support omitted

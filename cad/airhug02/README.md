@@ -1,9 +1,9 @@
 # AIRHUG 02: revised single-plate corner mount
 
 Download [mount-a1mini-pla.3mf](slicer/mount/mount-a1mini-pla.3mf) for the
-**photo-informed side-lip revision**. It contains sliced G-code for one A1 mini plate:
+**curved-frame and side-lip revision**. It contains sliced G-code for one A1 mini plate:
 **one clamp, one screw, one pressure pad and two tapered keepers**. No separate
-fit-check print or metal hardware is required. Bambu estimates **97 g / 3 h 43 min**,
+fit-check print or metal hardware is required. Bambu estimates **93 g / 3 h 46 min**,
 including supports and brims. Assembly and support removal are
 required after printing; this is not a print-in-place mechanism.
 
@@ -17,22 +17,27 @@ even if you keep using the screw you already printed. Do not scale the project.
 
 ## Weight and structural study
 
-The [CalculiX and slicing study](OPTIMIZATION.md) compared material-removal
-optimization, through-channels, two body widths, orientations and support types.
-The selected solid body is **44 mm wide instead of 48 mm**; the camera saddles,
-thread, ledge opening and locating stops keep their dimensions. With front-down
-printing and support omitted under detected bridges, the complete plate uses
-**18.1% less filament and 13.1% less estimated time** than the preceding revision.
-The perforated topology trial was rejected for the supplied print: its extra
-supports and wall paths erased the finished-part savings. Five walls and 30%
-gyroid remain enabled. The 36 and 40 mm bodies saved more but had less stiffness or stress margin.
+The [latest structural and slicing study](OPTIMIZATION.md) combines the **10 mm
+side lips** with **curved, tapered jaws**, rounded openings in the spine and
+camera uprights, and open side frames around the saddles. A **12 mm deep spine**
+keeps material in the clamp's main bending region; the body remains 44 mm wide.
+The lower jaw ends in a 28 mm diameter boss around the unchanged screw thread.
+The clear ledge opening, cradle floor, keeper slots and front lips retain their
+positions. No extra parts or hardware are needed.
 
-![CAD alternatives and full-plate material costs](previews/optimization.png)
+![Previous solid frame and new curved frame](previews/sculpted-frame.png)
 
-Linear elastic simulations screen assumed clamp/camera/cable loads; they do not
-establish a tested load rating, actual printed PLA strength, grip or creep life.
-See the study for mesh sensitivity, restraint assumptions and reproducible decks.
-The wider original body is available with `clamp_w=48`; reslice any CAD change.
+The complete print uses **93.1 g / 3 h 46 min**, including supports and brims:
+**3.7% less filament but about 3½ minutes longer** than the preceding solid
+44 mm frame (96.7 g / 3 h 43 min). Compared with the 118.0 g / 4 h 16 min
+side-lip baseline, this saves **21.1% filament and 11.8% estimated time**.
+Five walls, 30% gyroid, normal supports and front-down printing remain enabled.
+The side windows cost some toolpath time in return for the more open geometry.
+
+Linear elastic CalculiX checks use the same assumed clamp/camera/cable loads as
+the earlier study. They screen the new shape; they do not establish printed PLA
+strength, grip, impact resistance or creep life. The earlier rectangular design
+can be exported with `sculpted=false`; reslice any CAD change.
 
 ## What changed and why
 
@@ -76,14 +81,16 @@ residual side play if necessary.
 The earlier strap recommendation was too broad: it addressed unrestricted
 lift-out without first improving the tiny forward stop. This revision raises
 only the outer ends to **10 mm above the floor**, keeping drop-in assembly and
-adding no parts. The rest of the mount and its adjustment mechanism stay the same.
+adding no parts. The keeper adjustment mechanism retains its dimensions.
 
 ![Side lips, central opening and geometric engagement](previews/side-lips.png)
 
 The rounded ends matter. A 10 mm lip does not provide 10 mm of engagement:
 independently constructed capsule housings require **6.0–9.7 mm of straight
 upward travel** before they can cross the lips forward (**8.6 mm nominal**),
-versus the previous 0.6 mm toe. The [reproducible mesh check](check_retention.py)
+versus the previous 0.6 mm toe. Direct sideways crossings are also blocked in
+both directions across the same 27 housing scenarios, despite the new side-wall
+windows. The [reproducible mesh check](check_retention.py)
 tests all 27 width/height/depth combinations seated, translated 4 mm forward,
 and just below/above their calculated clearance thresholds. All seat without
 interference; all seated forward crossings are blocked. The

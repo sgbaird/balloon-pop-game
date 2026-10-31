@@ -65,6 +65,14 @@ def main():
         assert seated < 0.01, (w, h, d, 'seated', seated)
         moved = housing.copy(); moved.apply_translation([0,-4,0])
         blocked = overlap(clamp, moved)
+        # Side-wall windows must still stop direct sideways escape in either
+        # direction across the same independent housing-size scenarios.
+        lateral = []
+        for direction in [-1, 1]:
+            sideways = housing.copy()
+            sideways.apply_translation([direction * 8, 0, 0])
+            lateral.append(overlap(clamp, sideways))
+        assert min(lateral) > 0.1, (w, h, d, 'lateral crossing', lateral)
         assert blocked > 0.1, (w, h, d, 'unblocked forward crossing', blocked)
         # End curvature determines the rise needed to clear a 10 mm lip at X=31.
         dx = max(0, 31-(w-h)/2)
@@ -77,6 +85,7 @@ def main():
         assert overlap(clamp, above) < 0.01, (w,h,d,'above threshold')
         crossings.append(dict(width=w, height=h, depth=d,
                               seated_interference_mm3=seated,
+                              lateral_crossing_interference_mm3=lateral,
                               forward_crossing_interference_mm3=blocked,
                               approximate_lift_to_clear_mm=float(required_lift)))
     report = dict(

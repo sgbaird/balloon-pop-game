@@ -1,46 +1,46 @@
 {
     "error_string": "Success.",
-    "export_time": 506,
+    "export_time": 505,
     "layer_height": 0.20000000298023224,
     "plate_index": 0,
-    "prepare_time": 66,
+    "prepare_time": 80,
     "return_code": 0,
     "sliced_plates": [
         {
             "feature_type_times": {
-                "Bottom surface": 48.27600860595703,
-                "Bridge": 441.7706604003906,
-                "Brim": 82.18048095703125,
-                "Custom": 354.6910400390625,
+                "Bottom surface": 48.27618408203125,
+                "Bridge": 373.6317138671875,
+                "Brim": 75.62321472167969,
+                "Custom": 354.75665283203125,
                 "Flush": 28.0,
-                "Gap infill": 182.5182647705078,
-                "Inner wall": 3378.224853515625,
-                "Internal solid infill": 987.3461303710938,
-                "Outer wall": 1155.431640625,
-                "Overhang wall": 271.8484191894531,
-                "Sparse infill": 3345.67724609375,
-                "Support": 1137.3743896484375,
-                "Support interface": 158.45492553710938,
-                "Support transition": 94.38699340820313,
-                "Top surface": 212.86489868164063,
-                "Travel": 1500.5550537109375,
-                "Undefined": 1482.14892578125
+                "Gap infill": 181.64437866210938,
+                "Inner wall": 3373.470458984375,
+                "Internal solid infill": 992.7413940429688,
+                "Outer wall": 1192.4974365234375,
+                "Overhang wall": 352.7001953125,
+                "Sparse infill": 2974.4052734375,
+                "Support": 1364.868896484375,
+                "Support interface": 196.7173309326172,
+                "Support transition": 116.96361541748047,
+                "Top surface": 213.86331176757813,
+                "Travel": 1747.674072265625,
+                "Undefined": 1729.2022705078125
             },
             "filament_change_times": 0,
             "filaments": [
                 {
                     "filament_id": "GFL99",
                     "id": 1,
-                    "main_used_g": 96.67524719238281,
-                    "total_used_g": 96.67524719238281
+                    "main_used_g": 93.12773895263672,
+                    "total_used_g": 93.12773895263672
                 }
             ],
-            "generate_support_material_time": 322,
+            "generate_support_material_time": 291,
             "id": 1,
-            "infill_time": 1079,
+            "infill_time": 1001,
             "layer_filament_change": 0,
-            "main_predication": 12969.1015625,
-            "make_perimeters_time": 555,
+            "main_predication": 13176.3134765625,
+            "make_perimeters_time": 501,
             "obj_cached_cnt": 0,
             "objects": [
                 {
@@ -54,7 +54,7 @@
                     },
                     "id": 95,
                     "name": "clamp.stl",
-                    "triangle_count": 2656
+                    "triangle_count": 4388
                 },
                 {
                     "bbox": {
@@ -109,10 +109,10 @@
                     "triangle_count": 28
                 }
             ],
-            "sliced_time": 5577,
-            "sliced_time_with_cache": 2906,
-            "total_predication": 13361.38671875,
-            "triangle_count": 11548,
+            "sliced_time": 4815,
+            "sliced_time_with_cache": 2378,
+            "total_predication": 13568.5986328125,
+            "triangle_count": 13280,
             "warning_message": ""
         }
     ],
