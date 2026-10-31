@@ -1347,6 +1347,8 @@ class Game:
                 logger.critical(f"Failed to create display surface: {window_e}")
                 raise
         
+        self.fullscreen = bool(self.actual_surface.get_flags() & pygame.FULLSCREEN)
+
         # Set window caption
         pygame.display.set_caption("Balloon Pop Game")
         
@@ -1557,6 +1559,14 @@ class Game:
         if self.powerup_manager:
             self.powerup_manager.update(self)
 
+    def set_fullscreen(self, enabled):
+        """Switch between fullscreen and a resizable window (rendering scales to the surface)."""
+        if enabled:
+            self.actual_surface = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+        else:
+            self.actual_surface = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
+        self.fullscreen = enabled
+
     def handle_events(self): 
         """
         Handle mouse clicking and other events
@@ -1568,8 +1578,15 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
-            # ESC pauses/resumes during play; elsewhere (menus, results) it quits
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
+                self.set_fullscreen(not self.fullscreen)
+                continue
+            # ESC leaves fullscreen first. In a window it pauses/resumes during play;
+            # elsewhere (menus, results) it quits.
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                if self.fullscreen:
+                    self.set_fullscreen(False)
+                    continue
                 if self.game_state not in ("playing", "paused"):
                     return False
 
