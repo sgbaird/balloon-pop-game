@@ -1,0 +1,36 @@
+name: Codex login keep-alive
+
+# The scheduled writer of the shared Codex login. ChatGPT access tokens last
+# 10 days, and Codex refreshes only in the last 5 minutes before one expires
+# (or on a 401); each refresh rotates the refresh token, and only the run that
+# refreshed holds the new one. Forcing the refresh here every 3 to 4 days means
+# @codex runs never get near expiry, never refresh, and can overlap safely on
+# the same login. Each run also resets GitHub's 7-day cache eviction clock.
+#
+# Run it by hand (Actions > Codex login keep-alive > Run workflow) right after
+# seeding CODEX_AUTH_JSON, and to test the login.
+
+on:
+  schedule:
+    - cron: "17 10 * * 1,4" # Mon and Thu, 03:17/04:17 Mountain
+  workflow_dispatch:
+
+concurrency:
+  group: codex-login-refresh
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/codex-run
+        with:
+          mode: refresh
+          codex-auth-key: ${{ secrets.CODEX_AUTH_KEY }}
+          codex-auth-seed: ${{ secrets.CODEX_AUTH_JSON }}
