@@ -189,8 +189,8 @@ runs:
         : > "$events"
         cat > "$RUNNER_TEMP/codex-progress.jq" <<'JQ'
         def clip($n): if length > $n then .[0:$n] + "…" else . end;
-        def cmd: sub("^/bin/(ba)?sh -l?c "; "") | sub("^'(?<c>.*)'$"; "\(.c)"; "s")
-          | split("\n")[0] | gsub("`"; "'") | clip(120);
+        def cmd: sub("^/bin/(ba)?sh -l?c "; "") | split("\n")[0]
+          | sub("^'"; "") | sub("'$"; "") | gsub("`"; "'") | clip(120);
         def rel: ltrimstr($ws + "/");
         def line:
           if .type == "command_execution" then
