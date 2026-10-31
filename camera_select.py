@@ -18,10 +18,11 @@ def camera_index(default=0):
     return int(_option("--camera", "BALLOON_CAMERA", default))
 
 
-def beach_mode(default="strict"):
-    """`--beach-mode loose` (or BALLOON_BEACH_MODE=loose) also counts a ball touching the
-    wall while someone holds it or stands next to it, at the cost of some pops from
-    carrying the ball along the wall. Default: strict."""
+def beach_mode(default="loose"):
+    """`--beach-mode loose` (default) counts a ball touching the wall even while someone
+    holds it or stands next to it, at the cost of some pops from carrying the ball along
+    the wall. `--beach-mode strict` (or BALLOON_BEACH_MODE=strict) ignores a ball joined
+    to a person."""
     return str(_option("--beach-mode", "BALLOON_BEACH_MODE", default)).lower()
 
 

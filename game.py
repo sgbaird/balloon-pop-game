@@ -33,6 +33,10 @@ GOLD = (255, 215, 0)
 PURPLE = (128, 0, 128)
 PINK = (255, 105, 180)
 BALLOON_SIZE = 200
+# A hit that misses but lands within NUDGE_REACH x a balloon's hit radius pushes it away
+NUDGE_REACH = 2.2
+NUDGE_SPEED = 18.0   # initial push, px/frame (total drift ~ NUDGE_SPEED / (1 - NUDGE_DECAY))
+NUDGE_DECAY = 0.88
 GAME_DURATION = 120  # seconds
 POP_DURATION = 8  # frames
 
@@ -832,6 +836,9 @@ class Balloon(pygame.sprite.Sprite):
         
         # Frozen state for freeze powerup
         self.frozen = False
+        # Push from a near miss (Game.nudge_nearby_balloons); decays to zero
+        self.nudge_vx = 0.0
+        self.nudge_vy = 0.0
         self.original_speed = self.speed
         # Store a copy of the original image for scaling effects
         self.original_image = self.image.copy()
@@ -855,6 +862,14 @@ class Balloon(pygame.sprite.Sprite):
         # Apply horizontal wobble
         self.time += self.wobble_speed * slow_factor
         self.rect.x = self.start_x + int(math.sin(self.time) * self.wobble)
+
+        # Near-miss push: drift away from the hit, then settle back into rising
+        if abs(self.nudge_vx) > 0.3 or abs(self.nudge_vy) > 0.3:
+            self.start_x += self.nudge_vx
+            self.rect.x += int(self.nudge_vx)
+            self.rect.y += int(self.nudge_vy)
+            self.nudge_vx *= NUDGE_DECAY
+            self.nudge_vy *= NUDGE_DECAY
         
         # Apply balloon magnet effect if active
         if powerups and 'magnet' in powerups:
@@ -2721,6 +2736,21 @@ class Game:
         else:  # "end" state
             self.Draw_Game_Over_Screen(surface)
 
+    def nudge_nearby_balloons(self, x, y, ball_radius):
+        """Push balloons near (x, y) away from it; stronger the closer the miss."""
+        for balloon in self.balloons:
+            cx, cy = balloon.rect.center
+            dx, dy = cx - x, cy - y
+            dist = math.hypot(dx, dy) or 1.0
+            hit_radius = (balloon.rect.width + balloon.rect.height) / 4 + ball_radius + 15
+            reach = hit_radius * NUDGE_REACH
+            if dist > reach:
+                continue
+            closeness = 1.0 - max(0.0, dist - hit_radius) / (reach - hit_radius)
+            push = NUDGE_SPEED * (0.4 + 0.6 * closeness)
+            balloon.nudge_vx += dx / dist * push
+            balloon.nudge_vy += dy / dist * push
+
     def pop_balloon_at_point(self, event):
             """
             Expects event to be a tuple: (ball_color, x, y, detected_radius, frame_number, is_back[, confirmed])
@@ -2832,6 +2862,10 @@ class Game:
                         if not is_multiball:
                             break # Only pop one balloon per hit
                             
+            # A near miss still gets a reaction: nearby balloons are pushed away (no points)
+            if not popped_balloons:
+                self.nudge_nearby_balloons(x, y, calibrated_radius)
+
             # Pop all the balloons that were hit
             for balloon in popped_balloons:
                 self.pop_balloon(balloon, "camera")
