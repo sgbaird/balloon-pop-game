@@ -1,0 +1,255 @@
+{
+  "flashlight_reference": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": null,
+    "size_mm": [
+      40.0,
+      40.0,
+      165.0
+    ],
+    "volume_mm3": 136950.537
+  },
+  "flex_circle": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 1.2,
+    "size_mm": [
+      43.5,
+      43.5,
+      15.2
+    ],
+    "volume_mm3": 4246.493
+  },
+  "flex_square": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 1.2,
+    "size_mm": [
+      43.5,
+      43.5,
+      15.2
+    ],
+    "volume_mm3": 4246.535
+  },
+  "flex_triangle": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 1.2,
+    "size_mm": [
+      43.5,
+      43.5,
+      15.2
+    ],
+    "volume_mm3": 4246.227
+  },
+  "flex_cross": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 1.2,
+    "size_mm": [
+      43.5,
+      43.5,
+      15.2
+    ],
+    "volume_mm3": 4245.333
+  },
+  "flex_filled": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 0.2,
+    "size_mm": [
+      43.5,
+      43.5,
+      14.2
+    ],
+    "volume_mm3": 3137.757
+  },
+  "press_circle": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 1.2,
+    "size_mm": [
+      43.1,
+      43.1,
+      15.2
+    ],
+    "volume_mm3": 4255.263
+  },
+  "press_square": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 1.2,
+    "size_mm": [
+      43.1,
+      43.1,
+      15.2
+    ],
+    "volume_mm3": 4255.305
+  },
+  "press_triangle": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 1.2,
+    "size_mm": [
+      43.1,
+      43.1,
+      15.2
+    ],
+    "volume_mm3": 4254.996
+  },
+  "press_cross": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 1.2,
+    "size_mm": [
+      43.1,
+      43.1,
+      15.2
+    ],
+    "volume_mm3": 4254.103
+  },
+  "press_filled": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 0.2,
+    "size_mm": [
+      43.1,
+      43.1,
+      14.2
+    ],
+    "volume_mm3": 3173.724
+  },
+  "strap_circle": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 1.2,
+    "size_mm": [
+      43.8,
+      43.8,
+      15.2
+    ],
+    "volume_mm3": 4054.95
+  },
+  "strap_square": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 1.2,
+    "size_mm": [
+      43.8,
+      43.8,
+      15.2
+    ],
+    "volume_mm3": 4054.992
+  },
+  "strap_triangle": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 1.2,
+    "size_mm": [
+      43.8,
+      43.8,
+      15.2
+    ],
+    "volume_mm3": 4054.684
+  },
+  "strap_cross": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 1.2,
+    "size_mm": [
+      43.8,
+      43.8,
+      15.2
+    ],
+    "volume_mm3": 4053.79
+  },
+  "strap_filled": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": 0.2,
+    "size_mm": [
+      43.8,
+      43.8,
+      14.2
+    ],
+    "volume_mm3": 2925.656
+  },
+  "fit_-0p2": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": null,
+    "size_mm": [
+      43.0,
+      43.0,
+      8.0
+    ],
+    "volume_mm3": 1627.025
+  },
+  "fit_-0p1": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": null,
+    "size_mm": [
+      43.1,
+      43.1,
+      8.0
+    ],
+    "volume_mm3": 1630.935
+  },
+  "fit_+0p0": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": null,
+    "size_mm": [
+      43.2,
+      43.2,
+      8.0
+    ],
+    "volume_mm3": 1634.862
+  },
+  "fit_+0p2": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": null,
+    "size_mm": [
+      43.4,
+      43.4,
+      8.0
+    ],
+    "volume_mm3": 1642.714
+  },
+  "fit_+0p4": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": null,
+    "size_mm": [
+      43.6,
+      43.6,
+      8.0
+    ],
+    "volume_mm3": 1650.55
+  },
+  "fit_+0p6": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": null,
+    "size_mm": [
+      43.8,
+      43.8,
+      8.0
+    ],
+    "volume_mm3": 1658.429
+  },
+  "loose_diffuser_disk": {
+    "watertight": true,
+    "components": 1,
+    "face_thickness_mm": null,
+    "size_mm": [
+      39.8,
+      39.8,
+      0.2
+    ],
+    "volume_mm3": 248.72
+  }
+}

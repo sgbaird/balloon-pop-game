@@ -1,0 +1,518 @@
+{
+  "studio_version": "02.08.02.61",
+  "source_model_commit": "9131b0f",
+  "profiles_sha256": {
+    "filament.json": "54e756320fb74afc8bf62ef57a508627f3a2dee49bc35f608c0747fddeaf4bdd",
+    "machine.json": "08e3ae3361ab7b8e996773ab128f68339016d3c5be7803198f15b06c911d0b67",
+    "machine_model.json": "1ca393576f933ec39bad8e17b6fd72b7b4363ba97a8bfc396560389544ceae32",
+    "process.json": "d920e8aced13c91b6b3e24de87cf560b90afb6da629afc3a0e720d2ce9dfcb78"
+  },
+  "parts": {
+    "fit_+0p0": {
+      "source_sha256": "90da979def3db4267890f2cde5533e9605b325b92a983582586306d6f94b2347",
+      "file": "fit_+0p0.3mf",
+      "sha256": "94500528e85a2f27f452b426e24d51b51a7e1f4ec6dc58127aac437023085c82",
+      "layers": 40,
+      "max_z_mm": 8.0,
+      "estimated_seconds": 736,
+      "filament_g": 2.01,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "dc777664da30a3fd152739aa179ace6eb44a626146ccc680783f6701efa0d528"
+    },
+    "fit_+0p2": {
+      "source_sha256": "2be1b13ddd26a192580ef8d662656e81ee273612b809eb38276ee20381e65484",
+      "file": "fit_+0p2.3mf",
+      "sha256": "72b032e6f4cbbdb5197efab1f264bde5b405d66e919c1f1f6431ddff0b19b647",
+      "layers": 40,
+      "max_z_mm": 8.0,
+      "estimated_seconds": 737,
+      "filament_g": 2.02,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "a6c61c2b237c810afd64dcc2cde9462909d9c7e96db9e2057b086753af1f501c"
+    },
+    "fit_+0p4": {
+      "source_sha256": "1b7d7d08d63e4ca3f8867b9dd2f250392467b6bd68e8577eceef2284bc5da8c3",
+      "file": "fit_+0p4.3mf",
+      "sha256": "a3ffc4f14af6de43a7a1a002078f5f34d2295cf26498588cc93d7e2a52a114da",
+      "layers": 40,
+      "max_z_mm": 8.0,
+      "estimated_seconds": 732,
+      "filament_g": 2.03,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "b25318342c051ffc2a70b43a028aa7d3dc826c9b37af11805857d9719c7384d7"
+    },
+    "fit_+0p6": {
+      "source_sha256": "69a13bafd154b2c30cac94f04b63aa439e451b1dd069c611041fff593941b740",
+      "file": "fit_+0p6.3mf",
+      "sha256": "ea13b50c99e02548630c982d385365df68351133b2a9f4c1e321a0e1cffc8cbc",
+      "layers": 40,
+      "max_z_mm": 8.0,
+      "estimated_seconds": 738,
+      "filament_g": 2.04,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "e233ca3424b29c57b9f13a08d5eafc3ac17e675e34eb2d80ad1a53c4cf4e1b6c"
+    },
+    "fit_-0p1": {
+      "source_sha256": "340eacbbd8fffa2c8eb26714cf81330a08c2a127265de153ae67c5a363cd5386",
+      "file": "fit_-0p1.3mf",
+      "sha256": "e8480612566b86ee3ce86500578efc15efad220acd276401cf4be4e7881e001a",
+      "layers": 40,
+      "max_z_mm": 8.0,
+      "estimated_seconds": 735,
+      "filament_g": 2.01,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "f7523731777cabc1c9478c552b8a68dda968972e8cc7656ce576ed4a95d24a4f"
+    },
+    "fit_-0p2": {
+      "source_sha256": "e180299be64382a2dcfed55964d8220496a7fc9ef51a985c69ff4aaf791cb543",
+      "file": "fit_-0p2.3mf",
+      "sha256": "49ebe440b8acb2ed017d7ac64e03e820aff14e413a6110c026cbd82c7dc33bb4",
+      "layers": 40,
+      "max_z_mm": 8.0,
+      "estimated_seconds": 737,
+      "filament_g": 2.01,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "f963ca059fb8fcd40468bf042dfa1b40f6910d87b917d290bdd16cf4a6530fbb"
+    },
+    "flex_circle": {
+      "source_sha256": "ec26307dc0f109dcdcad043c3fccda63647de56c7812b9d87d7bf674ffa8afd1",
+      "file": "flex_circle.3mf",
+      "sha256": "86c5552e537932310d7b9ab8fdaff400f40c3e459a28a2526cda98a0935645bf",
+      "layers": 76,
+      "max_z_mm": 15.2,
+      "estimated_seconds": 1262,
+      "filament_g": 5.16,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "37915053fd1b48f9dd987f266a70588ccda8058875bda90b2e32d011795cbe34"
+    },
+    "flex_cross": {
+      "source_sha256": "cd2bd457525874b8858820e5caf113be964b23f8f18a8da8da121d5798e460c8",
+      "file": "flex_cross.3mf",
+      "sha256": "58d85fd7278075c078d5df12090fa367d7e9b4283aff62fb4cc70d0ba3467e49",
+      "layers": 76,
+      "max_z_mm": 15.2,
+      "estimated_seconds": 1286,
+      "filament_g": 5.16,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "33cb845fd90cd1e9eb335bf56697f7ed9d229607dc45984e65da299013f3cf65"
+    },
+    "flex_filled": {
+      "source_sha256": "d233bae80895501b583c6130419b633b1b3289a5ee5836975017b80bb9b2a19f",
+      "file": "flex_filled.3mf",
+      "sha256": "5c1651ce0946a9fc5b6942e7e80d4e32e4c39a9b2c6f1bcd71541dfa822de7c1",
+      "layers": 71,
+      "max_z_mm": 14.2,
+      "estimated_seconds": 1096,
+      "filament_g": 3.81,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "4e4586c20e8f1aed57175a73b5e5e50b8f5354abf3011a1c371314ad0d9cc3ae"
+    },
+    "flex_square": {
+      "source_sha256": "c47c346c1411464da15a8f5db4642c5833c6aee61fd702423ae709bc3cfac24a",
+      "file": "flex_square.3mf",
+      "sha256": "0a33933af1da78050036673e78d54f1b7f620846f59e37f792ea6ba460f36d40",
+      "layers": 76,
+      "max_z_mm": 15.2,
+      "estimated_seconds": 1269,
+      "filament_g": 5.16,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "4073074196895c4f0fdaf350912ba156003cbd5b485597ac00520eb04719726e"
+    },
+    "flex_triangle": {
+      "source_sha256": "8df501ad6773fbdb8d2c5cfbae929748131ea92422657f5c25d5a90ba7d73c9f",
+      "file": "flex_triangle.3mf",
+      "sha256": "33bb292d54a88bfb3ea6ee2c7d147106ca772ab5ffcf3eccc8cef0b5bf61c88e",
+      "layers": 76,
+      "max_z_mm": 15.2,
+      "estimated_seconds": 1272,
+      "filament_g": 5.16,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "5772097b7efef9827cc8de0cf5d1f9e79b08b559725a7aab065ed93620dc154a"
+    },
+    "loose_diffuser_disk": {
+      "source_sha256": "cc1564842d6e3735ae0bc48be9dc488f0c283a9f20edc5fa30f9d6f7b0b7d796",
+      "file": "loose_diffuser_disk.3mf",
+      "sha256": "ffc3af43a1fa85ff7e912838c3498ac01e1d959a73b05b2c95586a54ada134bd",
+      "layers": 1,
+      "max_z_mm": 0.2,
+      "estimated_seconds": 429,
+      "filament_g": 0.37,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "5159526bdb58139aa8bfa69e911bd67a1a5e8cd63231fb18f9ce3dd7b8e9347f"
+    },
+    "press_circle": {
+      "source_sha256": "76f17e573daf3bdf39b9f2bfb6c02d635c325b72430118db92a2e29521d431da",
+      "file": "press_circle.3mf",
+      "sha256": "f102327e4f4167e6f036e783de8c099e0fecfdf761c7821e029bab8cb4712601",
+      "layers": 76,
+      "max_z_mm": 15.2,
+      "estimated_seconds": 1215,
+      "filament_g": 5.18,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "47aa33720823058514764929be7d7a078c5f71bb08940dc7f323ae507a26999c"
+    },
+    "press_cross": {
+      "source_sha256": "f0618c272df721648cfcf1b2f127886ea684e6c2b1316753778298f6b5c534c4",
+      "file": "press_cross.3mf",
+      "sha256": "5dabc69b746cfbb7b98ddbe588a2eee05892923219e475df6038602eba378e32",
+      "layers": 76,
+      "max_z_mm": 15.2,
+      "estimated_seconds": 1239,
+      "filament_g": 5.18,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "cea0aa9e7471c30f6479d94efc9056fc9b1474b12e1d749fcd9876fdfc51e6c8"
+    },
+    "press_filled": {
+      "source_sha256": "9cec244bed0b2c78b53ec4c2f04e6cd139a75696405ff866c4e520600ab00af8",
+      "file": "press_filled.3mf",
+      "sha256": "14e14af37511298f7e5920e2bcb553db941288331a7721586168303795914106",
+      "layers": 71,
+      "max_z_mm": 14.2,
+      "estimated_seconds": 1051,
+      "filament_g": 3.86,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "7db293cfa08e5f5b539242d162c246ea2e7e354ce5b42a1142cb2578c181565c"
+    },
+    "press_square": {
+      "source_sha256": "d97c9df81539e9956242c2598fd1d93fab388da7ee2c02762a5a0d0e020b01b3",
+      "file": "press_square.3mf",
+      "sha256": "c3dc637fa552b184bc83c52340fc5642ed148e9af7398e7aeaa4edc15ece5e43",
+      "layers": 76,
+      "max_z_mm": 15.2,
+      "estimated_seconds": 1222,
+      "filament_g": 5.18,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "91a646ab635fc1f7b95f834e4818ba07b1630b82a8bbd7d8be61c52d2a189c8c"
+    },
+    "press_triangle": {
+      "source_sha256": "dde14fb752834743ad4c64c6f245f35240553863e6354c375bd5c40620769fea",
+      "file": "press_triangle.3mf",
+      "sha256": "65629e876d5d94519d8cf50fd9cf2c443360487b2cdcd733c17133bf92052090",
+      "layers": 76,
+      "max_z_mm": 15.2,
+      "estimated_seconds": 1224,
+      "filament_g": 5.18,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "b5663079ca55470b68b602d9b281c6ac53f6bd37081adfbbd76e27a40ee33ea3"
+    },
+    "strap_circle": {
+      "source_sha256": "f5d674f0996116cf98def39f8fbd077f50beb497553d1682b39ee6024ee8806e",
+      "file": "strap_circle.3mf",
+      "sha256": "e1197fa2b2958c95f7b122211eb61d51e0c8f9a75f74cf179589e88f8ff29aaf",
+      "layers": 76,
+      "max_z_mm": 15.2,
+      "estimated_seconds": 1268,
+      "filament_g": 4.92,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "3acdffb5a5199b99f0af8a90273664060f51a877dc19198c69914a868f1c6491"
+    },
+    "strap_cross": {
+      "source_sha256": "34f9e27c75ed30fb885f4a52beaef6f612bed327ce26e70becde42911f0a5dec",
+      "file": "strap_cross.3mf",
+      "sha256": "7c750cbb4922fdb2a21af0561dfb0c5c547b9b664e4fbc87d9c0d5bbd484a9a0",
+      "layers": 76,
+      "max_z_mm": 15.2,
+      "estimated_seconds": 1284,
+      "filament_g": 4.92,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "c71d4177a27462a9e40574816ee1788043f9b8bac77a0a3f024dbca4351dbb68"
+    },
+    "strap_filled": {
+      "source_sha256": "3d33acfd44db879dcdd72dd042dce72e095c98a38e79a0179bafefd95d3f5d61",
+      "file": "strap_filled.3mf",
+      "sha256": "0f169935da86947840dad3c95b652d250247a7fcc2a5031a5af4da60a4304024",
+      "layers": 71,
+      "max_z_mm": 14.2,
+      "estimated_seconds": 1106,
+      "filament_g": 3.54,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "5fdc3e22df0c4209ca255dcf234f81fba8ed046383193f0dfd6ff2223fbff11b"
+    },
+    "strap_square": {
+      "source_sha256": "c3b346fda895e4e9236714c047da51f1ee99327bcda1260da2a05132214f85fe",
+      "file": "strap_square.3mf",
+      "sha256": "1ace0ac37779d3e8b11431dff6d780e17985f68445db57287caf7bc205c0bd28",
+      "layers": 76,
+      "max_z_mm": 15.2,
+      "estimated_seconds": 1268,
+      "filament_g": 4.92,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "34fcae3fd3551eb00df3989b69a85c4e9d7eb018ec98b47503025bbd0bbe8164"
+    },
+    "strap_triangle": {
+      "source_sha256": "792636d667df42c685f0988e7336cbf23afd00d2e9fe4d6a14b55e1f2a9cf97b",
+      "file": "strap_triangle.3mf",
+      "sha256": "24d0bd374ed0b382229f7d18940732e5114c7c2acf3720161ceef7ac2c8296ed",
+      "layers": 76,
+      "max_z_mm": 15.2,
+      "estimated_seconds": 1274,
+      "filament_g": 4.92,
+      "warnings": [
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "2",
+          "error_code": "10018003"
+        },
+        {
+          "msg": "not_support_traditional_timelapse",
+          "level": "3",
+          "error_code": "1000C003"
+        }
+      ],
+      "thumbnail": false,
+      "gcode_sha256": "dc1f716a336ca4a641786afa3a08cb381748a559a6e78fccdc180118de443280"
+    }
+  }
+}
