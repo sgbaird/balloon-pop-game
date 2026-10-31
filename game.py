@@ -35,8 +35,15 @@ PINK = (255, 105, 180)
 BALLOON_SIZE = 200
 # A hit that misses but lands within NUDGE_REACH x a balloon's hit radius pushes it away
 NUDGE_REACH = 2.2
-NUDGE_SPEED = 18.0   # initial push, px/frame (total drift ~ NUDGE_SPEED / (1 - NUDGE_DECAY))
-NUDGE_DECAY = 0.88
+NUDGE_SPEED = 30.0   # initial push, px/frame (total drift ~ NUDGE_SPEED / (1 - NUDGE_DECAY))
+NUDGE_DECAY = 0.9
+NUDGE_SOUND = "sound/nudge_whee.wav"
+TWIRL_TURNS = 1.5    # a pushed balloon spins this many turns and lands upside down...
+TWIRL_EASE = 0.12    # ...easing in at this rate per frame (about 0.8 s at 60 FPS)
+TWIRL_HOLD = 1.5     # seconds it floats upside down before flipping back upright
+# Occasional big, slower balloons: easier targets for younger players
+BIG_BALLOON_CHANCE = 0.15
+BIG_BALLOON_SCALE = 1.6
 GAME_DURATION = 120  # seconds
 POP_DURATION = 8  # frames
 
@@ -839,10 +846,31 @@ class Balloon(pygame.sprite.Sprite):
         # Push from a near miss (Game.nudge_nearby_balloons); decays to zero
         self.nudge_vx = 0.0
         self.nudge_vy = 0.0
+        # Twirl after a near miss (degrees; eases from angle toward target_angle)
+        self.angle = 0.0
+        self.target_angle = 0.0
+        self.spin_dir = 1
+        self.upside_timer = 0
+        self.size_scale = 1.0
         self.original_speed = self.speed
         # Store a copy of the original image for scaling effects
         self.original_image = self.image.copy()
         
+    def make_big(self):
+        """Turn this into a big, slower balloon (easier to hit)."""
+        self.size_scale = BIG_BALLOON_SCALE
+        self.speed *= 0.8
+        self.original_speed = self.speed
+
+    def twirl(self, direction):
+        """Spin away from a near miss and land upside down; flips back upright later."""
+        self.spin_dir = 1 if direction >= 0 else -1
+        if self.upside_timer > 0:
+            self.target_angle += self.spin_dir * 360  # already twirling: one more turn
+        else:
+            self.target_angle = self.angle + self.spin_dir * 360 * TWIRL_TURNS
+        self.upside_timer = int(FPS * (0.8 + TWIRL_HOLD))
+
     def update(self, powerups=None):
         # Skip update if frozen
         if self.frozen:
@@ -899,18 +927,22 @@ class Balloon(pygame.sprite.Sprite):
                 # Override normal wobble to create a direct path
                 self.start_x = self.rect.x
 
-        # ---  Apply giant effect to visually scale the balloon ---
-        if 'giant' in powerups:
-            scale = 1.5  # or a higher value if desired
-            new_size = int(BALLOON_SIZE * scale)
-            # Use the original image to avoid cumulative distortion
-            self.image = pygame.transform.scale(self.original_image, (new_size, new_size))
-            # Re-center the balloon so it doesn't jump around
-            self.rect = self.image.get_rect(center=self.rect.center)
-        else:
-            # Optional: Reset to normal size if the giant powerup is not active.
-            self.image = pygame.transform.scale(self.original_image, (BALLOON_SIZE, BALLOON_SIZE))
-            self.rect = self.image.get_rect(center=self.rect.center)
+        # --- Size (big balloons, giant powerup) and twirl, from the original image ---
+        size = int(BALLOON_SIZE * self.size_scale * (1.5 if 'giant' in powerups else 1.0))
+        image = pygame.transform.scale(self.original_image, (size, size))
+        if self.angle != self.target_angle:
+            self.angle += (self.target_angle - self.angle) * TWIRL_EASE
+            if abs(self.target_angle - self.angle) < 1.0:
+                self.angle = self.target_angle
+        if self.upside_timer > 0:
+            self.upside_timer -= 1
+            if self.upside_timer == 0:
+                self.target_angle += self.spin_dir * 180  # flip back upright
+        if self.angle % 360 != 0:
+            image = pygame.transform.rotozoom(image, self.angle, 1.0)
+        self.image = image
+        # Re-center so the balloon doesn't jump around
+        self.rect = self.image.get_rect(center=self.rect.center)
     
         
         # Remove if it goes off screen
@@ -1547,6 +1579,8 @@ class Game:
                 )
                 
                 balloon = Balloon(RED, adjusted_speed, balloon_type)
+                if balloon_type == "normal" and random.random() < BIG_BALLOON_CHANCE:
+                    balloon.make_big()
                 
             self.balloons.add(balloon)
                 
@@ -1571,6 +1605,8 @@ class Game:
                 )
                 
                 balloon = Balloon(GREEN, adjusted_speed, balloon_type)
+                if balloon_type == "normal" and random.random() < BIG_BALLOON_CHANCE:
+                    balloon.make_big()
                 
             self.balloons.add(balloon)
             
@@ -2737,7 +2773,8 @@ class Game:
             self.Draw_Game_Over_Screen(surface)
 
     def nudge_nearby_balloons(self, x, y, ball_radius):
-        """Push balloons near (x, y) away from it; stronger the closer the miss."""
+        """Push balloons near (x, y) away from it with a twirl and a sound; stronger the closer the miss."""
+        pushed = False
         for balloon in self.balloons:
             cx, cy = balloon.rect.center
             dx, dy = cx - x, cy - y
@@ -2750,6 +2787,11 @@ class Game:
             push = NUDGE_SPEED * (0.4 + 0.6 * closeness)
             balloon.nudge_vx += dx / dist * push
             balloon.nudge_vy += dy / dist * push
+            # Spin clockwise when pushed right, counter-clockwise when pushed left
+            balloon.twirl(-1 if dx > 0 else 1)
+            pushed = True
+        if pushed:
+            self.sound_manager.play(NUDGE_SOUND, "ui", volume_scale=1.2)
 
     def pop_balloon_at_point(self, event):
             """
