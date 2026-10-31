@@ -123,8 +123,12 @@ runs:
         fi
 
         # Model and effort selector: @codex+<model>[:<effort>], e.g.
-        # @codex+gpt-5.5:high or @codex:low. Bare tag = plan defaults.
-        tag=$(grep -oiE -- "${TRIGGER}(\+[a-z0-9.-]*[a-z0-9])?(:(minimal|low|medium|high|xhigh))?" <<<"$text" | head -n1 | tr '[:upper:]' '[:lower:]' || true)
+        # @codex+gpt-6-luna:high or @codex:low. Bare tag = plan defaults.
+        # The first tag that carries a selector wins, so a bare @codex in an
+        # issue title does not hide @codex+<model> in its body.
+        tags=$(grep -oiE -- "${TRIGGER}(\+[a-z0-9.-]*[a-z0-9])?(:(none|minimal|low|medium|high|xhigh|max|ultra))?" <<<"$text" | tr '[:upper:]' '[:lower:]' || true)
+        tag=$(grep -E -- '[+:]' <<<"$tags" | head -n1 || true)
+        if [ -z "$tag" ]; then tag=$(head -n1 <<<"$tags"); fi
         rest=${tag#"$TRIGGER"}
         model=""
         effort=""
