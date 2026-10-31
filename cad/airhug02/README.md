@@ -1,9 +1,10 @@
 # AIRHUG 02 camera and corner-ledge mount
 
-> **Camera dimensions are unverified.** The original two-view face fit did not
-> validate housing depth or clip clearance. See the [new dimension audit](DIMENSIONS.md)
-> before printing the full mount; its existing STL/3MF files retain the original
-> prototype dimensions and have not been corrected from measurements.
+> **The original housing depth is wrong.** The [new ruler-photo analysis](DIMENSIONS.md#new-ruler-photos-the-depth-error-is-now-clear)
+> indicates roughly **70 mm width, 17–18 mm face height and 24–26 mm depth**,
+> rather than the original 65 × 16.1 × 10 mm. Existing CAD/STL/3MF files still use
+> the original prototype dimensions; they are not a corrected mount. Keep the
+> printed screw, but do not force the old width/depth gauges onto the housing.
 
 A video-derived **prototype**, with editable OpenSCAD, exported meshes,
 matched-view silhouette comparisons, and **sliced Bambu Studio projects for an
@@ -48,9 +49,10 @@ hidden ends. The bounds below are approximate, not statistical confidence interv
 
 The external model follows the visible capsule, covered face, lettering, folding
 clip and short cable exit. Lens internals, regulatory lettering, exact hinge
-geometry and hidden surfaces are not reproduced precisely. The lens is not
-visible clearly enough to locate it or establish the cover mechanism. This is
-an exterior fit model, not a manufacturer-exact replica.
+geometry and hidden surfaces are not reproduced precisely. The lens was not
+visible clearly enough in the original video; the new photos show it on the left
+with the lettered cover shifted right. That detail is not yet in the old model.
+This is an exterior fit model, not a manufacturer-exact replica.
 
 ## Rotations and intrinsics
 
@@ -107,8 +109,11 @@ support material from the openings first.
 | **C + D — short threaded ring and screw** | Hold the ring square to the shaft. Start the screw's narrow tip in it and turn clockwise **as viewed from the knob toward the tip**. Move the ring along several turns of thread and back off. | Smooth turning with fingers; no tools, cross-threading or jamming. The ring is 8 mm tall, only about two thread pitches, so this is a running-fit check, not a load test. |
 
 The width and depth openings each have **0.6 mm total nominal clearance**, not
-0.6 mm per side. These gauges do **not** check the 16.1 mm housing height,
-cover motion, folded clip clearance, keeper retention, ledge fit or holding force.
+0.6 mm per side. The new ruler photos show the depth gauge is undersized and
+suggest the width gauge is too narrow as well; their openings describe the old
+hypothesis, not the actual camera. These gauges do **not** check the housing
+height, cover motion, folded clip clearance, keeper retention, ledge fit or holding
+force.
 The housing dimensions came from video. Passing these checks still leaves height
 and clip clearance unresolved; review the [dimension audit](DIMENSIONS.md) before
 printing the full mount.

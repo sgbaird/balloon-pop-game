@@ -6,6 +6,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 from fit_dimensions import distances, fit, project, rim
+from audit_photos import ruler
 
 
 class DimensionMathTests(unittest.TestCase):
@@ -45,6 +46,31 @@ class DimensionMathTests(unittest.TestCase):
         result, errors = fit([frame], 1400, fixed=[16, 24], start=np.r_[12, 8, pose])
         np.testing.assert_array_equal(result[:2], [16, 24])
         self.assertLess(errors[0], 1e-6)
+
+
+class PhotoRulerMathTests(unittest.TestCase):
+    def test_rotated_projective_ruler_recovers_unseen_endpoints(self):
+        # Independent forward homography on a tilted line, including an offset.
+        # Test endpoints are between the annotated ticks, not used for fitting.
+        mm = np.arange(30, 101, 10, dtype=float)
+        axis = np.array([np.cos(0.37), np.sin(0.37)])
+
+        def pixels(values):
+            position = (12 * values + 800) / (0.002 * values + 1)
+            return np.array([130, 210]) + position[:, None] * axis
+
+        read, _, _, report = ruler(np.c_[mm, pixels(mm)])
+        np.testing.assert_allclose(read(pixels(np.array([36.5, 92.25]))),
+                                   [36.5, 92.25], atol=1e-7)
+        self.assertLess(report["tick_rms_mm"], 1e-7)
+        self.assertLess(max(abs(x) for x in report["leave_one_tick_out_error_mm"]), 1e-7)
+
+    def test_affine_ruler_with_vertical_image_axis(self):
+        mm = np.arange(20, 81, 10, dtype=float)
+        points = np.c_[np.full_like(mm, 240), 900 - 8 * mm]
+        read, _, _, _ = ruler(np.c_[mm, points])
+        np.testing.assert_allclose(read([[240, 900 - 8 * 23], [240, 900 - 8 * 74]]),
+                                   [23, 74], atol=1e-7)
 
 
 if __name__ == "__main__":
