@@ -26,8 +26,10 @@ a Codex session, for anyone with write access. Model and effort tags: `@codex+gp
 tag uses the plan's defaults. On an issue, a session that changes files opens a pull request from its branch (or links
 a compare page if it cannot) and embeds its key images and GIFs in the reply. Efforts: `none`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`, `ultra` (each model
 accepts a subset). The first tag with a `+model` or `:effort` wins, wherever it is in the title or body. On an issue the session works on a new `codex/issue-<n>-<run>` branch; on a PR it
-pushes to the PR's branch. One run at a time per issue or PR: another `@codex` waits for the current run (only the
-latest waiting one is kept); cancel a run from the Actions tab. While it runs, its "working on this" comment shows the plan, the
+pushes to the PR's branch. Every `@codex` starts at once, so other sessions may be working on the same issue or PR:
+check with `gh run list -w codex.yml --status in_progress` and the thread's "working on this" comments, and on a
+shared PR branch `git pull --rebase` before each push rather than force-pushing. Cancel a run from the Actions tab.
+While it runs, its "working on this" comment shows the plan, the
 latest interim message and the recent commands (never their output), updated about once a minute, so anything a
 session writes in an interim message or a command line is public on this repository.
 
