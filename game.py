@@ -58,7 +58,7 @@ try:
     POWERUP_SOUND = pygame.mixer.Sound("sound/pop_balloon.wav")  # Reuse existing sound
     COMBO_SOUND = pygame.mixer.Sound("sound/pop_red_ballon.wav")  # Reuse existing sound
     PENALTY_SOUND = pygame.mixer.Sound("sound/penalty_balloon.wav")  # Reuse existing sound
-except pygame.error as e:
+except (pygame.error, FileNotFoundError) as e:
     logger.error(f"Failed to load sound: {e}")
     # Create silent sound as fallback
     POP_GREEN = pygame.mixer.Sound(buffer=bytearray(44100))  # 1 second of silence
@@ -91,7 +91,7 @@ class SoundManager:
             sound = pygame.mixer.Sound(sound_file)
             self.sounds[sound_file] = sound
             return sound
-        except pygame.error as e:
+        except (pygame.error, FileNotFoundError) as e:
             logger.error(f"Could not load sound {sound_file}: {e}")
             # Create silent sound as fallback
             fallback = pygame.mixer.Sound(buffer=bytearray(22050))  # 0.5 seconds of silence
@@ -427,7 +427,7 @@ class PowerUp(pygame.sprite.Sprite):
             hourglass_img = pygame.transform.scale(hourglass_img, (icon_size, icon_size))
             icon_pos = (center[0] - icon_size // 2, center[1] - icon_size // 2)
             self.image.blit(hourglass_img, icon_pos)
-        except pygame.error:
+        except (pygame.error, FileNotFoundError):
             # Fallback to drawing clock hands
             # Hour hand
             hour_angle = math.pi / 6  # 30 degrees
@@ -484,7 +484,7 @@ class PowerUp(pygame.sprite.Sprite):
             magnet_img = pygame.transform.scale(magnet_img, (icon_size, icon_size))
             icon_pos = (center[0] - icon_size // 2, center[1] - icon_size // 2)
             self.image.blit(magnet_img, icon_pos)
-        except pygame.error:
+        except (pygame.error, FileNotFoundError):
             # Fallback to drawing a simple magnet
             # Draw magnet body
             magnet_width = self.size // 3
@@ -594,7 +594,7 @@ class PowerUp(pygame.sprite.Sprite):
             snowflake_img = pygame.transform.scale(snowflake_img, (icon_size, icon_size))
             icon_pos = (center[0] - icon_size // 2, center[1] - icon_size // 2)
             self.image.blit(snowflake_img, icon_pos)
-        except pygame.error:
+        except (pygame.error, FileNotFoundError):
             # Fallback to drawing snowflake
             for i in range(6):
                 angle = math.pi/3 * i
@@ -634,7 +634,7 @@ class PowerUp(pygame.sprite.Sprite):
             chain_img = pygame.transform.scale(chain_img, (icon_size, icon_size))
             icon_pos = (center[0] - icon_size // 2, center[1] - icon_size // 2)
             self.image.blit(chain_img, icon_pos)
-        except pygame.error:
+        except (pygame.error, FileNotFoundError):
             # Fallback to drawing chain links
             # Draw two interlocking circles as chain links
             link1_rect = pygame.Rect(
@@ -723,8 +723,11 @@ class Balloon(pygame.sprite.Sprite):
                 self.image, 
                 (BALLOON_SIZE, BALLOON_SIZE)
             )
-        except pygame.error as e:
-            logger.error(f"Failed to load balloon image: {e}")
+        except (pygame.error, FileNotFoundError) as e:
+            # Log once, not for every balloon (the png/ images are not in the repo)
+            if not getattr(Balloon, "_image_warning_logged", False):
+                logger.warning(f"Balloon image missing, drawing plain circles: {e}")
+                Balloon._image_warning_logged = True
             # Create a fallback balloon if image loading fails
             self.image = pygame.Surface(
                 (BALLOON_SIZE, BALLOON_SIZE), 
@@ -1397,7 +1400,7 @@ class Game:
             pygame.mixer.music.load("sound/background_sound.mp3")  # Use your audio file here
             pygame.mixer.music.set_volume(0.04)  # Adjust volume (0.0 to 1.0)
             pygame.mixer.music.play(-1)  # -1 means loop indefinitely
-        except pygame.error as e:
+        except (pygame.error, FileNotFoundError) as e:
             logger.error(f"Could not load background music: {e}")
 
         # Ball detection tracking
