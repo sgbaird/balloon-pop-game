@@ -79,6 +79,42 @@ filming the webcam. The AIRHUG's own intrinsics require images captured *by* it
 of a calibration target. Its [listed 78° FOV](https://airhug.com/products/airhug-02-mini-webcam-without-microphone)
 does not establish the filming phone's intrinsics or the mount dimensions.
 
+## Using the fit-check pieces
+
+![Identify and use the four fit-check pieces](previews/fit-check-guide.png)
+
+There are **four loose pieces** after removing supports and brims: three gauges
+from `coupon.stl` and one full screw. They are separate checks, not a little
+clamp to assemble onto the ledge. Let them cool and clear loose strands and
+support material from the openings first.
+
+| Piece | How to use it | What a pass looks like |
+| --- | --- | --- |
+| **A — long, shallow U-shaped width gauge** | Offer the **65.6 mm clear span** across the main housing's left and right ends. Align the end walls with its widest outline; checking only the narrower rounded lower edge can give a false pass. The housing need not bottom against the gauge's base. | Nominal 65 mm body fits between the walls with slight play, without spreading them. |
+| **B — small, taller U-shaped depth gauge** | Offer the **10.6 mm gap** across the main body's front-to-back thickness at an accessible spot. Keep the projecting privacy cover, hinge, original clip and cable outside the gap. If there is no accessible spot, use calipers on the body instead. | Nominal 10 mm main body slips between the walls without force. |
+| **C + D — short threaded ring and screw** | Hold the ring square to the shaft. Start the screw's narrow tip in it and turn clockwise **as viewed from the knob toward the tip**. Move the ring along several turns of thread and back off. | Smooth turning with fingers; no tools, cross-threading or jamming. The ring is 8 mm tall, only about two thread pitches, so this is a running-fit check, not a load test. |
+
+The width and depth openings each have **0.6 mm total nominal clearance**, not
+0.6 mm per side. These gauges do **not** check the 16.1 mm housing height,
+cover motion, folded clip clearance, keeper retention, ledge fit or holding force.
+The housing dimensions came from video; passing these checks is a reason to
+try the full prototype, not confirmation of its complete fit.
+
+If something binds, stop and record **which piece**, where it catches, the real
+housing width/height/depth, and the printed opening if you have calipers. A photo
+of the interference is useful. Remove obvious support debris, but do not force
+or sand the gauge wider and then treat it as a dimensional pass. If the ring
+binds, check both thread surfaces for debris and print defects; changing camera
+`clearance` will not loosen the thread. The female thread's separate radial slack
+is the `0.35` argument in `clamp_raw()` and `coupon()` in [mount.scad](mount.scad).
+Any thread adjustment must match in both places. Correct the relevant CAD
+parameter or print issue, rebuild/reslice, and repeat the affected check before
+printing the full mount.
+
+**Keep the screw**: it is the same part used by the full mount. The three gauges
+are not installed in the finished assembly. The supplied mount plate includes
+another screw; omit that duplicate in Bambu Studio and reslice if reusing this one.
+
 ## Printing and assembly
 
 ![Animated assembly: screw, pressure pad, ledge, camera and keeper wedges](previews/assembly.gif)
@@ -88,12 +124,10 @@ It starts with cleaned printed parts and shows the original camera clip already
 folded. Motions illustrate the assembly sequence; they do not validate physical
 fit, clamping force or cover clearance. Follow the checks below before use.
 
-1. Print the fit-check plate: short female thread, housing width/depth gauges
-   and the full screw, which can be reused. Remove supports and brims. Check
-   the 65.6 mm width opening and 10.6 mm depth opening against the **main housing**,
-   allowing for its projecting cover. The screw should turn by hand in the short
-   thread. If needed, edit `camera_w`, `camera_h`, `camera_d` or `clearance` in
-   `mount.scad` and rebuild both plates.
+1. Print the fit-check plate and follow [Using the fit-check pieces](#using-the-fit-check-pieces)
+   above before printing the full mount. If the housing dimensions need changes,
+   edit `camera_w`, `camera_h`, `camera_d` or `clearance` in `mount.scad` and
+   rebuild both plates; thread fit has its own slack parameter.
 2. Print the mount plate: one clamp, one screw, one pad, two keeper wedges.
    The clamp lies on its side. Normal removable supports and 5 mm brims are
    enabled. Supports use PLA; no AMS is needed. Carefully clear support from
@@ -137,6 +171,7 @@ python cad/airhug02/build.py /tmp/squashfs-root/AppRun
 python cad/airhug02/fit_video.py /path/to/video.mp4
 python cad/airhug02/validate.py
 python cad/airhug02/preview_toolpaths.py
+python cad/airhug02/preview_fit_check.py  # instruction sheet from committed STL meshes
 python cad/airhug02/animate_assembly.py  # OpenSCAD + Xvfb + Pillow; no slicer needed
 python -m py_compile *.py cad/airhug02/*.py
 ```
