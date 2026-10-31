@@ -26,6 +26,12 @@ def beach_mode(default="loose"):
     return str(_option("--beach-mode", "BALLOON_BEACH_MODE", default)).lower()
 
 
+def theme(default="normal"):
+    """`--theme halloween` (or BALLOON_THEME=halloween) adds coins, ghosts, bats and
+    spiders (halloween.py) and leaves out the game's own background music."""
+    return str(_option("--theme", "BALLOON_THEME", default)).lower()
+
+
 def ball_type(default="color"):
     """`--ball beach` (or BALLOON_BALL=beach) uses the beach-ball impact detector
     (beach_ball.py) instead of the blue/yellow colour trackers."""

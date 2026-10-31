@@ -11,6 +11,7 @@ from typing import Dict, List, Tuple, Optional, Any
 
 from enhanced_effects import EffectsManager
 from game_analytics import GameAnalytics
+from camera_select import theme
 
 # Configure logging
 logging.basicConfig(
@@ -1444,7 +1445,14 @@ class Game:
             CooperativeMode()
         ]
         
+        # --theme halloween: coins, ghosts, bats and spiders; music comes from elsewhere
+        self.halloween = None
+        if theme() == "halloween":
+            from halloween import HalloweenLayer
+            self.halloween = HalloweenLayer()
         try:
+            if self.halloween is not None:
+                raise FileNotFoundError("Halloween theme: game music off")
             pygame.mixer.music.load("sound/background_sound.mp3")  # Use your audio file here
             pygame.mixer.music.set_volume(0.04)  # Adjust volume (0.0 to 1.0)
             pygame.mixer.music.play(-1)  # -1 means loop indefinitely
@@ -1739,6 +1747,9 @@ class Game:
                         if balloon.rect.collidepoint(pos):
                             self.pop_balloon(balloon, "mouse")
                             break
+                    else:
+                        if self.halloween is not None:
+                            self.halloween.hit(pos[0], pos[1], 10, self.game_state)
                             
                     # Process clicks on powerups
                     for powerup in self.powerups:
@@ -1761,6 +1772,8 @@ class Game:
         return True
 
     def update(self):
+        if self.halloween is not None:
+            self.halloween.update(self.game_state)
         # Process events from the camera thread
         if self.event_queue is not None:
             while not self.event_queue.empty():
@@ -1949,6 +1962,9 @@ class Game:
                 )
             )"""
         
+        if self.halloween is not None:
+            self.halloween.on_pop(balloon.rect.centerx, balloon.rect.centery, balloon)
+
         # Add score
         points = balloon.points
         
@@ -2758,6 +2774,8 @@ class Game:
         """
         # Use white background for all screens
         surface.fill((255, 255, 255))  # White background can be changed to black
+        if self.halloween is not None:
+            self.halloween.draw_back(surface)
         
         # Call appropriate draw method based on game state
         if self.game_state == "mode_select":
@@ -2774,6 +2792,8 @@ class Game:
             self.Draw_Pause_Screen(surface)
         else:  # "end" state
             self.Draw_Game_Over_Screen(surface)
+        if self.halloween is not None:
+            self.halloween.draw_front(surface, self.game_state)
 
     def nudge_nearby_balloons(self, x, y, ball_radius):
         """Push balloons near (x, y) away from it with a twirl and a sound; stronger the closer the miss."""
@@ -2909,7 +2929,8 @@ class Game:
                             
             # A near miss still gets a reaction: nearby balloons are pushed away (no points)
             if not popped_balloons:
-                self.nudge_nearby_balloons(x, y, calibrated_radius)
+                if self.halloween is None or not self.halloween.hit(x, y, calibrated_radius, self.game_state):
+                    self.nudge_nearby_balloons(x, y, calibrated_radius)
 
             # Pop all the balloons that were hit
             for balloon in popped_balloons:
