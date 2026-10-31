@@ -141,6 +141,8 @@ The game uses YAML files for configuration:
 
 `python main.py --ball beach` (or `BALLOON_BALL=beach`) replaces the blue/yellow colour trackers with `beach_ball.py`, which detects the moment a pale or banded ball (e.g. a white/yellow beach ball) hits the wall: the ball and its shadow on the projection meet only at the wall. Only the projector calibration is needed, not the colour or ball-size calibration. All balls count as one player. It was tuned on one room and one camera position, so expect to adjust the constants at the top of `beach_ball.py`.
 
+By default (`--beach-mode strict`) a ball joined to a person is ignored, so carrying the ball along the wall does not pop balloons; this works best when players throw from a line a metre or two from the wall. `--beach-mode loose` also counts a ball pressed onto the wall or landing right next to someone, at the cost of some pops while the ball is carried near the wall.
+
 ### Poor ball detection
 - Adjust lighting conditions
 - Recalibrate the color detection system

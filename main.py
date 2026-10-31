@@ -3,7 +3,7 @@ import numpy as np
 import threading
 import time
 import os
-from camera_select import camera_index, ball_type
+from camera_select import camera_index, ball_type, beach_mode
 from beach_ball import BeachBallImpactDetector, DebugRecorder
 import yaml
 import pygame
@@ -531,8 +531,9 @@ def camera_processing(game_instance, event_queue):
     # --ball beach: one pale/banded ball, detected by its impact with the wall
     beach_detector = None
     if ball_type() == "beach" and SCREEN_COORDS is not None:
-        beach_detector = BeachBallImpactDetector(SCREEN_COORDS, init_frame.shape)
-        logger.info("Ball type: beach (impact detector; blue/yellow trackers off)")
+        strict = beach_mode() != "loose"
+        beach_detector = BeachBallImpactDetector(SCREEN_COORDS, init_frame.shape, strict=strict)
+        logger.info(f"Ball type: beach ({'strict' if strict else 'loose'}; blue/yellow trackers off)")
     beach_debug = None
     if beach_detector is not None and os.environ.get("BALLOON_DEBUG_DIR"):
         beach_debug = DebugRecorder(os.environ["BALLOON_DEBUG_DIR"])

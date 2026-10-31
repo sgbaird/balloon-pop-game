@@ -6,3 +6,4 @@ calibration.log
 __pycache__/
 out.txt
 err.txt
+game_stats.json

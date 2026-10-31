@@ -37,6 +37,7 @@ SPEED_MIN = 4.0             # px/frame the ball or its shadow must have moved ju
                             # contact (a held or carried ball drifts slower than this)
 SPEED_WINDOW = 0.25         # seconds before contact in which that speed is looked for
 MATCH_DISTANCE = 40.0       # max blob jump between frames when estimating speed
+TRACK_FRAMES = 6            # frames of history used for a ball's own speed
 MAX_COMPONENT_AREA = 900    # changed-pixel region containing the ball must be smaller than this;
                             # a held or carried ball is joined to the person holding it
 BG_RATE = 0.15              # background learning rate (unchanged pixels)
@@ -44,7 +45,10 @@ BG_RATE_FG = 0.03           # learning rate where something changed (ghosts fade
 
 
 class BeachBallImpactDetector:
-    def __init__(self, screen_coords, frame_shape=(480, 640)):
+    def __init__(self, screen_coords, frame_shape=(480, 640), strict=True):
+        # strict: ignore a ball joined to a person (no pops from carrying it along the wall,
+        # but also none from pressing it onto the wall or hitting right next to someone).
+        self.max_area = MAX_COMPONENT_AREA if strict else float("inf")
         h, w = frame_shape[:2]
         self.size = (int(w * SCALE), int(h * SCALE))
         pts = (np.asarray(screen_coords, np.float32) * SCALE).astype(np.int32)
@@ -60,6 +64,8 @@ class BeachBallImpactDetector:
         self.prev = ([], [])       # (shadows, balls) of the previous frame
         self.speeds = []           # (time, fastest small ball/shadow blob speed)
         self.pending = None        # closest ball-shadow approach so far: (d, x, y, r, time)
+        self.decisions = []        # recent candidate outcomes, for tuning
+        self.ball_hist = []        # ball blobs of the last frames, for this ball's own speed
         self.last_masks = None  # (shadow, ball) for debugging displays
 
     @staticmethod
@@ -72,6 +78,20 @@ class BeachBallImpactDetector:
                 (x, y), r = cv2.minEnclosingCircle(c)
                 out.append((x, y, r))
         return out
+
+    def _track_speed(self, x, y):
+        """Fastest step of this ball over the last frames, following nearest neighbours back."""
+        fastest = 0.0
+        for frame_balls in reversed(self.ball_hist):
+            d = [(np.hypot(x - p[0], y - p[1]), p) for p in frame_balls]
+            if not d:
+                break
+            step, p = min(d, key=lambda e: e[0])
+            if step > MATCH_DISTANCE:
+                break
+            fastest = max(fastest, step)
+            x, y = p[0], p[1]
+        return fastest
 
     def update(self, frame, now):
         """Feed one BGR camera frame; return (x, y, radius) in camera pixels on impact, else None.
@@ -141,17 +161,30 @@ class BeachBallImpactDetector:
             bx, by = int(round(best[1])), int(round(best[2]))
             lab = labels[min(max(by, 0), labels.shape[0] - 1), min(max(bx, 0), labels.shape[1] - 1)]
             area = int(stats[lab, cv2.CC_STAT_AREA]) if lab > 0 else 0
-            best = best + (area,)
+            best = best + (area, self._track_speed(best[1], best[2]))
+        self.ball_hist = (self.ball_hist + [balls])[-TRACK_FRAMES:]
 
         # Report at the closest approach: wait until the distance grows again or the pair is lost.
         if best is not None and (self.pending is None or best[0] <= self.pending[0]):
             self.pending = best
             return None
         done, self.pending = self.pending, best
-        if done is None or done[4] - self.last_impact < COOLDOWN:
+        if done is None:
             return None
         approach = max((v for t, v in self.speeds if done[4] - SPEED_WINDOW <= t <= done[4]), default=0.0)
-        if approach < SPEED_MIN or done[5] > MAX_COMPONENT_AREA:
+        if done[4] - self.last_impact < COOLDOWN:
+            reason = "cooldown"
+        elif approach < SPEED_MIN:
+            reason = "slow"
+        elif done[5] > self.max_area:
+            reason = "attached"
+        else:
+            reason = "impact"
+        # Recent decisions, for tuning:
+        # (time, reason, distance, x, y, radius, region area, any-blob speed, this ball's speed)
+        self.decisions = (self.decisions + [(done[4], reason, done[0], done[1], done[2], done[3],
+                                             done[5], approach, done[6])])[-500:]
+        if reason != "impact":
             return None
         self.last_impact = done[4]
         x, y, r = done[1:4]
