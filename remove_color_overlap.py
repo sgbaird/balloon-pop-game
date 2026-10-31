@@ -129,7 +129,7 @@ def init_pygame_display():
     pygame.init()
     
     # Set SDL window position to the projector monitor (same as in game.py)
-    if os.name == 'nt':  # Windows
+    if os.name == 'nt' and pygame.display.get_num_displays() > 1:  # projector is a second monitor
         os.environ['SDL_VIDEO_WINDOW_POS'] = "2000,0"  # Same as in game.py
         
     # Create a full-screen window on the projector - same as in game.py

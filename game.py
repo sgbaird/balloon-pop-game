@@ -46,8 +46,9 @@ DIFFICULTY_SETTINGS = {
 # Initialize pygame
 pygame.init()
 pygame.mixer.init()
-# Set the SDL window position to the projector monitor (adjust as needed)
-if os.name == 'nt':
+# Put the window on the projector when it is a second monitor (adjust as needed).
+# With a single or mirrored display, x=2000 would be off-screen, so leave it alone.
+if os.name == 'nt' and pygame.display.get_num_displays() > 1:
     os.environ['SDL_VIDEO_WINDOW_POS'] = "2000,0"
 
 # Load sound effects
