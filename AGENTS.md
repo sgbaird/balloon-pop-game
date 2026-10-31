@@ -6,6 +6,9 @@ covers the game itself (modes, power-ups, calibration, controls).
 
 - `origin` is the fork; `upstream` is nachman8's repository. Branches, issues and pull requests go to the fork
   (`gh ... -R sgbaird/balloon-pop-game`), never upstream, unless Sterling says otherwise.
+- Upstream maintainers must not be able to push to the fork. A pull request from the fork to upstream gets "Allow
+  edits by maintainers" by default, which lets them push to its head branch here; any such pull request is opened
+  with `gh pr create --no-maintainer-edit`, and its `maintainer_can_modify` is checked to be `false` afterwards.
 - Python with OpenCV, NumPy, pygame and PyYAML (`pip install opencv-python numpy pygame pyyaml`). No
   `requirements.txt` and no tests yet.
 - `main.py` is the entry point (camera thread, ball detection, Kalman tracking) and drives `game.py` (game logic and
