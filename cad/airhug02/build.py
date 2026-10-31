@@ -35,7 +35,7 @@ def presets(app):
         if kind=='process':
             j.update(wall_loops='5',sparse_infill_density='30%',sparse_infill_pattern='gyroid',
                      top_shell_layers='5',bottom_shell_layers='5',enable_support='1',
-                     support_type='normal(auto)',support_on_build_plate_only='0',
+                     bridge_no_support='1',support_type='normal(auto)',support_on_build_plate_only='0',
                      brim_type='outer_only',brim_width='5',curr_bed_type='Textured PEI Plate',
                      print_settings_id='AIRHUG clamp 0.20mm A1 mini')
         (ROOT/'slicer'/f'{kind}.json').write_text(json.dumps(j,indent=2)+'\n')

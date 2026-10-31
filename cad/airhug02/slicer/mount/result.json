@@ -1,55 +1,55 @@
 {
     "error_string": "Success.",
-    "export_time": 802,
+    "export_time": 506,
     "layer_height": 0.20000000298023224,
     "plate_index": 0,
-    "prepare_time": 64,
+    "prepare_time": 66,
     "return_code": 0,
     "sliced_plates": [
         {
             "feature_type_times": {
-                "Bottom surface": 83.36479187011719,
-                "Bridge": 283.792724609375,
-                "Brim": 68.37498474121094,
-                "Custom": 354.3440246582031,
+                "Bottom surface": 48.27600860595703,
+                "Bridge": 441.7706604003906,
+                "Brim": 82.18048095703125,
+                "Custom": 354.6910400390625,
                 "Flush": 28.0,
-                "Gap infill": 132.5072479248047,
-                "Inner wall": 3800.279052734375,
-                "Internal solid infill": 840.9349975585938,
-                "Outer wall": 1185.326416015625,
-                "Overhang wall": 301.9693298339844,
-                "Sparse infill": 3508.693603515625,
-                "Support": 2371.30859375,
-                "Support interface": 252.5110321044922,
-                "Support transition": 118.2212142944336,
-                "Top surface": 199.840087890625,
-                "Travel": 1864.65966796875,
-                "Undefined": 1846.759033203125
+                "Gap infill": 182.5182647705078,
+                "Inner wall": 3378.224853515625,
+                "Internal solid infill": 987.3461303710938,
+                "Outer wall": 1155.431640625,
+                "Overhang wall": 271.8484191894531,
+                "Sparse infill": 3345.67724609375,
+                "Support": 1137.3743896484375,
+                "Support interface": 158.45492553710938,
+                "Support transition": 94.38699340820313,
+                "Top surface": 212.86489868164063,
+                "Travel": 1500.5550537109375,
+                "Undefined": 1482.14892578125
             },
             "filament_change_times": 0,
             "filaments": [
                 {
                     "filament_id": "GFL99",
                     "id": 1,
-                    "main_used_g": 117.99964904785156,
-                    "total_used_g": 117.99964904785156
+                    "main_used_g": 96.67524719238281,
+                    "total_used_g": 96.67524719238281
                 }
             ],
-            "generate_support_material_time": 424,
+            "generate_support_material_time": 322,
             "id": 1,
-            "infill_time": 958,
+            "infill_time": 1079,
             "layer_filament_change": 0,
-            "main_predication": 14983.5263671875,
-            "make_perimeters_time": 444,
+            "main_predication": 12969.1015625,
+            "make_perimeters_time": 555,
             "obj_cached_cnt": 0,
             "objects": [
                 {
                     "bbox": {
-                        "depth": 68.83482360839844,
-                        "height": 82.0,
-                        "width": 109.98152160644531,
-                        "x": 32.90934753417969,
-                        "y": 94.25547790527344,
+                        "depth": 104.0,
+                        "height": 57.0,
+                        "width": 82.0,
+                        "x": 69.48889923095703,
+                        "y": 57.48371124267578,
                         "z": 0.0
                     },
                     "id": 95,
@@ -61,8 +61,8 @@
                         "depth": 42.42640686035156,
                         "height": 46.0,
                         "width": 42.42640686035156,
-                        "x": 107.43940734863281,
-                        "y": 55.49091720581055,
+                        "x": 21.786806106567383,
+                        "y": 125.7816162109375,
                         "z": 0.0
                     },
                     "id": 106,
@@ -71,11 +71,11 @@
                 },
                 {
                     "bbox": {
-                        "depth": 37.03947067260742,
+                        "depth": 37.03947448730469,
                         "height": 5.0,
                         "width": 37.03947448730469,
-                        "x": 111.1380615234375,
-                        "y": 18.21178436279297,
+                        "x": 119.4854507446289,
+                        "y": 13.480263710021973,
                         "z": 0.0
                     },
                     "id": 117,
@@ -84,11 +84,11 @@
                 },
                 {
                     "bbox": {
-                        "depth": 35.35533905029297,
+                        "depth": 35.355342864990234,
                         "height": 12.0,
                         "width": 35.35533905029297,
-                        "x": 69.35212707519531,
-                        "y": 55.83768081665039,
+                        "x": 22.13357925415039,
+                        "y": 87.69432830810547,
                         "z": 0.0
                     },
                     "id": 128,
@@ -97,11 +97,11 @@
                 },
                 {
                     "bbox": {
-                        "depth": 35.35533905029297,
+                        "depth": 38.0,
                         "height": 12.0,
-                        "width": 35.35533905029297,
-                        "x": 41.36098861694336,
-                        "y": 55.83768081665039,
+                        "width": 12.000000953674316,
+                        "x": 45.48889923095703,
+                        "y": 39.921470642089844,
                         "z": 0.0
                     },
                     "id": 139,
@@ -109,9 +109,9 @@
                     "triangle_count": 28
                 }
             ],
-            "sliced_time": 5361,
-            "sliced_time_with_cache": 2881,
-            "total_predication": 15375.9697265625,
+            "sliced_time": 5577,
+            "sliced_time_with_cache": 2906,
+            "total_predication": 13361.38671875,
             "triangle_count": 11548,
             "warning_message": ""
         }

@@ -1,0 +1,773 @@
+{
+  "baseline-spine-2mm": {
+    "restraint": "spine",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 2.0,
+    "nodes": 15179,
+    "elements": 11212,
+    "voxel_volume_mm3": 89696.0,
+    "results": [
+      {
+        "case": "preload",
+        "energy_work_relative_error": 8.999255025695626e-09,
+        "max_displacement_mm": 0.7600891782246706,
+        "max_von_mises_MPa": 7.48271870890369,
+        "p99_von_mises_MPa": 2.7608551775279917,
+        "strain_energy_Nmm": 37.28339192534959
+      },
+      {
+        "case": "camera",
+        "energy_work_relative_error": 6.279768577900519e-09,
+        "max_displacement_mm": 0.1144605321561594,
+        "max_von_mises_MPa": 0.5898134972121188,
+        "p99_von_mises_MPa": 0.22847435468185245,
+        "strain_energy_Nmm": 0.12723567800039948
+      },
+      {
+        "case": "side",
+        "energy_work_relative_error": 6.0370505992723906e-09,
+        "max_displacement_mm": 0.09746879519175253,
+        "max_von_mises_MPa": 0.6189784357485311,
+        "p99_von_mises_MPa": 0.19981780719647596,
+        "strain_energy_Nmm": 0.10568576993965072
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 0.757677636187878,
+        "max_von_mises_MPa": 7.525782222421134,
+        "p99_von_mises_MPa": 2.7861918862068897
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 0.7598482307257045,
+        "max_von_mises_MPa": 7.686881363136649,
+        "p99_von_mises_MPa": 2.7615475164261993
+      }
+    ],
+    "input_sha256": "33247015dcc5ce73cb22234d286716e8dd353ff893629aecfe3ca3f6a823a920"
+  },
+  "perforated-spine-2mm": {
+    "restraint": "spine",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 2.0,
+    "nodes": 14187,
+    "elements": 9932,
+    "voxel_volume_mm3": 79456.0,
+    "results": [
+      {
+        "case": "preload",
+        "energy_work_relative_error": 5.544468323487907e-09,
+        "max_displacement_mm": 0.8114749079332118,
+        "max_von_mises_MPa": 7.466595714702098,
+        "p99_von_mises_MPa": 2.8423349355188035,
+        "strain_energy_Nmm": 41.402138383542386
+      },
+      {
+        "case": "camera",
+        "energy_work_relative_error": 5.8482667832564296e-09,
+        "max_displacement_mm": 0.1409297409171098,
+        "max_von_mises_MPa": 0.5963890244768651,
+        "p99_von_mises_MPa": 0.26228951451514776,
+        "strain_energy_Nmm": 0.14565753574003856
+      },
+      {
+        "case": "side",
+        "energy_work_relative_error": 3.060470970057157e-09,
+        "max_displacement_mm": 0.11898266506270147,
+        "max_von_mises_MPa": 0.6218822705164074,
+        "p99_von_mises_MPa": 0.26560634054759924,
+        "strain_energy_Nmm": 0.1385937871387456
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 0.8088224380366951,
+        "max_von_mises_MPa": 7.5044638776738,
+        "p99_von_mises_MPa": 2.8821974599870677
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 0.8112446002884839,
+        "max_von_mises_MPa": 7.671373943279757,
+        "p99_von_mises_MPa": 2.837245501802266
+      }
+    ],
+    "input_sha256": "1361c9a2dd9dd3bc5781889ce88bf29ea61748862a83fe08b760b33bc71a19f4"
+  },
+  "baseline-spine-1mm": {
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 1.0,
+    "nodes": 104028,
+    "elements": 88599,
+    "voxel_volume_mm3": 88599.0,
+    "results": [
+      {
+        "case": "preload",
+        "max_displacement_mm": 0.737504655329145,
+        "max_von_mises_MPa": 9.724204897842121,
+        "p99_von_mises_MPa": 2.7259646855449025,
+        "strain_energy_Nmm": 35.93495615415122
+      },
+      {
+        "case": "camera",
+        "max_displacement_mm": 0.11997154646373948,
+        "max_von_mises_MPa": 0.9460435265617027,
+        "p99_von_mises_MPa": 0.24007772025688973,
+        "strain_energy_Nmm": 0.13425901032967233
+      },
+      {
+        "case": "side",
+        "max_displacement_mm": 0.09459941834221022,
+        "max_von_mises_MPa": 0.8517340924569006,
+        "p99_von_mises_MPa": 0.19721424642395582,
+        "strain_energy_Nmm": 0.10184349684641461
+      }
+    ],
+    "input_sha256": "70e847b0a201f6e22dcbcfdb4284934c0111f8264151c6f59223688a2826afe8"
+  },
+  "perforated-spine-1mm": {
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 1.0,
+    "nodes": 94942,
+    "elements": 78469,
+    "voxel_volume_mm3": 78469.0,
+    "results": [
+      {
+        "case": "preload",
+        "max_displacement_mm": 0.7871989637200427,
+        "max_von_mises_MPa": 9.799367686446024,
+        "p99_von_mises_MPa": 2.84301289712656,
+        "strain_energy_Nmm": 39.886046600039464
+      },
+      {
+        "case": "camera",
+        "max_displacement_mm": 0.14863056601445107,
+        "max_von_mises_MPa": 0.9490536205540168,
+        "p99_von_mises_MPa": 0.28163164062061447,
+        "strain_energy_Nmm": 0.15545605164297113
+      },
+      {
+        "case": "side",
+        "max_displacement_mm": 0.11553560339344665,
+        "max_von_mises_MPa": 0.873969717226083,
+        "p99_von_mises_MPa": 0.26466584266807286,
+        "strain_energy_Nmm": 0.13362250358225236
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 0.7851426046178349,
+        "max_von_mises_MPa": 10.086132411255909,
+        "p99_von_mises_MPa": 2.8689385196748436
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 0.7869278942874943,
+        "max_von_mises_MPa": 9.830132870693072,
+        "p99_von_mises_MPa": 2.8415991448799605
+      }
+    ],
+    "input_sha256": "7e0d73e6bf0c97156f3d3299519fcc7458571c897dd4834fedc7065689a6fb84"
+  },
+  "baseline-top-2mm": {
+    "restraint": "top",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 2.0,
+    "nodes": 15179,
+    "elements": 11212,
+    "voxel_volume_mm3": 89696.0,
+    "results": [
+      {
+        "case": "preload",
+        "max_displacement_mm": 1.5063243345842499,
+        "max_von_mises_MPa": 4.534986183056838,
+        "p99_von_mises_MPa": 3.274436914593416,
+        "strain_energy_Nmm": 44.06723333392102
+      },
+      {
+        "case": "camera",
+        "max_displacement_mm": 0.1082974482757581,
+        "max_von_mises_MPa": 0.5641293091587838,
+        "p99_von_mises_MPa": 0.21765245797516033,
+        "strain_energy_Nmm": 0.11750736142586272
+      },
+      {
+        "case": "side",
+        "max_displacement_mm": 0.08548888103877546,
+        "max_von_mises_MPa": 0.6162473640091841,
+        "p99_von_mises_MPa": 0.19512260865188646,
+        "strain_energy_Nmm": 0.09433662986315486
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 1.4892907444157586,
+        "max_von_mises_MPa": 4.729125354457981,
+        "p99_von_mises_MPa": 3.2816025329480367
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 1.5040287214966388,
+        "max_von_mises_MPa": 4.500480710288097,
+        "p99_von_mises_MPa": 3.279807524755467
+      }
+    ],
+    "input_sha256": "09274a55516145a8785a4ef26cb470baef9a6492d69733540fb64f2fb0cf72d3"
+  },
+  "baseline-top-1.5mm": {
+    "restraint": "top",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 1.5,
+    "nodes": 32823,
+    "elements": 25935,
+    "voxel_volume_mm3": 87530.625,
+    "results": [
+      {
+        "case": "preload",
+        "energy_work_relative_error": 2.4472924384511254e-08,
+        "max_displacement_mm": 1.8428123315527736,
+        "max_von_mises_MPa": 5.707396555317052,
+        "p99_von_mises_MPa": 3.8600445971831374,
+        "strain_energy_Nmm": 51.470643006625075
+      },
+      {
+        "case": "camera",
+        "energy_work_relative_error": 6.766973379463767e-10,
+        "max_displacement_mm": 0.09179537889205806,
+        "max_von_mises_MPa": 0.6399251047329191,
+        "p99_von_mises_MPa": 0.197451509723519,
+        "strain_energy_Nmm": 0.0994054243871597
+      },
+      {
+        "case": "side",
+        "energy_work_relative_error": 3.473804946309648e-09,
+        "max_displacement_mm": 0.07759231142037208,
+        "max_von_mises_MPa": 0.6495610033321926,
+        "p99_von_mises_MPa": 0.1757675113968546,
+        "strain_energy_Nmm": 0.08088068953339864
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 1.8291563174731966,
+        "max_von_mises_MPa": 5.729114981992165,
+        "p99_von_mises_MPa": 3.8693876061909758
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 1.8409546796522305,
+        "max_von_mises_MPa": 5.737548099243157,
+        "p99_von_mises_MPa": 3.8629639132969777
+      }
+    ],
+    "input_sha256": "834024dbe401255fbe597be3c8233dd2df690d00c9f7e867cc749756d93211cd"
+  },
+  "baseline-top-1mm": {
+    "restraint": "top",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 1.0,
+    "nodes": 104028,
+    "elements": 88599,
+    "voxel_volume_mm3": 88599.0,
+    "results": [
+      {
+        "case": "preload",
+        "energy_work_relative_error": 1.2836701553019347e-09,
+        "max_displacement_mm": 1.517492851608791,
+        "max_von_mises_MPa": 6.572262505816961,
+        "p99_von_mises_MPa": 3.3088664281915166,
+        "strain_energy_Nmm": 43.567533691457484
+      },
+      {
+        "case": "camera",
+        "energy_work_relative_error": 1.5842683965234563e-09,
+        "max_displacement_mm": 0.11294330340027114,
+        "max_von_mises_MPa": 0.9240985129543373,
+        "p99_von_mises_MPa": 0.22805914115586995,
+        "strain_energy_Nmm": 0.1238146041132852
+      },
+      {
+        "case": "side",
+        "energy_work_relative_error": 2.5504791520457924e-09,
+        "max_displacement_mm": 0.08408435063829713,
+        "max_von_mises_MPa": 0.8880805068931871,
+        "p99_von_mises_MPa": 0.1930495149395075,
+        "strain_energy_Nmm": 0.09227798265957182
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 1.5006691207641616,
+        "max_von_mises_MPa": 6.495521453251999,
+        "p99_von_mises_MPa": 3.3173098541319437
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 1.5151423504489532,
+        "max_von_mises_MPa": 6.603259209435603,
+        "p99_von_mises_MPa": 3.3152639893078275
+      }
+    ],
+    "input_sha256": "195bf82991a2ebd0eca4237641c1e2de04d92e43e618ead46f0ff7d333a134ce"
+  },
+  "perforated-top-1.5mm": {
+    "restraint": "top",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 1.5,
+    "nodes": 30230,
+    "elements": 22838,
+    "voxel_volume_mm3": 77078.25,
+    "results": [
+      {
+        "case": "preload",
+        "max_displacement_mm": 1.9140803907943182,
+        "max_von_mises_MPa": 5.7170257080380384,
+        "p99_von_mises_MPa": 3.885030088419156,
+        "strain_energy_Nmm": 53.10608655935965
+      },
+      {
+        "case": "camera",
+        "max_displacement_mm": 0.11762720638167601,
+        "max_von_mises_MPa": 0.6589554641767706,
+        "p99_von_mises_MPa": 0.23630202722042523,
+        "strain_energy_Nmm": 0.11765469057031512
+      },
+      {
+        "case": "side",
+        "max_displacement_mm": 0.10106610468430105,
+        "max_von_mises_MPa": 0.6363312867436683,
+        "p99_von_mises_MPa": 0.24124963739425193,
+        "strain_energy_Nmm": 0.11100821282961419
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 1.8992952869746091,
+        "max_von_mises_MPa": 5.791248419034175,
+        "p99_von_mises_MPa": 3.893551825959739
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 1.9118451661057527,
+        "max_von_mises_MPa": 5.760601975686159,
+        "p99_von_mises_MPa": 3.8869120650445153
+      }
+    ],
+    "input_sha256": "c0f52ac197a10d27a9e6c0d9f0e6586ea2e514868be51503ad5049b0c1ac4542"
+  },
+  "narrow36-top-1.5mm": {
+    "restraint": "top",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 1.5,
+    "nodes": 28784,
+    "elements": 22340,
+    "voxel_volume_mm3": 75397.5,
+    "results": [
+      {
+        "case": "preload",
+        "max_displacement_mm": 2.4913665746172855,
+        "max_von_mises_MPa": 7.6166155592600315,
+        "p99_von_mises_MPa": 5.191174713240146,
+        "strain_energy_Nmm": 69.30699809301922
+      },
+      {
+        "case": "camera",
+        "max_displacement_mm": 0.11500435782399422,
+        "max_von_mises_MPa": 0.7245237626075315,
+        "p99_von_mises_MPa": 0.2393763284565448,
+        "strain_energy_Nmm": 0.13956427935664284
+      },
+      {
+        "case": "side",
+        "max_displacement_mm": 0.10291555903846214,
+        "max_von_mises_MPa": 0.995689063549977,
+        "p99_von_mises_MPa": 0.21830167384269641,
+        "strain_energy_Nmm": 0.11216870314334132
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 2.4759067466622615,
+        "max_von_mises_MPa": 7.607146140086366,
+        "p99_von_mises_MPa": 5.204824411738941
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 2.4897388526822715,
+        "max_von_mises_MPa": 7.648122856888752,
+        "p99_von_mises_MPa": 5.195244104235399
+      }
+    ],
+    "input_sha256": "8c8355d6407e31bb12d3fc90e3c865a11cff1337ace3e6098b152242b212a6bb"
+  },
+  "narrow40-top-1.5mm": {
+    "restraint": "top",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 1.5,
+    "nodes": 30385,
+    "elements": 23732,
+    "voxel_volume_mm3": 80095.5,
+    "results": [
+      {
+        "case": "preload",
+        "energy_work_relative_error": 3.988596041065524e-08,
+        "max_displacement_mm": 2.207461940749617,
+        "max_von_mises_MPa": 6.809015444576447,
+        "p99_von_mises_MPa": 4.60536919308826,
+        "strain_energy_Nmm": 61.441086245817345
+      },
+      {
+        "case": "camera",
+        "energy_work_relative_error": 3.875078521258438e-09,
+        "max_displacement_mm": 0.10157310208014768,
+        "max_von_mises_MPa": 0.7524207665997663,
+        "p99_von_mises_MPa": 0.22168280879769423,
+        "strain_energy_Nmm": 0.12198255648667637
+      },
+      {
+        "case": "side",
+        "energy_work_relative_error": 5.650483453908323e-09,
+        "max_displacement_mm": 0.08615369967807993,
+        "max_von_mises_MPa": 0.7692140861432921,
+        "p99_von_mises_MPa": 0.1932317412396155,
+        "strain_energy_Nmm": 0.09277517851444596
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 2.191718624325544,
+        "max_von_mises_MPa": 7.334311014460373,
+        "p99_von_mises_MPa": 4.617454302177781
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 2.2056162855432224,
+        "max_von_mises_MPa": 7.046644883280925,
+        "p99_von_mises_MPa": 4.6077498432218755
+      }
+    ],
+    "input_sha256": "d7c1b2dc1f3a6396ee3110a427f67d09523858f847176ba5f305a1a0147a7358"
+  },
+  "narrow40-top-1mm": {
+    "restraint": "top",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 1.0,
+    "nodes": 94808,
+    "elements": 79983,
+    "voxel_volume_mm3": 79983.0,
+    "results": [
+      {
+        "case": "preload",
+        "max_displacement_mm": 1.8409566184192885,
+        "max_von_mises_MPa": 7.843921505306705,
+        "p99_von_mises_MPa": 3.9563805151706255,
+        "strain_energy_Nmm": 52.687998852886295
+      },
+      {
+        "case": "camera",
+        "max_displacement_mm": 0.12973603660244637,
+        "max_von_mises_MPa": 1.2445471496810356,
+        "p99_von_mises_MPa": 0.25809762711269435,
+        "strain_energy_Nmm": 0.15517514080000783
+      },
+      {
+        "case": "side",
+        "max_displacement_mm": 0.09887018040154769,
+        "max_von_mises_MPa": 1.2956997575081313,
+        "p99_von_mises_MPa": 0.21695940707415048,
+        "strain_energy_Nmm": 0.11139402981045471
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 1.8209414432995332,
+        "max_von_mises_MPa": 8.101845965010948,
+        "p99_von_mises_MPa": 3.9631284826535955
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 1.8389139168098718,
+        "max_von_mises_MPa": 7.73654300299845,
+        "p99_von_mises_MPa": 3.9575347940403836
+      }
+    ],
+    "input_sha256": "a508c17b9a890da655bd503c77601a3ef6f60eb11173c5686cb2942b42f3011c"
+  },
+  "selected_mesh_equivalence": {
+    "symmetric_difference_mm3": 0.007307963406447016,
+    "printed_stl_sha256": "7122ae6fbaa5dd4140137f68f9ec8b601d538d42f82f9a8a80eb624cc8552a1f"
+  },
+  "pre-lip44-top-1mm": {
+    "restraint": "top",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 1.0,
+    "nodes": 99656,
+    "elements": 84399,
+    "voxel_volume_mm3": 84399.0,
+    "results": [
+      {
+        "case": "preload",
+        "energy_work_relative_error": 8.665514663258361e-09,
+        "max_displacement_mm": 1.671376905090413,
+        "max_von_mises_MPa": 6.858605302136291,
+        "p99_von_mises_MPa": 3.6062903885968667,
+        "strain_energy_Nmm": 47.85030502491292
+      },
+      {
+        "case": "camera",
+        "energy_work_relative_error": 1.7073880350021034e-09,
+        "max_displacement_mm": 0.1206796315793121,
+        "max_von_mises_MPa": 1.0474808550710064,
+        "p99_von_mises_MPa": 0.2442572411579503,
+        "strain_energy_Nmm": 0.14086038729692696
+      },
+      {
+        "case": "side",
+        "energy_work_relative_error": 8.333150994041485e-10,
+        "max_displacement_mm": 0.0918028972224595,
+        "max_von_mises_MPa": 1.1054891998872354,
+        "p99_von_mises_MPa": 0.20505239387924193,
+        "strain_energy_Nmm": 0.10308847862676165
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 1.6518723631998706,
+        "max_von_mises_MPa": 6.882714466901964,
+        "p99_von_mises_MPa": 3.6094748984750336
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 1.6693572667633723,
+        "max_von_mises_MPa": 6.75546206046662,
+        "p99_von_mises_MPa": 3.6067664221447
+      }
+    ],
+    "input_sha256": "584f011548733ba857725629e3c1adc85cc64e99b29871b136d0aab34cf76372"
+  },
+  "selected44-top-1mm": {
+    "restraint": "top",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 1.0,
+    "nodes": 100188,
+    "elements": 84805,
+    "voxel_volume_mm3": 84805.0,
+    "results": [
+      {
+        "case": "preload",
+        "energy_work_relative_error": 8.664814519556387e-09,
+        "max_displacement_mm": 1.671376905090413,
+        "max_von_mises_MPa": 6.858605302136291,
+        "p99_von_mises_MPa": 3.6044364820103203,
+        "strain_energy_Nmm": 47.85030502494642
+      },
+      {
+        "case": "camera",
+        "energy_work_relative_error": 2.4655176258720114e-09,
+        "max_displacement_mm": 0.12080366842241712,
+        "max_von_mises_MPa": 1.0474801658743838,
+        "p99_von_mises_MPa": 0.24403223591060602,
+        "strain_energy_Nmm": 0.14085239862950788
+      },
+      {
+        "case": "side",
+        "energy_work_relative_error": 9.05673876203782e-09,
+        "max_displacement_mm": 0.09137831548863168,
+        "max_von_mises_MPa": 1.1054891998872354,
+        "p99_von_mises_MPa": 0.2047997920364984,
+        "strain_energy_Nmm": 0.10305915153123861
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 1.6518723631998706,
+        "max_von_mises_MPa": 6.882714481398232,
+        "p99_von_mises_MPa": 3.6075744503343805
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 1.6693572681231286,
+        "max_von_mises_MPa": 6.755462041514269,
+        "p99_von_mises_MPa": 3.6040959217051074
+      }
+    ],
+    "input_sha256": "f077d9bac6c7b45be6a0b75a7ca889898421e6d13dc2f7b8875d3ce04f420c9a"
+  },
+  "pre-lip44-top-1.5mm": {
+    "restraint": "top",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 1.5,
+    "nodes": 31449,
+    "elements": 24652,
+    "voxel_volume_mm3": 83200.5,
+    "results": [
+      {
+        "case": "preload",
+        "energy_work_relative_error": 1.6021281431944874e-08,
+        "max_displacement_mm": 2.050597049067255,
+        "max_von_mises_MPa": 6.241150732250667,
+        "p99_von_mises_MPa": 4.27597452014996,
+        "strain_energy_Nmm": 57.11551300059893
+      },
+      {
+        "case": "camera",
+        "energy_work_relative_error": 4.800412516229423e-10,
+        "max_displacement_mm": 0.09632657419507713,
+        "max_von_mises_MPa": 0.7294296635055146,
+        "p99_von_mises_MPa": 0.2131070992608041,
+        "strain_energy_Nmm": 0.11380476185463098
+      },
+      {
+        "case": "side",
+        "energy_work_relative_error": 1.882361021575607e-08,
+        "max_displacement_mm": 0.08197909753308052,
+        "max_von_mises_MPa": 0.6870534300227116,
+        "p99_von_mises_MPa": 0.18572029463477008,
+        "strain_energy_Nmm": 0.0881088841185533
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 2.0349490711369236,
+        "max_von_mises_MPa": 6.615570782111733,
+        "p99_von_mises_MPa": 4.286000566949996
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 2.04873947089211,
+        "max_von_mises_MPa": 6.394696827921587,
+        "p99_von_mises_MPa": 4.277537459215151
+      }
+    ],
+    "input_sha256": "66ad265639e964a1b0facc11e8997151eae198b5873b08304d835dff3a734d80"
+  },
+  "selected44-top-1.5mm": {
+    "restraint": "top",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 1.5,
+    "nodes": 31659,
+    "elements": 24792,
+    "voxel_volume_mm3": 83673.0,
+    "results": [
+      {
+        "case": "preload",
+        "energy_work_relative_error": 1.6022067170811848e-08,
+        "max_displacement_mm": 2.050597049067255,
+        "max_von_mises_MPa": 6.241150732250667,
+        "p99_von_mises_MPa": 4.274493015982288,
+        "strain_energy_Nmm": 57.11551300055405
+      },
+      {
+        "case": "camera",
+        "energy_work_relative_error": 5.03370614728907e-10,
+        "max_displacement_mm": 0.09642100363842206,
+        "max_von_mises_MPa": 0.7294295923948098,
+        "p99_von_mises_MPa": 0.2128938102295752,
+        "strain_energy_Nmm": 0.11380047796615367
+      },
+      {
+        "case": "side",
+        "energy_work_relative_error": 3.822968245296266e-09,
+        "max_displacement_mm": 0.081595890746989,
+        "max_von_mises_MPa": 0.6870532232294958,
+        "p99_von_mises_MPa": 0.1854005192943633,
+        "strain_energy_Nmm": 0.08808691362568577
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 2.0349490711369236,
+        "max_von_mises_MPa": 6.615570829198733,
+        "p99_von_mises_MPa": 4.28465011721338
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 2.04873947089211,
+        "max_von_mises_MPa": 6.394696852057821,
+        "p99_von_mises_MPa": 4.2763911695086465
+      }
+    ],
+    "input_sha256": "6305008d1a4fabe66f2cd43b80ea0e4814503a74589a73da22e8384b1bc9915a"
+  },
+  "pre-lip44-top-2mm": {
+    "restraint": "top",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 2.0,
+    "nodes": 14584,
+    "elements": 10714,
+    "voxel_volume_mm3": 85712.0,
+    "results": [
+      {
+        "case": "preload",
+        "energy_work_relative_error": 8.55616315735331e-09,
+        "max_displacement_mm": 1.643180886529263,
+        "max_von_mises_MPa": 5.198103958345574,
+        "p99_von_mises_MPa": 3.588890912286752,
+        "strain_energy_Nmm": 48.055519173075616
+      },
+      {
+        "case": "camera",
+        "energy_work_relative_error": 5.043454975211933e-10,
+        "max_displacement_mm": 0.11550229455702342,
+        "max_von_mises_MPa": 0.6646953421573291,
+        "p99_von_mises_MPa": 0.2302351085080155,
+        "strain_energy_Nmm": 0.12576626677684816
+      },
+      {
+        "case": "side",
+        "energy_work_relative_error": 2.2268004019736616e-09,
+        "max_displacement_mm": 0.09269496934886688,
+        "max_von_mises_MPa": 0.6540807960970162,
+        "p99_von_mises_MPa": 0.20430502863072136,
+        "strain_energy_Nmm": 0.10172931426333645
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 1.6259143115171137,
+        "max_von_mises_MPa": 5.4769388578285865,
+        "p99_von_mises_MPa": 3.5958284978918638
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 1.640746841508592,
+        "max_von_mises_MPa": 5.067408651399227,
+        "p99_von_mises_MPa": 3.5913527214251193
+      }
+    ],
+    "input_sha256": "4a6e8637d892b9855eb62686fea09a318d4bf8630c3ee432f07136070f161b1a"
+  },
+  "selected44-top-2mm": {
+    "restraint": "top",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 2.0,
+    "nodes": 14647,
+    "elements": 10749,
+    "voxel_volume_mm3": 85992.0,
+    "results": [
+      {
+        "case": "preload",
+        "energy_work_relative_error": 8.555077726510485e-09,
+        "max_displacement_mm": 1.643180886529263,
+        "max_von_mises_MPa": 5.198103958345574,
+        "p99_von_mises_MPa": 3.5887950708859653,
+        "strain_energy_Nmm": 48.055519173023455
+      },
+      {
+        "case": "camera",
+        "energy_work_relative_error": 6.853311437059683e-09,
+        "max_displacement_mm": 0.11562454839301774,
+        "max_von_mises_MPa": 0.6646950237403036,
+        "p99_von_mises_MPa": 0.23016873010804148,
+        "strain_energy_Nmm": 0.12575713815203604
+      },
+      {
+        "case": "side",
+        "energy_work_relative_error": 2.962454857870826e-09,
+        "max_displacement_mm": 0.09231239418133082,
+        "max_von_mises_MPa": 0.6540805645355089,
+        "p99_von_mises_MPa": 0.20419091685250504,
+        "strain_energy_Nmm": 0.101695247316325
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 1.6259143115171137,
+        "max_von_mises_MPa": 5.4769388578285865,
+        "p99_von_mises_MPa": 3.5953164061849177
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 1.6407468428675893,
+        "max_von_mises_MPa": 5.067408582921422,
+        "p99_von_mises_MPa": 3.591117950211799
+      }
+    ],
+    "input_sha256": "005a575630a92b62a55b1437bbb8d41e5933e2ec6c24527030eb9a09383eda4b"
+  }
+}

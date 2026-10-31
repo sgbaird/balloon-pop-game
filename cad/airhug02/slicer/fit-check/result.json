@@ -1,9 +1,9 @@
 {
     "error_string": "Success.",
-    "export_time": 216,
+    "export_time": 245,
     "layer_height": 0.20000000298023224,
     "plate_index": 0,
-    "prepare_time": 40,
+    "prepare_time": 39,
     "return_code": 0,
     "sliced_plates": [
         {
@@ -13,30 +13,30 @@
                 "Brim": 97.3738021850586,
                 "Custom": 354.95269775390625,
                 "Flush": 28.0,
-                "Gap infill": 48.6418571472168,
-                "Inner wall": 1124.46630859375,
-                "Internal solid infill": 479.2929382324219,
-                "Outer wall": 416.9736633300781,
-                "Sparse infill": 480.8910827636719,
-                "Top surface": 88.19873046875,
-                "Travel": 568.2301025390625,
-                "Undefined": 549.7225341796875
+                "Gap infill": 48.65419387817383,
+                "Inner wall": 1123.720458984375,
+                "Internal solid infill": 479.5960693359375,
+                "Outer wall": 416.97540283203125,
+                "Sparse infill": 480.7901306152344,
+                "Top surface": 88.20295715332031,
+                "Travel": 568.9409790039063,
+                "Undefined": 550.4334106445313
             },
             "filament_change_times": 0,
             "filaments": [
                 {
                     "filament_id": "GFL99",
                     "id": 1,
-                    "main_used_g": 19.428192138671875,
-                    "total_used_g": 19.428192138671875
+                    "main_used_g": 19.42753791809082,
+                    "total_used_g": 19.42753791809082
                 }
             ],
-            "generate_support_material_time": 48,
+            "generate_support_material_time": 94,
             "id": 1,
-            "infill_time": 585,
+            "infill_time": 1000,
             "layer_filament_change": 0,
-            "main_predication": 3444.541748046875,
-            "make_perimeters_time": 357,
+            "main_predication": 3444.70361328125,
+            "make_perimeters_time": 558,
             "obj_cached_cnt": 0,
             "objects": [
                 {
@@ -66,9 +66,9 @@
                     "triangle_count": 2276
                 }
             ],
-            "sliced_time": 2038,
-            "sliced_time_with_cache": 865,
-            "total_predication": 3836.987060546875,
+            "sliced_time": 3675,
+            "sliced_time_with_cache": 1635,
+            "total_predication": 3837.14892578125,
             "triangle_count": 10604,
             "warning_message": ""
         }

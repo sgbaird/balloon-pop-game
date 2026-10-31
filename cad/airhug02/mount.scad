@@ -7,10 +7,11 @@ camera_w=70; camera_h=17.5; camera_d=25;
 thread_slack=0.25; // radial: was 0.35; screw itself remains reusable
 cradle_floor=70;
 side_lip_height=10; // outer ends only; central 62 mm stays clear
-print_offset=41; // maximum left/right clamp extent
+print_offset=41; // maximum left/right clamp extent for optional side orientation
+print_orientation="front"; // front down reduces support; "side" reproduces earlier orientation
 corner_side=-1; // -1: left jamb stop; +1: right jamb; 0: no side stop
 clearance=0.6; // total clearance of the optional nominal-body gauges
-ledge_gap=30; jaw=10; throat=38; clamp_w=48;
+ledge_gap=30; jaw=10; throat=38; clamp_w=44; // CalculiX/slicer comparison: original 48, selected 44 mm
 // Coarse printable single-start trapezoidal thread, 16 mm major, 4 mm pitch.
 module thread(length=38, slack=0) {
     pitch=4; root=6.6+slack; crest=8+slack;
@@ -59,7 +60,7 @@ module cradle() {
         // Tall outer toes tie directly into the end stops. Recess the inner
         // face to Y=-16 to clear the illustrative projecting privacy cover.
         // Open top preserves drop-in assembly; these are bump stops, not latches.
-        translate([31,-19,cradle_floor-1]) cube([10,3,side_lip_height+1]);
+        if(side_lip_height>0) translate([31,-19,cradle_floor-1]) cube([10,3,side_lip_height+1]);
         translate([23,18,cradle_floor-4]) cube([18,3,28]); // rear guide
         translate([38,-19,cradle_floor-4]) cube([3,40,24]); // end stop
     }
@@ -116,7 +117,10 @@ module coupon() { // short matching female thread + cradle cross-section
     }
 }
 if(part=="camera") camera();
-if(part=="clamp") translate([0,0,print_offset]) rotate([0,-90,0]) clamp(); // side down, no jaw bridge
+if(part=="clamp") {
+    if(print_orientation=="side") translate([0,0,print_offset]) rotate([0,-90,0]) clamp();
+    else translate([0,0,19]) rotate([90,0,0]) clamp();
+}
 if(part=="screw") screw();
 if(part=="pad") rotate([180,0,0]) translate([0,0,-5]) pad();
 if(part=="key") translate([0,0,6]) rotate([0,90,0]) key();

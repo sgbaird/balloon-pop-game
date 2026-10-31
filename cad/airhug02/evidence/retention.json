@@ -242,7 +242,7 @@
     "No friction, preload, deformation, impact or holding-force model"
   ],
   "mesh_sha256": {
-    "clamp.stl": "b2cab3ca118b82b32e732224701b5cf53ee6a425ba8aecb0f8adb38d40360811",
+    "clamp.stl": "7122ae6fbaa5dd4140137f68f9ec8b601d538d42f82f9a8a80eb624cc8552a1f",
     "camera.stl": "dd974b5827002b4d849d883132df6e6f1caaa55ac15e189d6b3b84bdbf12080a",
     "key.stl": "14128c20e8c916fb06af480cb88838674ae8b57581985a0e726998ad1fd0bbe4"
   }

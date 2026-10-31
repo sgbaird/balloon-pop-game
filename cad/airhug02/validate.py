@@ -20,8 +20,8 @@ def main():
         assert min(m.bounds[0,2:])>=-1e-4,name
         assert np.all(m.extents<=180),name
     # Undo the clamp's print orientation, then place screw at illustrated phase.
-    clamp=meshes['clamp'].copy();clamp.apply_translation([0,0,-41])
-    clamp.apply_transform(trimesh.transformations.rotation_matrix(np.pi/2,[0,1,0]))
+    clamp=meshes['clamp'].copy();clamp.apply_translation([0,0,-19])
+    clamp.apply_transform(trimesh.transformations.rotation_matrix(-np.pi/2,[1,0,0]))
     assert clamp.bounds[0,0]>=-41.0001,('left jamb clearance',clamp.bounds[0,0])
     screw=meshes['screw'].copy();screw.apply_translation([0,24,-41])
     clash=trimesh.boolean.intersection([clamp,screw],engine='manifold')
@@ -109,6 +109,7 @@ def main():
             assert cfg['filament_type']==['PLA']
             assert cfg['nozzle_diameter']==['0.4']
             assert cfg['enable_support']=='1'
+            assert cfg['bridge_no_support']=='1'
             gcode=z.read('Metadata/plate_1.gcode').decode()
             assert 'machine: A1 mini' in gcode
             assert 'M140 S65' in gcode

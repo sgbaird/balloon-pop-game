@@ -17,8 +17,8 @@ ROOT = Path(__file__).resolve().parent
 
 def main():
     clamp = trimesh.load(ROOT / 'stl/clamp.stl')
-    clamp.apply_translation([0, 0, -41])
-    clamp.apply_transform(trimesh.transformations.rotation_matrix(np.pi / 2, [0, 1, 0]))
+    clamp.apply_translation([0, 0, -19])
+    clamp.apply_transform(trimesh.transformations.rotation_matrix(-np.pi / 2, [1, 0, 0]))
     camera = trimesh.load(ROOT / 'stl/camera.stl')
     camera.apply_translation([0, -1.5, 78.75])
     bodies = [piece for piece in camera.split() if piece.is_volume]

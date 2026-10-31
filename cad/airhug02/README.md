@@ -3,16 +3,36 @@
 Download [mount-a1mini-pla.3mf](slicer/mount/mount-a1mini-pla.3mf) for the
 **photo-informed side-lip revision**. It contains sliced G-code for one A1 mini plate:
 **one clamp, one screw, one pressure pad and two tapered keepers**. No separate
-fit-check print or metal hardware is required. Bambu estimates **118 g / 4 h 16 min**,
+fit-check print or metal hardware is required. Bambu estimates **97 g / 3 h 43 min**,
 including supports and brims. Assembly and support removal are
 required after printing; this is not a print-in-place mechanism.
 
 Use **A1 mini / 0.4 mm nozzle / Generic PLA / Textured PEI plate**. Open the project
 in Bambu Studio and confirm those match your setup. Normal removable PLA supports
-and 5 mm outer brims are enabled; no AMS is needed. All five parts are included
+and 5 mm outer brims are enabled; detected bridges are left unsupported. The clamp
+prints front down. No AMS is needed. All five parts are included
 even if you keep using the screw you already printed. Do not scale the project.
 
 ![Revised cradle and nominal camera on an example ledge](previews/assembly.png)
+
+## Weight and structural study
+
+The [CalculiX and slicing study](OPTIMIZATION.md) compared material-removal
+optimization, through-channels, two body widths, orientations and support types.
+The selected solid body is **44 mm wide instead of 48 mm**; the camera saddles,
+thread, ledge opening and locating stops keep their dimensions. With front-down
+printing and support omitted under detected bridges, the complete plate uses
+**18.1% less filament and 13.1% less estimated time** than the preceding revision.
+The perforated topology trial was rejected for the supplied print: its extra
+supports and wall paths erased the finished-part savings. Five walls and 30%
+gyroid remain enabled. The 36 and 40 mm bodies saved more but had less stiffness or stress margin.
+
+![CAD alternatives and full-plate material costs](previews/optimization.png)
+
+Linear elastic simulations screen assumed clamp/camera/cable loads; they do not
+establish a tested load rating, actual printed PLA strength, grip or creep life.
+See the study for mesh sensitivity, restraint assumptions and reproducible decks.
+The wider original body is available with `clamp_w=48`; reslice any CAD change.
 
 ## What changed and why
 
@@ -86,7 +106,7 @@ address forward escape; if resistance to upward cable pulls is needed, this
 open-top design alone does not establish it. Physical fit and retention have
 not been tested.
 
-The revised complete slice uses **118.00 g / 4 h 16 min**, including supports
+Before the weight study, the side-lip revision used **118.00 g / 4 h 16 min**, including supports
 and brims, versus **117.51 g / 4 h 15 min** before: approximately **0.49 g and
 92 seconds extra** with identical print settings. These are slicer estimates,
 not measured print results.
@@ -168,7 +188,7 @@ housing scenarios, clip keepout, nominal reference-camera intersection, modeled
 thread clearance over 15 mm of travel, seated-pad clearance, single-plate object inventory/bounds, embedded machine/PLA
 settings, slice estimates and artifact hashes. Slicer success is not a print
 or hardware test. Profile snapshots are in `slicer/`: 0.20 mm layers, five walls,
-30% gyroid infill, five top/bottom layers and normal supports, using manufacturer
+30% gyroid infill, five top/bottom layers and normal supports (except detected bridges), using manufacturer
 PLA temperatures/cooling/motion. Actual extrusion paths are plotted because GUI
 thumbnails are unavailable headlessly. No game or camera/projector calibration
 was run.

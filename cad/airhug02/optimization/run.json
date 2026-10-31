@@ -1,0 +1,42 @@
+{
+  "baseline_commit": "005a54c",
+  "solver": "CalculiX 2.21",
+  "cad": "OpenSCAD 2021.01",
+  "slicer": "Bambu Studio 02.08.02.61",
+  "selected_body_width_mm": 44,
+  "selected_print_orientation": "front",
+  "assumed_E_MPa": 1200,
+  "assumed_nu": 0.35,
+  "assumed_stress_screen_MPa": 8,
+  "preload_N": 100,
+  "camera_down_N": 5,
+  "cable_N": 5,
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "trimesh": "5.2.0",
+    "manifold3d": "3.5.4",
+    "embreex": "4.4.0.post1",
+    "matplotlib": "3.11.2",
+    "pillow": "13.0.0"
+  },
+  "artifact_sha256": {
+    "mount.scad": "2d3815a93445410acc5806255ca3f888a22a34089d39b27d26a5f1db62bdb32e",
+    "optimization/decks/baseline-spine-2mm.inp.gz": "8fdec6ce588c72d310af6cd1e283a2b5cfd604b04a9d9c4cb2daa86820c42fe5",
+    "optimization/decks/baseline-top-1mm.inp.gz": "13e5c1cd7c6627a7c57c6f5248effb0bfd5d91d90fb0c14128488ef241f05266",
+    "optimization/decks/narrow36-top-1.5mm.inp.gz": "7ccf9ce116e40a2a439964c23ec2a0993c556631801523b8f15f49ac9c934356",
+    "optimization/decks/narrow40-top-1mm.inp.gz": "6e5884238ea243e77ae0ff9c4d29db360f55053c102e7985f3bf3d282bcff25f",
+    "optimization/decks/perforated-spine-2mm.inp.gz": "bce2a87f2fec823f087ec423176ede6748a01b844fe227bc1dd209f94899a69f",
+    "optimization/decks/pre-lip44-top-1.5mm.inp.gz": "2258838307165595587fbe2e5c087cab860a413528e2f9e43a02b01292f64ef1",
+    "optimization/decks/pre-lip44-top-1mm.inp.gz": "cbc6e000fa4d0b19139a890a1101897b7c52dacc1312e45d6106d26fa21fdfe0",
+    "optimization/decks/pre-lip44-top-2mm.inp.gz": "d9880e0c3de50cd60bdd092e257f9eb6597e22776259a448be0912f90ca73063",
+    "optimization/decks/selected44-top-1.5mm.inp.gz": "3c2a44f44565c32c6c25cc1e213fbe5cf9f47da148d1166a44e339821aefa15a",
+    "optimization/decks/selected44-top-1mm.inp.gz": "e0a89fd48012c6761d90bab6e062ddafa120b0dc45cb3a773666764f5bc1b0f7",
+    "optimization/decks/selected44-top-2mm.inp.gz": "8718ce654e3fb3b50d71a29252a9aca34d46ed970b76e45b697979ea680af24b",
+    "previews/optimization.png": "c898053043848cb2671cbfd879e2f910eb41d0fed93116018b0679844dddbee4",
+    "previews/toolpaths.png": "bfc400ace76b9f70a34274acbf2993b7b3711bcb136c62e56b700194eb6b5ee1",
+    "slicer/mount/mount-a1mini-pla.3mf": "50524d4b0df769897d97ccf3ad053a28caedb8ab7b712194449998dfb869fbca",
+    "stl/clamp.stl": "7122ae6fbaa5dd4140137f68f9ec8b601d538d42f82f9a8a80eb624cc8552a1f"
+  },
+  "retention_revision_commit": "bd7ed72"
+}
