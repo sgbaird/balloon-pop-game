@@ -573,7 +573,8 @@ def camera_processing(game_instance, event_queue):
             if beach_detector is not None:
                 blue_result = yellow_result = None
                 impact = beach_detector.update(frame, current_time)
-                if beach_debug is not None:
+                # Only record during play, not menus, results or the desktop after the game.
+                if beach_debug is not None and getattr(game_instance, "game_state", "") == "playing":
                     beach_debug.record(frame, current_time, impact)
                 if impact is not None and M is not None:
                     ix, iy, ir = impact
