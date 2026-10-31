@@ -1,0 +1,257 @@
+name: Run Codex with the shared ChatGPT login
+description: >
+  Restores the ChatGPT-managed Codex login (auth.json), then either answers the
+  triggering issue or comment (mode: reply) or forces a token refresh (mode:
+  refresh). If Codex rewrote auth.json, the new copy is encrypted and saved to
+  the Actions cache, where the next run picks it up.
+
+# Why a cache and not a secret: OpenAI rotates the refresh token every time
+# Codex refreshes, so the refreshed auth.json has to be saved somewhere each
+# time. The job's GITHUB_TOKEN cannot write secrets, but it can write the
+# Actions cache, so the login is kept there, encrypted with CODEX_AUTH_KEY.
+# CODEX_AUTH_JSON is only the first seed, used when the cache is empty.
+# Background: https://learn.chatgpt.com/docs/auth/ci-cd-auth (ephemeral runners).
+#
+# This whole file is read from the default branch when the step starts, so
+# checking out a PR branch partway through cannot change what runs here.
+
+inputs:
+  mode:
+    description: "reply (answer the issue or comment) or refresh (keep-alive)"
+    default: reply
+  trigger:
+    description: "The tag that started the workflow"
+    default: "@codex"
+  codex-auth-key:
+    description: "Passphrase for the encrypted login in the cache (secrets.CODEX_AUTH_KEY)"
+    required: true
+  codex-auth-seed:
+    description: "Initial auth.json from `codex login` (secrets.CODEX_AUTH_JSON)"
+    required: true
+  codex-version:
+    description: "Pinned @openai/codex version"
+    default: "0.165.0"
+
+runs:
+  using: composite
+  steps:
+    - name: Post a progress comment
+      id: progress
+      if: inputs.mode == 'reply'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        NUMBER: ${{ github.event.issue.number }}
+        TRIGGER: ${{ inputs.trigger }}
+        RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      run: |
+        id=$(gh api "repos/$GITHUB_REPOSITORY/issues/$NUMBER/comments" \
+          -f body="Codex ($TRIGGER) is working on this. [View job]($RUN_URL)" --jq .id)
+        echo "comment_id=$id" >> "$GITHUB_OUTPUT"
+
+    - name: Install Codex CLI
+      shell: bash
+      env:
+        CODEX_VERSION: ${{ inputs.codex-version }}
+      run: |
+        npm install -g "@openai/codex@$CODEX_VERSION" >/dev/null
+        codex --version
+
+    - name: Restore the encrypted login
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ runner.temp }}/codex-auth/auth.enc
+        # Never an exact hit; restore-keys returns the newest saved login.
+        key: codex-auth-restore-${{ github.run_id }}
+        restore-keys: codex-auth-
+
+    - name: Unpack the login
+      shell: bash
+      env:
+        CODEX_AUTH_KEY: ${{ inputs.codex-auth-key }}
+        CODEX_AUTH_SEED: ${{ inputs.codex-auth-seed }}
+      run: |
+        umask 077
+        home="$RUNNER_TEMP/codex-home"
+        mkdir -p "$home" && chmod 700 "$home"
+        enc="$RUNNER_TEMP/codex-auth/auth.enc"
+        if [ -s "$enc" ]; then
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -pass env:CODEX_AUTH_KEY \
+            -in "$enc" -out "$home/auth.json"
+          echo "Restored the login from the Actions cache."
+        else
+          printf '%s' "$CODEX_AUTH_SEED" > "$home/auth.json"
+          echo "No saved login in the cache; seeded from the CODEX_AUTH_JSON secret."
+        fi
+        chmod 600 "$home/auth.json"
+        if ! jq -e '.auth_mode == "chatgpt" and ((.tokens.refresh_token // "") | length > 0)' "$home/auth.json" >/dev/null; then
+          echo "::error::auth.json is not a ChatGPT login with a refresh token. Reseed CODEX_AUTH_JSON (see AGENTS.md)."
+          exit 1
+        fi
+        jq -r '"last_refresh: \(.last_refresh)"' "$home/auth.json"
+        echo "CODEX_HOME=$home" >> "$GITHUB_ENV"
+        echo "CODEX_AUTH_SHA=$(sha256sum "$home/auth.json" | cut -d' ' -f1)" >> "$GITHUB_ENV"
+
+    - name: Check out the pull request branch
+      if: inputs.mode == 'reply' && github.event.issue.pull_request
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        NUMBER: ${{ github.event.issue.number }}
+      run: gh pr checkout "$NUMBER"
+
+    - name: Build the prompt
+      id: prompt
+      if: inputs.mode == 'reply'
+      shell: bash
+      env:
+        TRIGGER: ${{ inputs.trigger }}
+        EVENT_NAME: ${{ github.event_name }}
+        ACTOR: ${{ github.event.sender.login }}
+        COMMENT_BODY: ${{ github.event.comment.body }}
+        ISSUE_TITLE: ${{ github.event.issue.title }}
+        ISSUE_BODY: ${{ github.event.issue.body }}
+        NUMBER: ${{ github.event.issue.number }}
+        IS_PR: ${{ github.event.issue.pull_request && 'true' || 'false' }}
+      run: |
+        # Event text arrives through env, never an inline expression, so quotes and
+        # backticks in a comment cannot break out into the shell.
+        if [ "$EVENT_NAME" = issue_comment ]; then
+          text=$COMMENT_BODY
+        else
+          text="$ISSUE_TITLE"$'\n\n'"$ISSUE_BODY"
+        fi
+
+        # Model and effort selector: @codex+<model>[:<effort>], e.g.
+        # @codex+gpt-5.5:high or @codex:low. Bare tag = plan defaults.
+        tag=$(grep -oiE -- "${TRIGGER}(\+[a-z0-9.-]*[a-z0-9])?(:(minimal|low|medium|high|xhigh))?" <<<"$text" | head -n1 | tr '[:upper:]' '[:lower:]' || true)
+        rest=${tag#"$TRIGGER"}
+        model=""
+        effort=""
+        if [[ $rest == *:* ]]; then effort=${rest##*:}; rest=${rest%%:*}; fi
+        if [[ $rest == +* ]]; then model=${rest#+}; fi
+        echo "model=$model" >> "$GITHUB_OUTPUT"
+        echo "effort=$effort" >> "$GITHUB_OUTPUT"
+
+        if [ "$IS_PR" = true ]; then
+          kind="pull request"
+          read_cmd="gh pr view $NUMBER --comments && gh pr diff $NUMBER"
+          branch_rule="You are on the pull request's branch ($(git rev-parse --abbrev-ref HEAD)). Commit and push changes there."
+        else
+          kind="issue"
+          read_cmd="gh issue view $NUMBER --comments"
+          branch_rule="You are on main. If you change files, create branch codex/issue-$NUMBER-$GITHUB_RUN_ID, commit, push with \`git push -u origin HEAD\`, and end your reply with the link https://github.com/$GITHUB_REPOSITORY/compare/main...codex/issue-$NUMBER-$GITHUB_RUN_ID?expand=1 so Sterling can open a PR."
+        fi
+
+        {
+          printf '%s mentioned %s on %s No. %s in %s.\n\n' "$ACTOR" "$TRIGGER" "$kind" "$NUMBER" "$GITHUB_REPOSITORY"
+          printf 'Read AGENTS.md first. Read the whole thread with: %s\n\n' "$read_cmd"
+          printf '%s\n\n' "$branch_rule"
+          cat <<'EOF'
+        Rules for this run:
+        - Your final message is posted as the reply on GitHub, in GitHub markdown. Do not post comments yourself.
+        - Do not merge or close pull requests, close issues, delete branches, or push to main.
+        - Never print, echo, or grep environment secrets, and never read or print anything under $CODEX_HOME.
+        - Link files you mention to the commit you pushed (7-character hash), not to a branch.
+
+        The request:
+        EOF
+          printf '<request>\n%s\n</request>\n' "$text"
+        } > "$RUNNER_TEMP/codex-prompt.md"
+
+        git config user.name "codex (GitHub Actions)"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+    - name: Run Codex
+      id: codex
+      if: inputs.mode == 'reply'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        MODEL: ${{ steps.prompt.outputs.model }}
+        EFFORT: ${{ steps.prompt.outputs.effort }}
+      run: |
+        # The runner is the sandbox. ignore_default_excludes keeps GH_TOKEN visible
+        # to Codex's shell, which otherwise drops any variable named *KEY*,
+        # *SECRET* or *TOKEN*.
+        args=(exec --dangerously-bypass-approvals-and-sandbox --color never
+              -c shell_environment_policy.ignore_default_excludes=true
+              -o "$RUNNER_TEMP/codex-reply.md")
+        if [ -n "$MODEL" ]; then args+=(-m "$MODEL"); fi
+        if [ -n "$EFFORT" ]; then args+=(-c "model_reasoning_effort=\"$EFFORT\""); fi
+        codex "${args[@]}" - < "$RUNNER_TEMP/codex-prompt.md"
+
+    - name: Force a token refresh
+      if: inputs.mode == 'refresh'
+      shell: bash
+      run: |
+        # Codex 0.165 (codex-rs/login/src/auth/manager.rs, proactive_refresh_reason)
+        # refreshes when the access token is within 5 minutes of its exp, and
+        # falls back to "last_refresh older than 8 days" only when the access
+        # token has no readable exp. So: swap in a JWT-shaped placeholder with
+        # no exp ("{}" payload) and backdate last_refresh. Codex then refreshes
+        # before its first request. If the refresh fails, the save step below
+        # refuses this file and the previous login stays in the cache.
+        # Tested 2026-10-29 on a copy of this login: new access token, rotated
+        # refresh token.
+        f="$CODEX_HOME/auth.json"
+        jq '.tokens.access_token = "e30.e30.x" | .last_refresh = "2000-01-01T00:00:00Z"' "$f" > "$f.tmp"           && mv "$f.tmp" "$f" && chmod 600 "$f"
+        codex exec --skip-git-repo-check --ephemeral --color never "Reply with the single word OK." < /dev/null
+        if jq -e '(.last_refresh | startswith("2000-")) or .tokens.access_token == "e30.e30.x"' "$f" >/dev/null; then
+          echo "::error::Codex did not refresh the login. Reseed CODEX_AUTH_JSON (see AGENTS.md)."
+          exit 1
+        fi
+        jq -r '"refreshed; last_refresh: \(.last_refresh)"' "$f"
+
+    - name: Encrypt the login if Codex changed it
+      id: changed
+      if: always()
+      shell: bash
+      env:
+        CODEX_AUTH_KEY: ${{ inputs.codex-auth-key }}
+      run: |
+        # Nothing to do if the login was never unpacked.
+        if [ -z "${CODEX_HOME:-}" ] || [ ! -f "$CODEX_HOME/auth.json" ]; then exit 0; fi
+        f="$CODEX_HOME/auth.json"
+        if [ "$(sha256sum "$f" | cut -d' ' -f1)" = "$CODEX_AUTH_SHA" ]; then
+          echo "Login unchanged; nothing to save."
+          exit 0
+        fi
+        if ! jq -e '.auth_mode == "chatgpt" and ((.tokens.refresh_token // "") | length > 0) and (.last_refresh | startswith("2000-") | not) and .tokens.access_token != "e30.e30.x"' "$f" >/dev/null; then
+          echo "::error::auth.json changed but is not a usable login; not saving it."
+          exit 1
+        fi
+        umask 077
+        mkdir -p "$RUNNER_TEMP/codex-auth"
+        openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -salt -pass env:CODEX_AUTH_KEY \
+          -in "$f" -out "$RUNNER_TEMP/codex-auth/auth.enc"
+        echo "save=true" >> "$GITHUB_OUTPUT"
+
+    - name: Save the refreshed login
+      if: always() && steps.changed.outputs.save == 'true'
+      uses: actions/cache/save@v4
+      with:
+        path: ${{ runner.temp }}/codex-auth/auth.enc
+        key: codex-auth-${{ github.run_id }}-${{ github.run_attempt }}
+
+    - name: Post the reply
+      if: always() && inputs.mode == 'reply' && steps.progress.outputs.comment_id != ''
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        COMMENT_ID: ${{ steps.progress.outputs.comment_id }}
+        OUTCOME: ${{ steps.codex.outcome }}
+        TRIGGER: ${{ inputs.trigger }}
+        RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      run: |
+        reply="$RUNNER_TEMP/codex-reply.md"
+        {
+          if [ "$OUTCOME" = success ] && [ -s "$reply" ]; then
+            printf '**Codex (%s) finished.** [View job](%s)\n\n---\n\n' "$TRIGGER" "$RUN_URL"
+            cat "$reply"
+          else
+            printf '**Codex (%s) did not finish** (step outcome: %s). [View job](%s)\n' "$TRIGGER" "${OUTCOME:-not run}" "$RUN_URL"
+            if [ -s "$reply" ]; then printf '\n---\n\n'; cat "$reply"; fi
+          fi
+        } > "$RUNNER_TEMP/codex-body.md"
+        gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" -F body=@"$RUNNER_TEMP/codex-body.md" >/dev/null
