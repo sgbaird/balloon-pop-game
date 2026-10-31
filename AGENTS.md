@@ -23,9 +23,10 @@ covers the game itself (modes, power-ups, calibration, controls).
 
 `@codex` (`.github/workflows/codex.yml`) in an issue (title or body) or an issue or PR conversation comment starts
 a Codex session, for anyone with write access. Model and effort tags: `@codex+gpt-6-luna:high`, `@codex:low`; a bare
-tag uses the plan's defaults. Efforts: `none`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`, `ultra` (each model
-accepts a subset). The first tag with a `+model` or `:effort` wins, wherever it is in the title or body. On an issue the session works on a new `codex/issue-<n>-<run>` branch and links a
-compare page; on a PR it pushes to the PR's branch. While it runs, its "working on this" comment shows the plan, the
+tag uses the plan's defaults. On an issue, a session that changes files opens a pull request from its branch (or links
+a compare page if it cannot) and embeds its key images and GIFs in the reply. Efforts: `none`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`, `ultra` (each model
+accepts a subset). The first tag with a `+model` or `:effort` wins, wherever it is in the title or body. On an issue the session works on a new `codex/issue-<n>-<run>` branch; on a PR it
+pushes to the PR's branch. While it runs, its "working on this" comment shows the plan, the
 latest interim message and the recent commands (never their output), updated about once a minute, so anything a
 session writes in an interim message or a command line is public on this repository.
 

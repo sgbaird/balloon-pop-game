@@ -144,13 +144,16 @@ runs:
         else
           kind="issue"
           read_cmd="gh issue view $NUMBER --comments"
-          branch_rule="You are on main. If you change files, create branch codex/issue-$NUMBER-$GITHUB_RUN_ID, commit, push with \`git push -u origin HEAD\`, and end your reply with the link https://github.com/$GITHUB_REPOSITORY/compare/main...codex/issue-$NUMBER-$GITHUB_RUN_ID?expand=1 so Sterling can open a PR."
+          branch="codex/issue-$NUMBER-$GITHUB_RUN_ID"
+          branch_rule="You are on main. If you change files, create branch $branch, commit, push with \`git push -u origin HEAD\`, then open a pull request: \`gh pr create --base main --head $branch --title '<short title>' --body-file <file>\`, with a body that summarizes the change and ends with 'Refs #$NUMBER'. Put the pull request link on the first line of your reply. If \`gh pr create\` fails, say so in one line and end your reply with [Open a pull request](https://github.com/$GITHUB_REPOSITORY/compare/main...$branch?expand=1) instead."
         fi
+        media_rule="If you create or change images, GIFs or videos (renders, previews, plots, screenshots), embed the few that matter most in your reply so they show inline, e.g. ![short description](https://github.com/$GITHUB_REPOSITORY/blob/<7-character hash>/<path>?raw=true). Use the commit you pushed, PNG, JPG or GIF (GIFs animate; SVG and video do not render inline, so link those). Keep embeds small: a few key images, not every file."
 
         {
           printf '%s mentioned %s on %s No. %s in %s.\n\n' "$ACTOR" "$TRIGGER" "$kind" "$NUMBER" "$GITHUB_REPOSITORY"
           printf 'Read AGENTS.md first. Read the whole thread with: %s\n\n' "$read_cmd"
           printf '%s\n\n' "$branch_rule"
+          printf '%s\n\n' "$media_rule"
           cat <<'EOF'
         Rules for this run:
         - Your final message is posted as the reply on GitHub, in GitHub markdown. Do not post comments yourself.
