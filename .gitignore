@@ -2,7 +2,6 @@
 # Local runtime files
 *.avi
 game.log
-sound/
 __pycache__/
 out.txt
 err.txt
