@@ -1,68 +1,68 @@
 {
     "error_string": "Success.",
-    "export_time": 537,
+    "export_time": 667,
     "layer_height": 0.20000000298023224,
     "plate_index": 0,
-    "prepare_time": 69,
+    "prepare_time": 64,
     "return_code": 0,
     "sliced_plates": [
         {
             "feature_type_times": {
-                "Bottom surface": 53.95429992675781,
-                "Bridge": 210.60101318359375,
-                "Brim": 72.45175170898438,
-                "Custom": 354.8501892089844,
+                "Bottom surface": 83.36479187011719,
+                "Bridge": 283.8300476074219,
+                "Brim": 68.37498474121094,
+                "Custom": 354.3440246582031,
                 "Flush": 28.0,
-                "Gap infill": 80.93791198730469,
-                "Inner wall": 3558.6015625,
-                "Internal solid infill": 694.1951293945313,
-                "Outer wall": 1085.2125244140625,
-                "Overhang wall": 250.55935668945313,
-                "Sparse infill": 3368.265625,
-                "Support": 1439.521240234375,
-                "Support interface": 185.67462158203125,
-                "Support transition": 94.20329284667969,
-                "Top surface": 151.9638214111328,
-                "Travel": 1442.4835205078125,
-                "Undefined": 1424.073974609375
+                "Gap infill": 120.41156768798828,
+                "Inner wall": 3774.759521484375,
+                "Internal solid infill": 834.5353393554688,
+                "Outer wall": 1175.4521484375,
+                "Overhang wall": 301.02789306640625,
+                "Sparse infill": 3506.88671875,
+                "Support": 2358.991943359375,
+                "Support interface": 249.64456176757813,
+                "Support transition": 117.30123901367188,
+                "Top surface": 198.4613494873047,
+                "Travel": 1847.35888671875,
+                "Undefined": 1829.458251953125
             },
             "filament_change_times": 0,
             "filaments": [
                 {
                     "filament_id": "GFL99",
                     "id": 1,
-                    "main_used_g": 99.21534729003906,
-                    "total_used_g": 99.21534729003906
+                    "main_used_g": 117.50733184814453,
+                    "total_used_g": 117.50733184814453
                 }
             ],
-            "generate_support_material_time": 272,
+            "generate_support_material_time": 384,
             "id": 1,
-            "infill_time": 914,
+            "infill_time": 851,
             "layer_filament_change": 0,
-            "main_predication": 12660.82421875,
-            "make_perimeters_time": 383,
+            "main_predication": 14891.8896484375,
+            "make_perimeters_time": 446,
             "obj_cached_cnt": 0,
             "objects": [
                 {
                     "bbox": {
-                        "depth": 49.999996185302734,
-                        "height": 74.5,
-                        "width": 94.0,
-                        "x": 42.9999885559082,
-                        "y": 104.97260284423828,
+                        "depth": 68.83482360839844,
+                        "height": 82.0,
+                        "width": 109.98152160644531,
+                        "x": 32.90934753417969,
+                        "y": 94.25547790527344,
                         "z": 0.0
                     },
                     "id": 95,
                     "name": "clamp.stl",
-                    "triangle_count": 2696
+                    "triangle_count": 2632
                 },
                 {
                     "bbox": {
                         "depth": 42.42640686035156,
                         "height": 46.0,
                         "width": 42.42640686035156,
-                        "x": 101.29790496826172,
-                        "y": 57.2704963684082,
+                        "x": 107.43940734863281,
+                        "y": 55.49091720581055,
                         "z": 0.0
                     },
                     "id": 106,
@@ -71,11 +71,11 @@
                 },
                 {
                     "bbox": {
-                        "depth": 37.03947448730469,
+                        "depth": 37.03947067260742,
                         "height": 5.0,
-                        "width": 37.03947067260742,
-                        "x": 104.99656677246094,
-                        "y": 19.991363525390625,
+                        "width": 37.03947448730469,
+                        "x": 111.1380615234375,
+                        "y": 18.21178436279297,
                         "z": 0.0
                     },
                     "id": 117,
@@ -84,11 +84,11 @@
                 },
                 {
                     "bbox": {
-                        "depth": 10.99999713897705,
-                        "height": 14.0,
-                        "width": 16.000003814697266,
-                        "x": 80.24759674072266,
-                        "y": 81.97260284423828,
+                        "depth": 35.35533905029297,
+                        "height": 12.0,
+                        "width": 35.35533905029297,
+                        "x": 69.35212707519531,
+                        "y": 55.83768081665039,
                         "z": 0.0
                     },
                     "id": 128,
@@ -97,11 +97,11 @@
                 },
                 {
                     "bbox": {
-                        "depth": 10.999999046325684,
-                        "height": 14.0,
-                        "width": 16.000003814697266,
-                        "x": 80.022216796875,
-                        "y": 61.424930572509766,
+                        "depth": 35.35533905029297,
+                        "height": 12.0,
+                        "width": 35.35533905029297,
+                        "x": 41.36098861694336,
+                        "y": 55.83768081665039,
                         "z": 0.0
                     },
                     "id": 139,
@@ -109,10 +109,10 @@
                     "triangle_count": 28
                 }
             ],
-            "sliced_time": 3878,
-            "sliced_time_with_cache": 1854,
-            "total_predication": 13053.2646484375,
-            "triangle_count": 11588,
+            "sliced_time": 4403,
+            "sliced_time_with_cache": 2201,
+            "total_predication": 15284.3330078125,
+            "triangle_count": 11524,
             "warning_message": ""
         }
     ],

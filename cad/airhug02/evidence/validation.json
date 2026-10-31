@@ -4,16 +4,275 @@
   "camera_interference_mm3": 0.0,
   "slices": {
     "mount": {
-      "grams": 99.22,
-      "estimated_seconds": 13053,
+      "grams": 117.51,
+      "estimated_seconds": 15284,
       "slicer_warning": ""
     },
     "fit-check": {
-      "grams": 18.32,
-      "estimated_seconds": 3734,
+      "grams": 19.43,
+      "estimated_seconds": 3837,
       "slicer_warning": ""
     }
   },
+  "housing_scenarios": [
+    {
+      "width": 66,
+      "height": 16,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 57.09
+    },
+    {
+      "width": 66,
+      "height": 16,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 64.29
+    },
+    {
+      "width": 66,
+      "height": 16,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 75.09
+    },
+    {
+      "width": 66,
+      "height": 18,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 58.9
+    },
+    {
+      "width": 66,
+      "height": 18,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 66.1
+    },
+    {
+      "width": 66,
+      "height": 18,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 76.91
+    },
+    {
+      "width": 66,
+      "height": 20,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 60.65
+    },
+    {
+      "width": 66,
+      "height": 20,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 67.85
+    },
+    {
+      "width": 66,
+      "height": 20,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 78.65
+    },
+    {
+      "width": 70,
+      "height": 16,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 57.23
+    },
+    {
+      "width": 70,
+      "height": 16,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 64.43
+    },
+    {
+      "width": 70,
+      "height": 16,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 75.24
+    },
+    {
+      "width": 70,
+      "height": 18,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 59.2
+    },
+    {
+      "width": 70,
+      "height": 18,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 66.4
+    },
+    {
+      "width": 70,
+      "height": 18,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 77.2
+    },
+    {
+      "width": 70,
+      "height": 20,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 61.12
+    },
+    {
+      "width": 70,
+      "height": 20,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 68.32
+    },
+    {
+      "width": 70,
+      "height": 20,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 79.11
+    },
+    {
+      "width": 74,
+      "height": 16,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 57.26
+    },
+    {
+      "width": 74,
+      "height": 16,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 64.46
+    },
+    {
+      "width": 74,
+      "height": 16,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 75.26
+    },
+    {
+      "width": 74,
+      "height": 18,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 59.25
+    },
+    {
+      "width": 74,
+      "height": 18,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 66.45
+    },
+    {
+      "width": 74,
+      "height": 18,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 77.25
+    },
+    {
+      "width": 74,
+      "height": 20,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 61.23
+    },
+    {
+      "width": 74,
+      "height": 20,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 68.43
+    },
+    {
+      "width": 74,
+      "height": 20,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 79.24
+    }
+  ],
+  "clip_keepout_interference_mm3": 0.0,
+  "thread_travel_scenarios": [
+    {
+      "advance_mm": -2.6,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": -1.6,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": -0.6000000000000001,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 0.3999999999999999,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 1.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 2.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 3.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 4.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 5.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 6.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 7.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 8.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 9.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 10.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 11.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 12.4,
+      "interference_mm3": 0.0
+    }
+  ],
+  "seated_pad_interference_mm3": 0.0,
   "not_validated": [
     "physical fit",
     "print quality",
@@ -22,13 +281,13 @@
     "camera view on site"
   ],
   "artifact_sha256": {
-    "slicer/fit-check/fit-check-a1mini-pla.3mf": "283893af9c75b3c319e34da4153ae3bbdc30be48257ac2bb3cc21bc87352d54e",
-    "slicer/mount/mount-a1mini-pla.3mf": "c22d90d72fc2f2ae4b86a976135ff146b9636ec5bdb168a94cd992e86e940e89",
-    "stl/camera.stl": "15b1ab26f7511115719b4a991c154c9433df7d0f2fc23d0e55d66f9df1d0d806",
-    "stl/clamp.stl": "d9acd07579dcf9cac7e26425e93036ecb451a75c46df9e21912e438b76f29cf0",
-    "stl/coupon.stl": "bb0411e9696c722c7dd4665d557532ecb73bbc00d693f720c613566070b21d30",
-    "stl/key.stl": "50cbfc20255ece81718bb3d6b5415e92cb0a9540b10d30ec9c5b07b76defd21e",
-    "stl/pad.stl": "adb4463445ada5ce3327e10b2c0fd2729a605ba434109013f03fddd77956a92e",
+    "slicer/fit-check/fit-check-a1mini-pla.3mf": "613340c7bb29c703e4d27f658afbf1c11afb38a291b225eafd801a1a032d2826",
+    "slicer/mount/mount-a1mini-pla.3mf": "3730e68dfe4c8cb58e0fab3a8491572a52905167dfb2ea5033dd46635b94137c",
+    "stl/camera.stl": "dd974b5827002b4d849d883132df6e6f1caaa55ac15e189d6b3b84bdbf12080a",
+    "stl/clamp.stl": "b610683521f0f2b80530073c15c4b55e95b7344b3bf3c32aef40ebc74f78acb7",
+    "stl/coupon.stl": "e4594c6cbb3553a73ae80574d4ec161ab7452bcaa9b59a268b60cc4fbd9f1243",
+    "stl/key.stl": "14128c20e8c916fb06af480cb88838674ae8b57581985a0e726998ad1fd0bbe4",
+    "stl/pad.stl": "f9007206684c5cb07bf129fac2442280ac12d7df60eb756c74be5a2e6f77af2c",
     "stl/screw.stl": "4f7c8e21ab1d5508134b81733ab4206856ae00642026e54825964dd21d5db104"
   }
 }

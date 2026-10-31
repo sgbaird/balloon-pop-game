@@ -1,10 +1,12 @@
 # Webcam dimension audit after the fit-check feedback
 
-**The original mount's camera fit is unverified. Do not use the existing complete
-mount 3MF as a dimensionally corrected print.** The old 65 × 16.1 × 10 mm housing
-is a hypothesis, not a measurement. The fit-check pieces already printed remain
-useful as records of their actual openings; a successful screw fit says nothing
-about the camera envelope.
+**Current print revision:** [the complete one-plate 3MF](slicer/mount/mount-a1mini-pla.3mf)
+now uses a photo-informed 70 × 17.5 × 25 mm reference camera and larger adjustable
+saddles. See [assembly and checks](README.md) and [validation](evidence/validation.json).
+The audit below records why the original 65 × 16.1 × 10 mm design was rejected.
+Statements about unchanged CAD/print files describe the earlier audit-only run;
+those files have now been regenerated. The photos remain estimates, and physical
+fit has not been tested.
 
 The original analysis fixed width at 65 mm, adjusted height against two face
 outlines, and never optimized depth or the clip. Its 2.10 pixel training error
@@ -56,8 +58,9 @@ close agreement between the two width photos can share systematic error. The
 ±5% scenarios illustrate scale dependence; they are not measured confidence
 bounds, and they do not cover every possible pose or plane error.
 
-**The old STL/3MF files remain the old prototype, not a corrected mount.** This
-follow-up changes the evidence and fit guidance, not the CAD or sliced projects.
+**At the time of the photo audit, the STL/3MF files remained the old prototype.** That
+follow-up changed the evidence and fit guidance, not the CAD or sliced projects.
+The subsequent print revision linked above replaces those artifacts.
 The photos give a much better nominal housing envelope, but do not establish the
 folded clip/hinge envelope, saddle contact surfaces or cover travel needed to
 validate a replacement clamp. Regenerating only the camera-depth parameter would
