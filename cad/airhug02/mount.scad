@@ -6,6 +6,7 @@ $fn=64;
 camera_w=70; camera_h=17.5; camera_d=25;
 thread_slack=0.25; // radial: was 0.35; screw itself remains reusable
 cradle_floor=70;
+side_lip_height=10; // outer ends only; central 62 mm stays clear
 print_offset=41; // maximum left/right clamp extent
 corner_side=-1; // -1: left jamb stop; +1: right jamb; 0: no side stop
 clearance=0.6; // total clearance of the optional nominal-body gauges
@@ -55,6 +56,10 @@ module cradle() {
             translate([25,8,cradle_floor-5]) cube([12,11,6]);
         }
         translate([23,-17,cradle_floor-1]) cube([18,3,1.6]); // 0.6 mm above floor, below bezel
+        // Tall outer toes tie directly into the end stops. Recess the inner
+        // face to Y=-16 to clear the illustrative projecting privacy cover.
+        // Open top preserves drop-in assembly; these are bump stops, not latches.
+        translate([31,-19,cradle_floor-1]) cube([10,3,side_lip_height+1]);
         translate([23,18,cradle_floor-4]) cube([18,3,28]); // rear guide
         translate([38,-19,cradle_floor-4]) cube([3,40,24]); // end stop
     }

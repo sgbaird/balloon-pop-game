@@ -1,9 +1,9 @@
 # AIRHUG 02: revised single-plate corner mount
 
 Download [mount-a1mini-pla.3mf](slicer/mount/mount-a1mini-pla.3mf) for the
-**photo-informed revision**. It contains sliced G-code for one A1 mini plate:
+**photo-informed side-lip revision**. It contains sliced G-code for one A1 mini plate:
 **one clamp, one screw, one pressure pad and two tapered keepers**. No separate
-fit-check print or metal hardware is required. Bambu estimates **118 g / 4 h 15 min**,
+fit-check print or metal hardware is required. Bambu estimates **118 g / 4 h 16 min**,
 including supports and brims. Assembly and support removal are
 required after printing; this is not a print-in-place mechanism.
 
@@ -22,7 +22,10 @@ The reference camera now illustrates an exposed left lens, cover shifted right,
 and folded clip. Hidden details and cover travel remain approximate.
 
 The new saddles have **76 mm clear width and 32 mm toe-to-back opening**,
-a flat support floor and a front toe only 0.6 mm above it, below the bezel. The optical face and top stay open.
+a flat support floor, the original low toe, and **10 mm tall front lips at
+X = ±31–41 mm**. The **62 mm central opening** leaves the illustrated lens clear;
+the top stays open. The taller lips join the end walls and sit at Y = −19 to
+−16 mm, ahead of the illustrated cover, rather than growing across its face.
 The middle leaves a **45 mm wide** opening behind the housing for the original
 clip and cable. Through-slots let the two long keepers slide down behind the
 body; their **1–11 mm taper over 36 mm** takes up depth differences. Their top
@@ -49,28 +52,44 @@ residual side play if necessary.
 
 ## Does the front lip prevent dislodging?
 
-**No positive retention is provided by this lip.** The circled front toe in the
-PR discussion is only **0.6 mm above the saddle floor** (Z = 70.6 versus 70 mm).
-It limits forward sliding while the housing stays seated; an upward movement
-can clear it. The open top and removable tapered keepers rely on friction,
-and the keepers themselves have no latch against lifting out with the camera.
-Rounded housing ends, printing tolerances and rocking further limit how much
-engagement can be assumed from that nominal height.
+**Taller lips at the sides are a useful, simple improvement for forward bumps.**
+The earlier strap recommendation was too broad: it addressed unrestricted
+lift-out without first improving the tiny forward stop. This revision raises
+only the outer ends to **10 mm above the floor**, keeping drop-in assembly and
+adding no parts. The rest of the mount and its adjustment mechanism stay the same.
 
-A [mesh escape check](check_retention.py) lifts the illustrated camera and both
-keepers together from 0 to 60 mm in 0.5 mm increments. Its
-[report](evidence/retention.json) records collision volumes and the exact mesh
-hashes. This checks a possible removal direction; it supplies no friction,
-impact, cable-pull or holding-force prediction. The existing size sweep checks
-clearances, not retention, and structural analysis of the clamp alone cannot
-establish that the camera stays seated.
+![Side lips, central opening and geometric engagement](previews/side-lips.png)
 
-For resistance to accidental knocks or cable pulls, add a retaining strap
-securing the rigid housing to the fixed cradle, with its route checked on the
-real camera to clear the lens, privacy-cover travel, hinge and cable. A taller
-front toe alone still allows lift-out and could obstruct the optical face.
-The supplied 3MF has no strap or positive latch; do not treat it as a verified
-dislodgement-resistant mount. Physical retention has not been tested.
+The rounded ends matter. A 10 mm lip does not provide 10 mm of engagement:
+independently constructed capsule housings require **6.0–9.7 mm of straight
+upward travel** before they can cross the lips forward (**8.6 mm nominal**),
+versus the previous 0.6 mm toe. The [reproducible mesh check](check_retention.py)
+tests all 27 width/height/depth combinations seated, translated 4 mm forward,
+and just below/above their calculated clearance thresholds. All seat without
+interference; all seated forward crossings are blocked. The
+[report](evidence/retention.json) also repeats the nominal camera-and-keepers
+vertical escape check and records mesh hashes.
+
+This is a geometric bump stop, **not a positive lift latch or a prediction of
+impact resistance**. The checks cover centred, unrotated housings; rocking,
+lateral displacement, combined escape paths, friction and deformation are not
+modeled. The open top still allows deliberate removal. The keepers take up
+front-to-back play; they do not latch into the guides. A roof or snap hooks
+would constrain removal and depend more heavily on the uncertain housing and
+cover dimensions, so the side lips are the smaller revision to try first.
+
+The illustrated camera and cover clear the revised clamp, but their real travel
+and lens field of view remain unmeasured. Centre the camera, exercise the cover
+fully, and check the live image for edge obstruction. Gently check forward,
+sideways, rocking and upward movement after seating the keepers. These lips
+address forward escape; if resistance to upward cable pulls is needed, this
+open-top design alone does not establish it. Physical fit and retention have
+not been tested.
+
+The revised complete slice uses **118.00 g / 4 h 16 min**, including supports
+and brims, versus **117.51 g / 4 h 15 min** before: approximately **0.49 g and
+92 seconds extra** with identical print settings. These are slicer estimates,
+not measured print results.
 
 ## Print and assemble
 
@@ -136,6 +155,7 @@ python -m pip install numpy scipy pillow matplotlib opencv-python-headless trime
 python cad/airhug02/build.py /tmp/squashfs-root/AppRun
 python cad/airhug02/validate.py
 python cad/airhug02/check_retention.py
+python cad/airhug02/preview_retention.py
 python cad/airhug02/preview_toolpaths.py
 python cad/airhug02/preview_fit_check.py
 python cad/airhug02/animate_assembly.py

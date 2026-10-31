@@ -10,14 +10,239 @@
   "initial_camera_keeper_interference_mm3": 0.0,
   "final_moving_bottom_z_mm": 111.75,
   "clamp_top_z_mm": 94.0,
-  "conclusion": "Sampled common vertical escape path has no geometric obstruction",
+  "conclusion": "Side lips block seated forward escape; open top still permits deliberate lift-out",
+  "side_lip_height_mm": 10,
+  "central_face_opening_mm": 62,
+  "housing_forward_crossings": [
+    {
+      "width": 66,
+      "height": 16,
+      "depth": 23,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 58.81041264528176,
+      "approximate_lift_to_clear_mm": 7.291502622129181
+    },
+    {
+      "width": 66,
+      "height": 16,
+      "depth": 25,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 58.81041264528176,
+      "approximate_lift_to_clear_mm": 7.291502622129181
+    },
+    {
+      "width": 66,
+      "height": 16,
+      "depth": 28,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 58.81041264528176,
+      "approximate_lift_to_clear_mm": 7.291502622129181
+    },
+    {
+      "width": 66,
+      "height": 18,
+      "depth": 23,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 50.15762039425317,
+      "approximate_lift_to_clear_mm": 6.656854249492381
+    },
+    {
+      "width": 66,
+      "height": 18,
+      "depth": 25,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 50.15762039425317,
+      "approximate_lift_to_clear_mm": 6.656854249492381
+    },
+    {
+      "width": 66,
+      "height": 18,
+      "depth": 28,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 50.15762039425317,
+      "approximate_lift_to_clear_mm": 6.656854249492381
+    },
+    {
+      "width": 66,
+      "height": 20,
+      "depth": 23,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 40.84590548177948,
+      "approximate_lift_to_clear_mm": 6.0
+    },
+    {
+      "width": 66,
+      "height": 20,
+      "depth": 25,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 40.84590548177948,
+      "approximate_lift_to_clear_mm": 6.0
+    },
+    {
+      "width": 66,
+      "height": 20,
+      "depth": 28,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 40.84590548177948,
+      "approximate_lift_to_clear_mm": 6.0
+    },
+    {
+      "width": 70,
+      "height": 16,
+      "depth": 23,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 131.59782747208374,
+      "approximate_lift_to_clear_mm": 8.928203230275509
+    },
+    {
+      "width": 70,
+      "height": 16,
+      "depth": 25,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 131.59782747208374,
+      "approximate_lift_to_clear_mm": 8.928203230275509
+    },
+    {
+      "width": 70,
+      "height": 16,
+      "depth": 28,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 131.59782747208374,
+      "approximate_lift_to_clear_mm": 8.928203230275509
+    },
+    {
+      "width": 70,
+      "height": 18,
+      "depth": 23,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 118.63986307237064,
+      "approximate_lift_to_clear_mm": 8.483314773547882
+    },
+    {
+      "width": 70,
+      "height": 18,
+      "depth": 25,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 118.63986307237064,
+      "approximate_lift_to_clear_mm": 8.483314773547882
+    },
+    {
+      "width": 70,
+      "height": 18,
+      "depth": 28,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 118.63986307237064,
+      "approximate_lift_to_clear_mm": 8.483314773547882
+    },
+    {
+      "width": 70,
+      "height": 20,
+      "depth": 23,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 104.78131868183846,
+      "approximate_lift_to_clear_mm": 8.0
+    },
+    {
+      "width": 70,
+      "height": 20,
+      "depth": 25,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 104.78131868183846,
+      "approximate_lift_to_clear_mm": 8.0
+    },
+    {
+      "width": 70,
+      "height": 20,
+      "depth": 28,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 104.78131868183846,
+      "approximate_lift_to_clear_mm": 8.0
+    },
+    {
+      "width": 74,
+      "height": 16,
+      "depth": 23,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 213.51932922526854,
+      "approximate_lift_to_clear_mm": 9.745966692414834
+    },
+    {
+      "width": 74,
+      "height": 16,
+      "depth": 25,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 213.51932922526854,
+      "approximate_lift_to_clear_mm": 9.745966692414834
+    },
+    {
+      "width": 74,
+      "height": 16,
+      "depth": 28,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 213.51932922526854,
+      "approximate_lift_to_clear_mm": 9.745966692414834
+    },
+    {
+      "width": 74,
+      "height": 18,
+      "depth": 23,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 198.09550976360333,
+      "approximate_lift_to_clear_mm": 9.48528137423857
+    },
+    {
+      "width": 74,
+      "height": 18,
+      "depth": 25,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 198.09550976360333,
+      "approximate_lift_to_clear_mm": 9.48528137423857
+    },
+    {
+      "width": 74,
+      "height": 18,
+      "depth": 28,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 198.09550976360333,
+      "approximate_lift_to_clear_mm": 9.48528137423857
+    },
+    {
+      "width": 74,
+      "height": 20,
+      "depth": 23,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 181.0384012387949,
+      "approximate_lift_to_clear_mm": 9.16515138991168
+    },
+    {
+      "width": 74,
+      "height": 20,
+      "depth": 25,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 181.0384012387949,
+      "approximate_lift_to_clear_mm": 9.16515138991168
+    },
+    {
+      "width": 74,
+      "height": 20,
+      "depth": 28,
+      "seated_interference_mm3": 0.0,
+      "forward_crossing_interference_mm3": 181.0384012387949,
+      "approximate_lift_to_clear_mm": 9.16515138991168
+    }
+  ],
+  "lift_to_clear_range_mm": [
+    6.0,
+    9.745966692414834
+  ],
   "limitations": [
     "Discrete samples, not continuous collision detection",
     "Illustrated nominal geometry, not measured physical hardware",
+    "Forward crossings assume centred, unrotated housings; no combined escape paths",
     "No friction, preload, deformation, impact or holding-force model"
   ],
   "mesh_sha256": {
-    "clamp.stl": "b610683521f0f2b80530073c15c4b55e95b7344b3bf3c32aef40ebc74f78acb7",
+    "clamp.stl": "b2cab3ca118b82b32e732224701b5cf53ee6a425ba8aecb0f8adb38d40360811",
     "camera.stl": "dd974b5827002b4d849d883132df6e6f1caaa55ac15e189d6b3b84bdbf12080a",
     "key.stl": "14128c20e8c916fb06af480cb88838674ae8b57581985a0e726998ad1fd0bbe4"
   }
