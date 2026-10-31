@@ -1,0 +1,126 @@
+name: Codex action check
+
+# Offline checks of the "Run Codex" step in .github/actions/codex-run: the
+# progress-comment filter on sample events, and the step's script itself with
+# stand-ins for codex and gh (no login, no comments, no secrets).
+
+on:
+  pull_request:
+    paths:
+      - .github/actions/codex-run/**
+      - .github/workflows/codex-action-check.yml
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract the step script and the filter
+        run: |
+          yq '.runs.steps[] | select(.name == "Run Codex") | .run' .github/actions/codex-run/action.yml > "$RUNNER_TEMP/step.sh"
+          sed -n "/<<'JQ'$/,/^JQ$/p" "$RUNNER_TEMP/step.sh" | sed '1d;$d' > "$RUNNER_TEMP/progress.jq"
+          test -s "$RUNNER_TEMP/progress.jq"
+          jq --version
+
+      - name: Render sample events
+        run: |
+          cat > "$RUNNER_TEMP/events.jsonl" <<'EOF'
+          {"type":"thread.started","thread_id":"t1"}
+          {"type":"item.started","item":{"id":"i0","type":"todo_list","items":[{"text":"Read the issue","completed":false},{"text":"Build the model","completed":false}]}}
+          {"type":"item.started","item":{"id":"i1","type":"command_execution","command":"/bin/bash -lc 'gh issue view 5 --comments'","aggregated_output":"","exit_code":null,"status":"in_progress"}}
+          {"type":"item.completed","item":{"id":"i1","type":"command_execution","command":"/bin/bash -lc 'gh issue view 5 --comments'","aggregated_output":"COMMAND OUTPUT","exit_code":0,"status":"completed"}}
+          {"type":"item.completed","item":{"id":"i2","type":"agent_message","text":"Read the issue.\nNext: frames."}}
+          not json
+          {"type":"item.completed","item":{"id":"i3","type":"command_execution","command":"/bin/bash -lc 'python - <<\"PY\"\nimport `x`\nPY'","aggregated_output":"","exit_code":1,"status":"failed"}}
+          {"type":"item.updated","item":{"id":"i0","type":"todo_list","items":[{"text":"Read the issue","completed":true},{"text":"Build the model","completed":false}]}}
+          {"type":"item.completed","item":{"id":"i4","type":"file_change","changes":[{"path":"/ws/models/cover.scad","kind":"add"}],"status":"completed"}}
+          {"type":"item.completed","item":{"id":"i5","type":"web_search","query":"flashlight dimensions","action":{"type":"search"}}}
+          {"type":"item.completed","item":{"id":"i6","type":"reasoning","text":"PRIVATE REASONING"}}
+          EOF
+          render() { jq -R -n -r --arg trigger "@codex" --arg run_url "https://example/run" --arg ws /ws \
+                       --arg elapsed "3 min" -f "$RUNNER_TEMP/progress.jq" "$1"; }
+          out=$(render "$RUNNER_TEMP/events.jsonl")
+          printf '%s\n' "$out"
+          expect() { grep -qF -- "$1" <<<"$out" || { echo "::error::missing: $1"; exit 1; }; }
+          reject() { if grep -qF -- "$1" <<<"$out"; then echo "::error::should not appear: $1"; exit 1; fi; }
+          expect "**Codex (@codex) is working on this.** 3 min so far. [View job](https://example/run)"
+          expect "- ✅ Read the issue"
+          expect "- ⬜ Build the model"
+          expect "> Read the issue."
+          expect "> Next: frames."
+          expect "(2 commands so far)"
+          expect '- ✅ `gh issue view 5 --comments`'
+          expect "- ❌ \`python - <<\"PY\"\`"
+          expect '- 📝 add `models/cover.scad`'
+          expect "- 🔎 flashlight dimensions"
+          reject "COMMAND OUTPUT"
+          reject "PRIVATE REASONING"
+          reject "⏳"
+          : > "$RUNNER_TEMP/empty.jsonl"
+          out=$(render "$RUNNER_TEMP/empty.jsonl")
+          printf '%s\n' "$out"
+          expect "**Codex (@codex) is working on this.** 3 min so far."
+          reject "Recent activity"
+
+      - name: Run the step with stand-ins for codex and gh
+        run: |
+          set -u
+          export RUNNER_TEMP="$RUNNER_TEMP/run" && mkdir -p "$RUNNER_TEMP/bin"
+          export PATH="$RUNNER_TEMP/bin:$PATH" GITHUB_REPOSITORY=owner/repo
+          export COMMENT_ID=123 TRIGGER=@codex RUN_URL=https://example/run MODEL= EFFORT=
+          echo "the prompt" > "$RUNNER_TEMP/codex-prompt.md"
+
+          # codex: emits events over 2 x CODEX_PAUSE seconds, then exits with $CODEX_EXIT.
+          cat > "$RUNNER_TEMP/bin/codex" <<'EOF'
+          #!/usr/bin/env bash
+          cat > /dev/null
+          echo '{"type":"item.started","item":{"id":"p","type":"todo_list","items":[{"text":"Step one","completed":false}]}}'
+          echo '{"type":"item.completed","item":{"id":"c1","type":"command_execution","command":"ls","aggregated_output":"","exit_code":0,"status":"completed"}}'
+          sleep "${CODEX_PAUSE:-0}"
+          echo '{"type":"item.updated","item":{"id":"p","type":"todo_list","items":[{"text":"Step one","completed":true}]}}'
+          echo '{"type":"item.completed","item":{"id":"m","type":"agent_message","text":"Halfway."}}'
+          sleep "${CODEX_PAUSE:-0}"
+          exit "${CODEX_EXIT:-0}"
+          EOF
+          # gh: records each call's start and end and a copy of the body; each call takes 6 s.
+          cat > "$RUNNER_TEMP/bin/gh" <<'EOF'
+          #!/usr/bin/env bash
+          n=$(( $(ls "$RUNNER_TEMP"/body.* 2>/dev/null | wc -l) + 1 ))
+          for a in "$@"; do case $a in body=@*) cp "${a#body=@}" "$RUNNER_TEMP/body.$n";; esac; done
+          echo "start $n $(date +%s.%N) $*" >> "$RUNNER_TEMP/gh.log"
+          sleep 6
+          echo "end $n $(date +%s.%N)" >> "$RUNNER_TEMP/gh.log"
+          EOF
+          chmod +x "$RUNNER_TEMP/bin/codex" "$RUNNER_TEMP/bin/gh"
+
+          # Updates run at about 30-36 s and 96-102 s; Codex ends at 99 s, mid-request.
+          status=0
+          CODEX_PAUSE=49.5 bash -eo pipefail "$RUNNER_TEMP/../step.sh" > "$RUNNER_TEMP/step.out" || status=$?
+          done_at=$(date +%s.%N)
+          cat "$RUNNER_TEMP/gh.log"
+          test "$status" -eq 0 || { echo "::error::step exited $status"; exit 1; }
+          calls=$(grep -c '^start' "$RUNNER_TEMP/gh.log")
+          test "$calls" -ge 2 || { echo "::error::expected at least 2 updates, got $calls"; exit 1; }
+          last_end=$(grep '^end' "$RUNNER_TEMP/gh.log" | tail -n1 | cut -d' ' -f3)
+          test "$(grep -c '^end' "$RUNNER_TEMP/gh.log")" -eq "$calls" || { echo "::error::an update was still running when the step ended"; exit 1; }
+          awk -v a="$last_end" -v b="$done_at" 'BEGIN { exit !(a <= b) }' || { echo "::error::update finished after the step"; exit 1; }
+          sleep 8
+          test "$(grep -c '^start' "$RUNNER_TEMP/gh.log")" -eq "$calls" || { echo "::error::updates continued after the step"; exit 1; }
+          grep -q 'issues/comments/123' "$RUNNER_TEMP/gh.log"
+          cat "$RUNNER_TEMP/body.$calls"
+          grep -qF -- "- ✅ Step one" "$RUNNER_TEMP/body.$calls"
+          grep -qF -- "> Halfway." "$RUNNER_TEMP/body.$calls"
+          grep -qF '"type":"item.completed"' "$RUNNER_TEMP/step.out"
+
+          # A failing codex fails the step with its exit code; no comment means no updater.
+          rm -f "$RUNNER_TEMP"/gh.log "$RUNNER_TEMP"/body.* "$RUNNER_TEMP/codex-progress.stop"
+          status=0
+          COMMENT_ID= CODEX_EXIT=3 bash -eo pipefail "$RUNNER_TEMP/../step.sh" > /dev/null || status=$?
+          test "$status" -eq 3 || { echo "::error::expected exit 3, got $status"; exit 1; }
+          test ! -e "$RUNNER_TEMP/gh.log" || { echo "::error::gh called without a comment"; exit 1; }
+          echo "All checks passed."
