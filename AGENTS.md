@@ -22,8 +22,9 @@ covers the game itself (modes, power-ups, calibration, controls).
 ## @codex on GitHub
 
 `@codex` (`.github/workflows/codex.yml`) in an issue (title or body) or an issue or PR conversation comment starts
-a Codex session, for anyone with write access. Model and effort tags: `@codex+gpt-5.5:high`, `@codex:low`; a bare
-tag uses the plan's defaults. On an issue the session works on a new `codex/issue-<n>-<run>` branch and links a
+a Codex session, for anyone with write access. Model and effort tags: `@codex+gpt-6-luna:high`, `@codex:low`; a bare
+tag uses the plan's defaults. Efforts: `none`, `minimal`, `low`, `medium`, `high`, `xhigh`, `max`, `ultra` (each model
+accepts a subset). The first tag with a `+model` or `:effort` wins, wherever it is in the title or body. On an issue the session works on a new `codex/issue-<n>-<run>` branch and links a
 compare page; on a PR it pushes to the PR's branch.
 
 ## The shared Codex login (for Sterling and for sessions)
