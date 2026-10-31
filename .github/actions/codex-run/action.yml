@@ -174,16 +174,96 @@ runs:
         GH_TOKEN: ${{ github.token }}
         MODEL: ${{ steps.prompt.outputs.model }}
         EFFORT: ${{ steps.prompt.outputs.effort }}
+        COMMENT_ID: ${{ steps.progress.outputs.comment_id }}
+        TRIGGER: ${{ inputs.trigger }}
+        RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
       run: |
+        # Live progress: --json makes Codex print one event per line (plan
+        # updates, commands, file edits, interim messages; schema in
+        # codex-rs/exec/src/exec_events.rs). A background loop turns the latest
+        # events into the progress comment once a minute. Command output is
+        # never posted, only the command line. "Post the reply" overwrites the
+        # comment when Codex ends. The filter is inline because this file is
+        # read before the PR checkout, and a file in the action folder is not.
+        events="$RUNNER_TEMP/codex-events.jsonl"
+        : > "$events"
+        cat > "$RUNNER_TEMP/codex-progress.jq" <<'JQ'
+        def clip($n): if length > $n then .[0:$n] + "…" else . end;
+        def cmd: sub("^/bin/(ba)?sh -l?c "; "") | sub("^'(?<c>.*)'$"; "\(.c)"; "s")
+          | split("\n")[0] | gsub("`"; "'") | clip(120);
+        def rel: ltrimstr($ws + "/");
+        def line:
+          if .type == "command_execution" then
+            (if .status == "in_progress" then "⏳" elif .exit_code == 0 then "✅" else "❌" end)
+            + " `" + (.command | cmd) + "`"
+          elif .type == "file_change" then
+            "📝 " + ([.changes[] | .kind + " `" + (.path | rel) + "`"] | join(", "))
+          elif .type == "web_search" then "🔎 " + (.query | clip(120))
+          elif .type == "mcp_tool_call" then "🔧 " + .server + "." + .tool
+          else empty end;
+        [inputs | fromjson? | select(type == "object" and (.item | type) == "object")] as $ev
+        | ($ev | map(select(.item.type == "todo_list")) | last | .item.items // []) as $todo
+        | ($ev | map(select(.type == "item.completed" and .item.type == "agent_message")) | last | .item.text // "") as $msg
+        | ($ev | map(.item | select(.type | IN("command_execution", "file_change", "web_search", "mcp_tool_call")))
+            | reverse
+            | reduce .[] as $i ({seen: {}, out: []};
+                if .seen[$i.id] then . else .seen[$i.id] = true | .out += [$i] end)
+            | .out | reverse) as $acts
+        | [
+            "**Codex (\($trigger)) is working on this.** \($elapsed) so far. [View job](\($run_url))",
+            (if ($todo | length) > 0 then
+              "\n**Plan**\n" + ([$todo[] | "- " + (if .completed then "✅ " else "⬜ " end) + (.text | clip(200))] | join("\n"))
+             else empty end),
+            (if $msg != "" then
+              "\n**Latest update**\n" + ($msg | clip(1200) | split("\n") | map("> " + .) | join("\n"))
+             else empty end),
+            (if ($acts | length) > 0 then
+              "\n**Recent activity** (\($acts | map(select(.type == "command_execution")) | length) commands so far)\n"
+              + ([$acts[-8:][] | line | "- " + .] | join("\n"))
+             else empty end),
+            "\n<sub>Updated about once a minute while Codex runs; replaced by the final reply when it finishes.</sub>"
+          ] | join("\n")
+        JQ
+
+        # The loop stops at the flag file, never mid-request, so its last edit
+        # always lands before the final reply.
+        stop="$RUNNER_TEMP/codex-progress.stop"
+        progress() {
+          local start=$SECONDS
+          sleep 30 & wait $! || true
+          while [ ! -e "$stop" ]; do
+            local m=$(( (SECONDS - start + 30) / 60 ))
+            jq -R -n -r --arg trigger "$TRIGGER" --arg run_url "$RUN_URL" --arg ws "$GITHUB_WORKSPACE" \
+              --arg elapsed "${m} min" -f "$RUNNER_TEMP/codex-progress.jq" "$events" \
+              > "$RUNNER_TEMP/codex-progress.md" \
+              && [ ! -e "$stop" ] \
+              && gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" \
+                   -F body=@"$RUNNER_TEMP/codex-progress.md" >/dev/null \
+              || [ -e "$stop" ] || echo "::warning::Could not update the progress comment."
+            sleep 60 & wait $! || true
+          done
+        }
+        if [ -n "$COMMENT_ID" ]; then progress & progress_pid=$!; fi
+
         # The runner is the sandbox. ignore_default_excludes keeps GH_TOKEN visible
         # to Codex's shell, which otherwise drops any variable named *KEY*,
         # *SECRET* or *TOKEN*.
-        args=(exec --dangerously-bypass-approvals-and-sandbox --color never
+        args=(exec --dangerously-bypass-approvals-and-sandbox --color never --json
               -c shell_environment_policy.ignore_default_excludes=true
               -o "$RUNNER_TEMP/codex-reply.md")
         if [ -n "$MODEL" ]; then args+=(-m "$MODEL"); fi
         if [ -n "$EFFORT" ]; then args+=(-c "model_reasoning_effort=\"$EFFORT\""); fi
-        codex "${args[@]}" - < "$RUNNER_TEMP/codex-prompt.md"
+        status=0
+        codex "${args[@]}" - < "$RUNNER_TEMP/codex-prompt.md" | tee -a "$events" || status=$?
+
+        # Stop the updater before "Post the reply" writes the final comment:
+        # raise the flag, cut its sleep short, and wait for it to exit.
+        if [ -n "${progress_pid:-}" ]; then
+          touch "$stop"
+          pkill -P "$progress_pid" -x sleep 2>/dev/null || true
+          wait "$progress_pid" 2>/dev/null || true
+        fi
+        exit "$status"
 
     - name: Force a token refresh
       if: inputs.mode == 'refresh'
