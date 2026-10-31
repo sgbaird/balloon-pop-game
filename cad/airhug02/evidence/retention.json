@@ -1,0 +1,24 @@
+{
+  "pose": "Illustrated nominal camera and both keepers lifted together; clamp fixed",
+  "samples": 121,
+  "lift_range_mm": [
+    0,
+    60
+  ],
+  "step_mm": 0.5,
+  "maximum_clamp_interference_mm3": 0.0,
+  "initial_camera_keeper_interference_mm3": 0.0,
+  "final_moving_bottom_z_mm": 111.75,
+  "clamp_top_z_mm": 94.0,
+  "conclusion": "Sampled common vertical escape path has no geometric obstruction",
+  "limitations": [
+    "Discrete samples, not continuous collision detection",
+    "Illustrated nominal geometry, not measured physical hardware",
+    "No friction, preload, deformation, impact or holding-force model"
+  ],
+  "mesh_sha256": {
+    "clamp.stl": "b610683521f0f2b80530073c15c4b55e95b7344b3bf3c32aef40ebc74f78acb7",
+    "camera.stl": "dd974b5827002b4d849d883132df6e6f1caaa55ac15e189d6b3b84bdbf12080a",
+    "key.stl": "14128c20e8c916fb06af480cb88838674ae8b57581985a0e726998ad1fd0bbe4"
+  }
+}

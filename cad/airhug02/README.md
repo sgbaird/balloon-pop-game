@@ -47,6 +47,31 @@ The open space between end stops also permits some lateral play; centre the
 housing before seating the keepers. Small removable tape pads can take up
 residual side play if necessary.
 
+## Does the front lip prevent dislodging?
+
+**No positive retention is provided by this lip.** The circled front toe in the
+PR discussion is only **0.6 mm above the saddle floor** (Z = 70.6 versus 70 mm).
+It limits forward sliding while the housing stays seated; an upward movement
+can clear it. The open top and removable tapered keepers rely on friction,
+and the keepers themselves have no latch against lifting out with the camera.
+Rounded housing ends, printing tolerances and rocking further limit how much
+engagement can be assumed from that nominal height.
+
+A [mesh escape check](check_retention.py) lifts the illustrated camera and both
+keepers together from 0 to 60 mm in 0.5 mm increments. Its
+[report](evidence/retention.json) records collision volumes and the exact mesh
+hashes. This checks a possible removal direction; it supplies no friction,
+impact, cable-pull or holding-force prediction. The existing size sweep checks
+clearances, not retention, and structural analysis of the clamp alone cannot
+establish that the camera stays seated.
+
+For resistance to accidental knocks or cable pulls, add a retaining strap
+securing the rigid housing to the fixed cradle, with its route checked on the
+real camera to clear the lens, privacy-cover travel, hinge and cable. A taller
+front toe alone still allows lift-out and could obstruct the optical face.
+The supplied 3MF has no strap or positive latch; do not treat it as a verified
+dislodgement-resistant mount. Physical retention has not been tested.
+
 ## Print and assemble
 
 ![Actual extrusion paths from the revised single plate](previews/toolpaths.png)
@@ -110,6 +135,7 @@ extracted under `/tmp`. Scripts do not download installers automatically.
 python -m pip install numpy scipy pillow matplotlib opencv-python-headless trimesh manifold3d shapely mapbox-earcut
 python cad/airhug02/build.py /tmp/squashfs-root/AppRun
 python cad/airhug02/validate.py
+python cad/airhug02/check_retention.py
 python cad/airhug02/preview_toolpaths.py
 python cad/airhug02/preview_fit_check.py
 python cad/airhug02/animate_assembly.py
