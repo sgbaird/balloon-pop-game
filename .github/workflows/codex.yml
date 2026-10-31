@@ -1,8 +1,11 @@
 name: Codex
 
 # @codex in an issue (title or body) or in an issue or PR conversation comment,
-# from someone with write access. The repository is public, so the
-# author_association check is what keeps strangers from starting a run.
+# from someone with write access. The repository is public, so the authorize
+# job is what keeps strangers from starting a run: it asks GitHub for the
+# sender's permission on this repository (author_association proved unreliable
+# for private org members in ME-EN-250/me-en-250-private). Anyone else gets a
+# skipped codex job, not a failure.
 # Review-thread comments and reviews are not triggers; use a normal PR
 # conversation comment.
 #
@@ -19,25 +22,47 @@ on:
   issues:
     types: [opened]
 
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+permissions: {}
 
 jobs:
-  codex:
+  authorize:
     if: |
       github.event.sender.type != 'Bot' &&
-      ((github.event_name == 'issue_comment' &&
-        contains(github.event.comment.body, '@codex') &&
-        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) ||
+      ((github.event_name == 'issue_comment' && contains(github.event.comment.body, '@codex')) ||
        (github.event_name == 'issues' &&
-        (contains(github.event.issue.body, '@codex') || contains(github.event.issue.title, '@codex')) &&
-        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association)))
+        (contains(github.event.issue.body, '@codex') || contains(github.event.issue.title, '@codex'))))
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      allowed: ${{ steps.check.outputs.allowed }}
+    steps:
+      - name: Check that the sender can write to this repository
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SENDER: ${{ github.event.sender.login }}
+        run: |
+          perm=$(gh api "repos/$GITHUB_REPOSITORY/collaborators/$SENDER/permission" --jq .permission 2>/dev/null || echo none)
+          echo "$SENDER: $perm"
+          case $perm in
+            admin|write) echo "allowed=true" >> "$GITHUB_OUTPUT" ;;
+            *) echo "::notice::$SENDER has $perm access; @codex needs write access." ;;
+          esac
+
+  codex:
+    needs: authorize
+    if: needs.authorize.outputs.allowed == 'true'
     # No concurrency group on purpose: every @codex runs at once, even several
     # on one issue or PR. Sessions check for each other (see AGENTS.md).
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    permissions:
+      actions: read # lets a session see other in-progress @codex runs
+      contents: write
+      issues: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
         with:
