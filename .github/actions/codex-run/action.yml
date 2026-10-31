@@ -140,19 +140,23 @@ runs:
         if [ "$IS_PR" = true ]; then
           kind="pull request"
           read_cmd="gh pr view $NUMBER --comments && gh pr diff $NUMBER"
-          branch_rule="You are on the pull request's branch ($(git rev-parse --abbrev-ref HEAD)). Commit and push changes there."
+          branch_rule="You are on the pull request's branch ($(git rev-parse --abbrev-ref HEAD)). Commit and push changes there. If you are asked to open a new pull request instead, follow the rule for new pull requests below."
         else
           kind="issue"
           read_cmd="gh issue view $NUMBER --comments"
           branch="codex/issue-$NUMBER-$GITHUB_RUN_ID"
-          branch_rule="You are on main. If you change files, create branch $branch, commit, push with \`git push -u origin HEAD\`, then open a pull request: \`gh pr create --base main --head $branch --title '<short title>' --body-file <file>\`, with a body that summarizes the change and ends with 'Refs #$NUMBER'. Put the pull request link on the first line of your reply. If \`gh pr create\` fails, say so in one line and end your reply with [Open a pull request](https://github.com/$GITHUB_REPOSITORY/compare/main...$branch?expand=1) instead."
+          branch_rule="You are on main. If you change files, create branch $branch, commit, push with \`git push -u origin HEAD\`, then open a pull request: \`gh pr create --base main --head $branch --title '<short title>' --body-file <file>\`. If \`gh pr create\` fails, give the full write-up in your reply instead and end it with [Open a pull request](https://github.com/$GITHUB_REPOSITORY/compare/main...$branch?expand=1)."
         fi
-        media_rule="If you create or change images, GIFs or videos (renders, previews, plots, screenshots), embed the few that matter most in your reply so they show inline, e.g. ![short description](https://github.com/$GITHUB_REPOSITORY/blob/<7-character hash>/<path>?raw=true). Use the commit you pushed, PNG, JPG or GIF (GIFs animate; SVG and video do not render inline, so link those). Keep embeds small: a few key images, not every file."
+        # A new pull request carries the details; the reply on the thread that
+        # asked for it stays one sentence, so the thread does not repeat them.
+        pr_rule="Whenever you open a new pull request, its description is the full write-up: what changed and why, links to the key files, embedded images, what you checked and what was not tested, and a last line 'Refs #$NUMBER'. Your reply here is then a single sentence that says what you did and links the pull request, and nothing else."
+        media_rule="If you create or change images, GIFs or videos (renders, previews, plots, screenshots), embed the few that matter most where the write-up goes (the new pull request's description, otherwise your reply) so they show inline, e.g. ![short description](https://github.com/$GITHUB_REPOSITORY/blob/<7-character hash>/<path>?raw=true). Use the commit you pushed, PNG, JPG or GIF (GIFs animate; SVG and video do not render inline, so link those). Keep embeds small: a few key images, not every file."
 
         {
           printf '%s mentioned %s on %s No. %s in %s.\n\n' "$ACTOR" "$TRIGGER" "$kind" "$NUMBER" "$GITHUB_REPOSITORY"
           printf 'Read AGENTS.md first. Read the whole thread with: %s\n\n' "$read_cmd"
           printf '%s\n\n' "$branch_rule"
+          printf '%s\n\n' "$pr_rule"
           printf '%s\n\n' "$media_rule"
           cat <<'EOF'
         Rules for this run:
