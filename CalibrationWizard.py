@@ -134,8 +134,8 @@ class CalibrationWizard:
     def get_camera_frame(self) -> Optional[np.ndarray]:
         """Get a frame from the camera with error handling"""
         if self.camera is None:
-            # Retry initializing camera
-            self.initialize_camera()
+            # Retry initializing camera (keep the handle it returns)
+            self.camera, self.camera_index = self.initialize_camera()
             
         if self.camera is None:
             return None
@@ -345,7 +345,11 @@ class CalibrationWizard:
         # Test camera button
         test_rect = pygame.Rect(self.width//2 - 220, self.height - 100, 200, 60)
         if self.draw_button(test_rect, "Test Camera", active=True):
-            self.initialize_camera()
+            # Release the current handle before reopening; a second open of the
+            # same device takes it over and the old handle stops returning frames.
+            if self.camera is not None:
+                self.camera.release()
+            self.camera, self.camera_index = self.initialize_camera()
             
         # Next button
         next_rect = pygame.Rect(self.width//2 + 20, self.height - 100, 200, 60)
