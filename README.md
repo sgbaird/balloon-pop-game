@@ -137,6 +137,10 @@ The game uses YAML files for configuration:
 - Run `python CalibrationWizard.py` to test the camera
 - With more than one camera, pick one by index: `python main.py --camera 1` (or `python CalibrationWizard.py --camera 1`, or set `BALLOON_CAMERA=1`). The default is 0. Recalibrate after switching cameras.
 
+### Playing with a beach ball
+
+`python main.py --ball beach` (or `BALLOON_BALL=beach`) replaces the blue/yellow colour trackers with `beach_ball.py`, which detects the moment a pale or banded ball (e.g. a white/yellow beach ball) hits the wall: the ball and its shadow on the projection meet only at the wall. Only the projector calibration is needed, not the colour or ball-size calibration. All balls count as one player. It was tuned on one room and one camera position, so expect to adjust the constants at the top of `beach_ball.py`.
+
 ### Poor ball detection
 - Adjust lighting conditions
 - Recalibrate the color detection system

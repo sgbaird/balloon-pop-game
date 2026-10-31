@@ -2723,11 +2723,15 @@ class Game:
 
     def pop_balloon_at_point(self, event):
             """
-            Expects event to be a tuple: (ball_color, x, y, detected_radius, frame_number, is_back)
+            Expects event to be a tuple: (ball_color, x, y, detected_radius, frame_number, is_back[, confirmed])
             Checks if the detected ball's radius is within tolerance of the calibrated radius
-            for the corresponding screen region before registering a balloon pop.
+            for the corresponding screen region before registering a balloon pop. A
+            confirmed event (beach-ball impact detector) skips that check.
             """
-            ball_color, x, y, detected_radius, frame_number, is_back = event
+            ball_color, x, y, detected_radius, frame_number, is_back = event[:6]
+            confirmed = len(event) > 6 and bool(event[6])
+            if confirmed:
+                detected_radius = calibrated_radius = float(detected_radius)
     
             # Determine the nearest calibration region
             min_dist = float('inf')
@@ -2739,7 +2743,8 @@ class Game:
                     nearest_region = region
 
             # Retrieve the expected calibrated radius for this region and color
-            calibrated_radius = self.ball_calibration.get(ball_color, {}).get(nearest_region)
+            if not confirmed:
+                calibrated_radius = self.ball_calibration.get(ball_color, {}).get(nearest_region)
             if calibrated_radius is None:
                 logger.warning(f"No calibration data for {ball_color} in region {nearest_region}")
                 return
@@ -2753,7 +2758,7 @@ class Game:
             RADIUS_TOLERANCE = 2.5
 
             # Check if the detected ball radius is expected and the ball is not returning from the wall
-            if (abs(detected_radius - calibrated_radius) > RADIUS_TOLERANCE) or (is_back):
+            if not confirmed and ((abs(detected_radius - calibrated_radius) > RADIUS_TOLERANCE) or is_back):
                 logger.debug(f"Ball detection skipped: radius mismatch or ball returning from wall")
                 return
             

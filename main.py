@@ -3,7 +3,8 @@ import numpy as np
 import threading
 import time
 import os
-from camera_select import camera_index
+from camera_select import camera_index, ball_type
+from beach_ball import BeachBallImpactDetector
 import yaml
 import pygame
 import logging
@@ -527,6 +528,12 @@ def camera_processing(game_instance, event_queue):
     blue_tracker = BallTracker(calibration_data["blue"], init_frame)
     yellow_tracker = BallTracker(calibration_data["yellow"], init_frame)
 
+    # --ball beach: one pale/banded ball, detected by its impact with the wall
+    beach_detector = None
+    if ball_type() == "beach" and SCREEN_COORDS is not None:
+        beach_detector = BeachBallImpactDetector(SCREEN_COORDS, init_frame.shape)
+        logger.info("Ball type: beach (impact detector; blue/yellow trackers off)")
+
     try:
         logger.info("Starting main processing loop")
         last_gc_time = time.time()
@@ -558,8 +565,22 @@ def camera_processing(game_instance, event_queue):
             M = get_projector_screen_transform(frame_display, WIDTH, HEIGHT)
 
             # Use the enhanced ball trackers
-            blue_result = blue_tracker.update(frame, frame_number)
-            yellow_result = yellow_tracker.update(frame, frame_number)
+            if beach_detector is not None:
+                blue_result = yellow_result = None
+                impact = beach_detector.update(frame, current_time)
+                if impact is not None and M is not None:
+                    ix, iy, ir = impact
+                    cv2.circle(frame_display, (int(ix), int(iy)), int(ir) + 4, (0, 255, 255), 2)
+                    warped = cv2.perspectiveTransform(np.array([[[ix, iy]]], dtype=np.float32), M)[0][0]
+                    # Ball radius in game pixels (the quad spans the full game width)
+                    screen_r = ir * WIDTH / max(1.0, float(np.ptp(SCREEN_COORDS[:, 0])))
+                    logger.info(f"Beach ball impact at ({int(warped[0])}, {int(warped[1])}), r={screen_r:.0f}")
+                    # 7th field True = confirmed impact: the game skips its radius check
+                    event_queue.put(("yellow", int(warped[0]), int(warped[1]), screen_r,
+                                     frame_number, False, True))
+            else:
+                blue_result = blue_tracker.update(frame, frame_number)
+                yellow_result = yellow_tracker.update(frame, frame_number)
             
             # Process blue ball detection result
             if blue_result:

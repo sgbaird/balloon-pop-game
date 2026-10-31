@@ -2,12 +2,23 @@ import os
 import sys
 
 
-def camera_index(default=0):
-    """Camera index from `--camera N` on the command line, else BALLOON_CAMERA, else default."""
+def _option(flag, env, default):
+    """Value of `flag N` / `flag=N` on the command line, else the env variable, else default."""
     args = sys.argv[1:]
     for i, arg in enumerate(args):
-        if arg == "--camera" and i + 1 < len(args):
-            return int(args[i + 1])
-        if arg.startswith("--camera="):
-            return int(arg.split("=", 1)[1])
-    return int(os.environ.get("BALLOON_CAMERA", default))
+        if arg == flag and i + 1 < len(args):
+            return args[i + 1]
+        if arg.startswith(flag + "="):
+            return arg.split("=", 1)[1]
+    return os.environ.get(env, default)
+
+
+def camera_index(default=0):
+    """Camera index from `--camera N` on the command line, else BALLOON_CAMERA, else default."""
+    return int(_option("--camera", "BALLOON_CAMERA", default))
+
+
+def ball_type(default="color"):
+    """`--ball beach` (or BALLOON_BALL=beach) uses the beach-ball impact detector
+    (beach_ball.py) instead of the blue/yellow colour trackers."""
+    return str(_option("--ball", "BALLOON_BALL", default)).lower()
