@@ -806,13 +806,9 @@ def camera_processing(game_instance, event_queue):
             video_recorder_contour.stop()
         
         logger.info("Camera resources released")
-
-    # Run the game
-    try:
-        logger.info("Starting game in main thread")
-        game_instance.run()
-    except Exception as e:
-        logger.error(f"Error running game: {e}", exc_info=True)
+    # The game loop already runs in the main thread (start_game_and_camera).
+    # Starting a second game_instance.run() here, in the camera thread, made two
+    # loops draw at once and crashed with "Surfaces must not be locked during blit".
 
 
 def start_game_and_camera():
