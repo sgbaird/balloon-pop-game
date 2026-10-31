@@ -193,7 +193,7 @@ runs:
         cat > "$RUNNER_TEMP/codex-progress.jq" <<'JQ'
         def clip($n): if length > $n then .[0:$n] + "…" else . end;
         def cmd: sub("^/bin/(ba)?sh -l?c "; "") | split("\n")[0]
-          | sub("^'"; "") | sub("'$"; "") | gsub("`"; "'") | clip(120);
+          | sub("^[\"']"; "") | sub("[\"']$"; "") | gsub("`"; "'") | clip(120);
         def rel: ltrimstr($ws + "/");
         def line:
           if .type == "command_execution" then
@@ -218,7 +218,7 @@ runs:
               "\n**Plan**\n" + ([$todo[] | "- " + (if .completed then "✅ " else "⬜ " end) + (.text | clip(200))] | join("\n"))
              else empty end),
             (if $msg != "" then
-              "\n**Latest update**\n" + ($msg | clip(1200) | split("\n") | map("> " + .) | join("\n"))
+              "\n**Latest update**\n" + ($msg | sub("\\s+$"; "") | clip(1200) | split("\n") | map("> " + .) | join("\n"))
              else empty end),
             (if ($acts | length) > 0 then
               "\n**Recent activity** (\($acts | map(select(.type == "command_execution")) | length) commands so far)\n"
