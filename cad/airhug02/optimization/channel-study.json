@@ -1,0 +1,247 @@
+{
+  "baseline_commit": "005a54c",
+  "method": "Sequential energy-guided rounded-slot insertion, remeshed and re-solved after each insertion",
+  "accepted": [
+    [
+      "jaw_channel",
+      [
+        0,
+        23,
+        35,
+        "x_y",
+        4,
+        24,
+        50
+      ]
+    ],
+    [
+      "lower_channel",
+      [
+        0,
+        10,
+        -5,
+        "x_y",
+        4,
+        8,
+        50
+      ]
+    ]
+  ],
+  "rejected": [
+    {
+      "name": "spine_channel",
+      "reason": "screening limit"
+    }
+  ],
+  "history": [
+    {
+      "name": "baseline",
+      "volume_mm3": 88569.09681977432,
+      "discarded_isolated_voxels": 0,
+      "pitch_mm": 2.0,
+      "nodes": 15179,
+      "elements": 11212,
+      "voxel_volume_mm3": 89696.0,
+      "results": [
+        {
+          "case": "preload",
+          "max_displacement_mm": 0.7600891782246706,
+          "max_von_mises_MPa": 7.48271870890369,
+          "p99_von_mises_MPa": 2.7608551775279917,
+          "strain_energy_Nmm": 37.28339192534959
+        },
+        {
+          "case": "camera",
+          "max_displacement_mm": 0.1144605321561594,
+          "max_von_mises_MPa": 0.5898134972121188,
+          "p99_von_mises_MPa": 0.22847435468185245,
+          "strain_energy_Nmm": 0.12723567800039948
+        },
+        {
+          "case": "side",
+          "max_displacement_mm": 0.09746879519175253,
+          "max_von_mises_MPa": 0.6189784357485311,
+          "p99_von_mises_MPa": 0.19981780719647596,
+          "strain_energy_Nmm": 0.10568576993965072
+        },
+        {
+          "case": "preload_camera",
+          "max_displacement_mm": 0.757677636187878,
+          "max_von_mises_MPa": 7.525782222421134,
+          "p99_von_mises_MPa": 2.7861918862068897
+        },
+        {
+          "case": "preload_side",
+          "max_displacement_mm": 0.7598482307257045,
+          "max_von_mises_MPa": 7.686881363136649,
+          "p99_von_mises_MPa": 2.7615475164261993
+        }
+      ]
+    },
+    {
+      "name": "jaw_channel",
+      "slot": [
+        0,
+        23,
+        35,
+        "x_y",
+        4,
+        24,
+        50
+      ],
+      "score": 0.1080683421587884,
+      "volume_mm3": 84063.53598872384,
+      "accepted": true,
+      "discarded_isolated_voxels": 0,
+      "pitch_mm": 2.0,
+      "nodes": 14912,
+      "elements": 10636,
+      "voxel_volume_mm3": 85088.0,
+      "results": [
+        {
+          "case": "preload",
+          "max_displacement_mm": 0.7608115442424889,
+          "max_von_mises_MPa": 7.498793955232699,
+          "p99_von_mises_MPa": 2.8254602029444453,
+          "strain_energy_Nmm": 41.22564632591022
+        },
+        {
+          "case": "camera",
+          "max_displacement_mm": 0.11498800882676245,
+          "max_von_mises_MPa": 0.591466686607583,
+          "p99_von_mises_MPa": 0.23164775008077082,
+          "strain_energy_Nmm": 0.12798632358314432
+        },
+        {
+          "case": "side",
+          "max_displacement_mm": 0.09763516150240394,
+          "max_von_mises_MPa": 0.6215541819112604,
+          "p99_von_mises_MPa": 0.2027625088044732,
+          "strain_energy_Nmm": 0.10600553698693214
+        },
+        {
+          "case": "preload_camera",
+          "max_displacement_mm": 0.7583626470003803,
+          "max_von_mises_MPa": 7.539760314735731,
+          "p99_von_mises_MPa": 2.850977291745577
+        },
+        {
+          "case": "preload_side",
+          "max_displacement_mm": 0.7605479431913114,
+          "max_von_mises_MPa": 7.703107189558112,
+          "p99_von_mises_MPa": 2.824360485577592
+        }
+      ]
+    },
+    {
+      "name": "lower_channel",
+      "slot": [
+        0,
+        10,
+        -5,
+        "x_y",
+        4,
+        8,
+        50
+      ],
+      "score": 0.47447610165162796,
+      "volume_mm3": 82696.21853685097,
+      "accepted": true,
+      "discarded_isolated_voxels": 0,
+      "pitch_mm": 2.0,
+      "nodes": 14862,
+      "elements": 10468,
+      "voxel_volume_mm3": 83744.0,
+      "results": [
+        {
+          "case": "preload",
+          "max_displacement_mm": 0.796711103375732,
+          "max_von_mises_MPa": 7.491547024926026,
+          "p99_von_mises_MPa": 2.842650270876869,
+          "strain_energy_Nmm": 42.74766013855339
+        },
+        {
+          "case": "camera",
+          "max_displacement_mm": 0.11500966103525043,
+          "max_von_mises_MPa": 0.5914721679843259,
+          "p99_von_mises_MPa": 0.23257019015319635,
+          "strain_energy_Nmm": 0.12801495855328676
+        },
+        {
+          "case": "side",
+          "max_displacement_mm": 0.09763658535030094,
+          "max_von_mises_MPa": 0.6215542350015727,
+          "p99_von_mises_MPa": 0.20344897982604468,
+          "strain_energy_Nmm": 0.10600622610753956
+        },
+        {
+          "case": "preload_camera",
+          "max_displacement_mm": 0.7943060024946089,
+          "max_von_mises_MPa": 7.532563369484701,
+          "p99_von_mises_MPa": 2.8649897396115
+        },
+        {
+          "case": "preload_side",
+          "max_displacement_mm": 0.7964504065979607,
+          "max_von_mises_MPa": 7.6962031013409415,
+          "p99_von_mises_MPa": 2.8428880907209373
+        }
+      ]
+    },
+    {
+      "name": "spine_channel",
+      "slot": [
+        0,
+        -5,
+        16,
+        "x_z",
+        4,
+        24,
+        50
+      ],
+      "score": 1.3927962619546397,
+      "volume_mm3": 78256.90109143191,
+      "accepted": false,
+      "discarded_isolated_voxels": 0,
+      "pitch_mm": 2.0,
+      "nodes": 14612,
+      "elements": 9916,
+      "voxel_volume_mm3": 79328.0,
+      "results": [
+        {
+          "case": "preload",
+          "max_displacement_mm": 0.8545277111683536,
+          "max_von_mises_MPa": 8.755018247171131,
+          "p99_von_mises_MPa": 3.2318656964908445,
+          "strain_energy_Nmm": 46.50956112232058
+        },
+        {
+          "case": "camera",
+          "max_displacement_mm": 0.2006389257135058,
+          "max_von_mises_MPa": 0.8933219767511374,
+          "p99_von_mises_MPa": 0.2946024202291468,
+          "strain_energy_Nmm": 0.26114108212521586
+        },
+        {
+          "case": "side",
+          "max_displacement_mm": 0.10276392247918965,
+          "max_von_mises_MPa": 0.6204758299366397,
+          "p99_von_mises_MPa": 0.21483640018149278,
+          "strain_energy_Nmm": 0.11465781451172627
+        },
+        {
+          "case": "preload_camera",
+          "max_displacement_mm": 0.8019100316464698,
+          "max_von_mises_MPa": 8.748395914292074,
+          "p99_von_mises_MPa": 3.309569428598866
+        },
+        {
+          "case": "preload_side",
+          "max_displacement_mm": 0.8521587919301026,
+          "max_von_mises_MPa": 9.021040486453439,
+          "p99_von_mises_MPa": 3.2328419700742272
+        }
+      ]
+    }
+  ]
+}

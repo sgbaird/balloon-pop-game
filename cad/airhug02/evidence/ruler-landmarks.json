@@ -1,0 +1,78 @@
+{
+  "second": 51,
+  "method": "Manual metric centimetre ticks on tape edge; 1D projective ruler fitted along its image axis. Housing rear long axis nearly parallel to ruler. Endpoints approximate because hand touches upper cap. Plane offset and foreshortening NOT corrected by this 1D fit.",
+  "ticks": [
+    {
+      "mm": 160,
+      "pixel": [
+        414,
+        825
+      ]
+    },
+    {
+      "mm": 150,
+      "pixel": [
+        414,
+        874
+      ]
+    },
+    {
+      "mm": 140,
+      "pixel": [
+        414,
+        924
+      ]
+    },
+    {
+      "mm": 130,
+      "pixel": [
+        417,
+        975
+      ]
+    },
+    {
+      "mm": 120,
+      "pixel": [
+        417,
+        1025
+      ]
+    },
+    {
+      "mm": 110,
+      "pixel": [
+        417,
+        1076
+      ]
+    },
+    {
+      "mm": 100,
+      "pixel": [
+        417,
+        1127
+      ]
+    },
+    {
+      "mm": 90,
+      "pixel": [
+        417,
+        1178
+      ]
+    }
+  ],
+  "housing_width_endpoints": [
+    [
+      575,
+      848
+    ],
+    [
+      552,
+      1175
+    ]
+  ],
+  "endpoint_annotation_error_px": 6,
+  "plane_and_axis_scale_scenarios": [
+    0.9,
+    1,
+    1.1
+  ]
+}

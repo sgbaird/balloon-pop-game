@@ -1,0 +1,492 @@
+{
+  "baseline-normal": {
+    "plates": 1,
+    "total_g": 117.50732421875,
+    "seconds": 15287.8388671875,
+    "support_g": 27.379101448404406,
+    "brim_g": 0.3255076707590054,
+    "extrusion_g_by_feature": {
+      "Support": 25.049858876523036,
+      "Brim": 0.3255076707590054,
+      "Outer wall": 11.989672794014801,
+      "Inner wall": 46.18001931300219,
+      "Bottom surface": 0.44238984969804823,
+      "Gap infill": 0.6560218789770168,
+      "Internal solid infill": 6.14188388798177,
+      "Support transition": 0.5944372419586074,
+      "Support interface": 1.734805329922763,
+      "Sparse infill": 19.31980402522422,
+      "Overhang wall": 0.32772468929779675,
+      "Bridge": 1.8105106090657,
+      "Floating vertical shell": 1.501513944748438,
+      "Top surface": 1.3623498242907628
+    },
+    "support_seconds": 2725.937698364258,
+    "warnings": [
+      ""
+    ]
+  },
+  "baseline-tree": {
+    "plates": 2,
+    "total_g": 102.50650358200073,
+    "seconds": 15815.953735351562,
+    "support_g": 12.166978742045348,
+    "brim_g": 0.4893056818146383,
+    "extrusion_g_by_feature": {
+      "Support": 11.435736009619328,
+      "Brim": 0.4893056818146383,
+      "Outer wall": 11.989681562710377,
+      "Inner wall": 46.18004824373233,
+      "Bottom surface": 0.44245477980121817,
+      "Gap infill": 0.6587668386073106,
+      "Internal solid infill": 6.141600784380786,
+      "Support interface": 0.7312427324260209,
+      "Sparse infill": 19.294558264590776,
+      "Overhang wall": 0.3277247489487878,
+      "Bridge": 1.8121776156465013,
+      "Floating vertical shell": 1.5015341664342177,
+      "Top surface": 1.3600444029840362,
+      "Custom": 0.07081169083446394
+    },
+    "support_seconds": 2245.0211839675903,
+    "warnings": [
+      "",
+      ""
+    ]
+  },
+  "optimized-normal": {
+    "plates": 1,
+    "total_g": 118.5419692993164,
+    "seconds": 16140.6181640625,
+    "support_g": 33.118633857854704,
+    "brim_g": 0.3120712851466203,
+    "extrusion_g_by_feature": {
+      "Support": 29.520864058965113,
+      "Brim": 0.3120712851466203,
+      "Outer wall": 11.403351427221178,
+      "Inner wall": 42.80191070760683,
+      "Bottom surface": 0.44238984969804823,
+      "Gap infill": 0.6866768510805714,
+      "Internal solid infill": 7.791128312632895,
+      "Support transition": 0.8300830517283742,
+      "Support interface": 2.7676867471612177,
+      "Sparse infill": 15.730892428250247,
+      "Overhang wall": 0.4520247671617164,
+      "Bridge": 2.3629214912978,
+      "Floating vertical shell": 1.7127594273735836,
+      "Top surface": 1.656386079839105
+    },
+    "support_seconds": 3677.9628143310547,
+    "warnings": [
+      ""
+    ]
+  },
+  "optimized-tree": {
+    "plates": 2,
+    "total_g": 103.90880155563354,
+    "seconds": 17292.703857421875,
+    "support_g": 18.294904656156994,
+    "brim_g": 0.45710706137866447,
+    "extrusion_g_by_feature": {
+      "Support": 17.262225575078432,
+      "Brim": 0.45710706137866447,
+      "Outer wall": 11.403360404695224,
+      "Inner wall": 42.80193868392115,
+      "Bottom surface": 0.44245477980121817,
+      "Gap infill": 0.6894188281613404,
+      "Internal solid infill": 7.790844016012077,
+      "Support interface": 1.032679081078562,
+      "Sparse infill": 15.705162182271627,
+      "Overhang wall": 0.4520248864636967,
+      "Bridge": 2.3636611934056226,
+      "Floating vertical shell": 1.7122140980183271,
+      "Top surface": 1.654080598881387,
+      "Custom": 0.07081169083446394
+    },
+    "support_seconds": 3385.1537523269653,
+    "warnings": [
+      "",
+      ""
+    ]
+  },
+  "baseline-front-normal": {
+    "plates": 1,
+    "total_g": 105.55624389648438,
+    "seconds": 14133.46484375,
+    "support_g": 18.4919914989738,
+    "brim_g": 0.32924119642953414,
+    "extrusion_g_by_feature": {
+      "Brim": 0.32924119642953414,
+      "Outer wall": 11.110171342339466,
+      "Inner wall": 40.03029123029237,
+      "Bottom surface": 0.2137509733540436,
+      "Support": 15.727328460521564,
+      "Gap infill": 1.220183946688657,
+      "Internal solid infill": 8.466354231494334,
+      "Support transition": 0.8746113827752885,
+      "Support interface": 1.8900516556769478,
+      "Sparse infill": 19.81008846048877,
+      "Overhang wall": 0.30901924221717386,
+      "Bridge": 2.764609203433241,
+      "Floating vertical shell": 1.1452869086416169,
+      "Top surface": 1.594433038303309
+    },
+    "support_seconds": 2026.9767608642578,
+    "warnings": [
+      ""
+    ]
+  },
+  "baseline-front-tree": {
+    "plates": 2,
+    "total_g": 99.31340551376343,
+    "seconds": 16268.99560546875,
+    "support_g": 12.111247030389645,
+    "brim_g": 0.4383125851947061,
+    "extrusion_g_by_feature": {
+      "Brim": 0.4383125851947061,
+      "Outer wall": 11.11016588427375,
+      "Inner wall": 40.0302396023598,
+      "Bottom surface": 0.21419925054772623,
+      "Support": 10.884471828202601,
+      "Gap infill": 1.220303755703056,
+      "Internal solid infill": 8.46797554541647,
+      "Sparse infill": 19.767621637848904,
+      "Floating vertical shell": 1.1451639381246819,
+      "Bridge": 2.763632448289132,
+      "Overhang wall": 0.30901927204266916,
+      "Top surface": 1.5938882458069863,
+      "Support interface": 1.226775202187043,
+      "Custom": 0.07081169083446394
+    },
+    "support_seconds": 2797.8531188964844,
+    "warnings": [
+      "",
+      ""
+    ]
+  },
+  "optimized-front-normal": {
+    "plates": 1,
+    "total_g": 107.69996643066406,
+    "seconds": 15263.0234375,
+    "support_g": 23.2888002509128,
+    "brim_g": 0.32924128590602003,
+    "extrusion_g_by_feature": {
+      "Brim": 0.32924128590602003,
+      "Outer wall": 11.618746948558803,
+      "Inner wall": 40.55455785060702,
+      "Bottom surface": 0.2137509733540436,
+      "Support": 20.08915822287046,
+      "Gap infill": 1.2408933091444732,
+      "Internal solid infill": 8.930403206719664,
+      "Support transition": 0.9325415018601021,
+      "Support interface": 2.267100526182238,
+      "Sparse infill": 15.518819586386055,
+      "Overhang wall": 0.37582498130744996,
+      "Bridge": 2.6981269516644986,
+      "Floating vertical shell": 1.2607242511140149,
+      "Top surface": 1.5992571033823453
+    },
+    "support_seconds": 2749.7847747802734,
+    "warnings": [
+      ""
+    ]
+  },
+  "optimized-front-tree": {
+    "plates": 2,
+    "total_g": 99.97324895858765,
+    "seconds": 17184.776611328125,
+    "support_g": 15.422560484747661,
+    "brim_g": 0.4383519548484427,
+    "extrusion_g_by_feature": {
+      "Brim": 0.4383519548484427,
+      "Outer wall": 11.618741550143998,
+      "Inner wall": 40.55450616302283,
+      "Bottom surface": 0.21419925054772623,
+      "Support": 14.16930307619621,
+      "Gap infill": 1.2410131181588724,
+      "Internal solid infill": 8.93202452064186,
+      "Sparse infill": 15.476352763747041,
+      "Floating vertical shell": 1.2621779755782443,
+      "Bridge": 2.69715019652039,
+      "Overhang wall": 0.3758250111329456,
+      "Top surface": 1.5987123108860208,
+      "Support interface": 1.2532574085514516,
+      "Custom": 0.07081169083446394
+    },
+    "support_seconds": 3239.9990844726562,
+    "warnings": [
+      "",
+      ""
+    ]
+  },
+  "baseline-normal_bridge": {
+    "plates": 1,
+    "total_g": 113.50947570800781,
+    "seconds": 15230.0986328125,
+    "support_g": 23.38126557938234,
+    "brim_g": 0.3255076707590054,
+    "extrusion_g_by_feature": {
+      "Support": 21.468570616486307,
+      "Brim": 0.3255076707590054,
+      "Outer wall": 11.989672794014801,
+      "Inner wall": 46.18001931300219,
+      "Bottom surface": 0.44238984969804823,
+      "Gap infill": 0.6560218789770168,
+      "Internal solid infill": 6.14188388798177,
+      "Support transition": 0.5055994691744392,
+      "Support interface": 1.4070954937215938,
+      "Sparse infill": 19.31980402522422,
+      "Overhang wall": 0.32772468929779675,
+      "Bridge": 1.8105106090657,
+      "Floating vertical shell": 1.501501954899341,
+      "Top surface": 1.3623498242907628
+    },
+    "support_seconds": 2607.1514205932617,
+    "warnings": [
+      ""
+    ]
+  },
+  "optimized-normal_bridge": {
+    "plates": 1,
+    "total_g": 114.4445571899414,
+    "seconds": 16135.6513671875,
+    "support_g": 29.021208274137496,
+    "brim_g": 0.3120712851466203,
+    "extrusion_g_by_feature": {
+      "Support": 26.001514554052978,
+      "Brim": 0.3120712851466203,
+      "Outer wall": 11.403351427221178,
+      "Inner wall": 42.80191070760683,
+      "Bottom surface": 0.44238984969804823,
+      "Gap infill": 0.6866768510805714,
+      "Internal solid infill": 7.791128312632895,
+      "Support transition": 0.7066220246969694,
+      "Support interface": 2.3130716953875474,
+      "Sparse infill": 15.730892428250247,
+      "Overhang wall": 0.4520247671617164,
+      "Bridge": 2.3629214912978,
+      "Floating vertical shell": 1.7127832877697875,
+      "Top surface": 1.656386079839105
+    },
+    "support_seconds": 3583.870834350586,
+    "warnings": [
+      ""
+    ]
+  },
+  "optimized-front-normal_bridge": {
+    "plates": 1,
+    "total_g": 101.29702758789062,
+    "seconds": 14692.4033203125,
+    "support_g": 16.837187214275488,
+    "brim_g": 0.37772015292694555,
+    "extrusion_g_by_feature": {
+      "Brim": 0.37772015292694555,
+      "Outer wall": 11.618746948558803,
+      "Inner wall": 40.55455785060702,
+      "Bottom surface": 0.2137509733540436,
+      "Support": 14.721166451811342,
+      "Gap infill": 1.2408933091444732,
+      "Internal solid infill": 8.930403206719664,
+      "Support transition": 0.5973870430903131,
+      "Support interface": 1.5186337193738324,
+      "Sparse infill": 15.518819586386055,
+      "Overhang wall": 0.37582498130744996,
+      "Bridge": 2.6981269516644986,
+      "Floating vertical shell": 1.260920890604232,
+      "Top surface": 1.5992571033823453
+    },
+    "support_seconds": 2184.3276596069336,
+    "warnings": [
+      ""
+    ]
+  },
+  "baseline-front-normal_bridge": {
+    "plates": 1,
+    "total_g": 98.4942398071289,
+    "seconds": 13490.0986328125,
+    "support_g": 11.372283103578697,
+    "brim_g": 0.38668116332532504,
+    "extrusion_g_by_feature": {
+      "Brim": 0.38668116332532504,
+      "Outer wall": 11.110171342339466,
+      "Inner wall": 40.03029123029237,
+      "Bottom surface": 0.2137509733540436,
+      "Support": 9.837819442947282,
+      "Gap infill": 1.220183946688657,
+      "Internal solid infill": 8.466354231494334,
+      "Support transition": 0.4866478722814733,
+      "Support interface": 1.047815788349942,
+      "Sparse infill": 19.81008846048877,
+      "Overhang wall": 0.30901924221717386,
+      "Bridge": 2.764609203433241,
+      "Floating vertical shell": 1.1455572767561006,
+      "Top surface": 1.594433038303309
+    },
+    "support_seconds": 1399.7874603271484,
+    "warnings": [
+      ""
+    ]
+  },
+  "channels-normal_bridge": {
+    "plates": 1,
+    "total_g": 115.05123138427734,
+    "seconds": 16245.9794921875,
+    "support_g": 23.385106536486685,
+    "brim_g": 0.3255076707590054,
+    "extrusion_g_by_feature": {
+      "Support": 21.54263510565868,
+      "Brim": 0.3255076707590054,
+      "Outer wall": 13.664556258279486,
+      "Inner wall": 48.64949978279526,
+      "Bottom surface": 0.44238984969804823,
+      "Gap infill": 2.4057547499730405,
+      "Internal solid infill": 5.922540276361437,
+      "Support transition": 0.4819655976068859,
+      "Support interface": 1.3605058332211188,
+      "Sparse infill": 15.219941549415191,
+      "Overhang wall": 0.33914845049037345,
+      "Bridge": 1.7320004806979892,
+      "Floating vertical shell": 1.5385656802958148,
+      "Top surface": 1.3554042717342383
+    },
+    "support_seconds": 2617.58602142334,
+    "warnings": [
+      ""
+    ]
+  },
+  "narrow36-front-normal_bridge": {
+    "plates": 1,
+    "total_g": 91.21505737304688,
+    "seconds": 12766.9716796875,
+    "support_g": 11.829233372328957,
+    "brim_g": 0.38668116332532504,
+    "extrusion_g_by_feature": {
+      "Brim": 0.38668116332532504,
+      "Outer wall": 10.5847800920707,
+      "Inner wall": 37.438097369131164,
+      "Bottom surface": 0.2137509733540436,
+      "Support": 10.208431852274655,
+      "Gap infill": 1.2201817097765137,
+      "Internal solid infill": 7.545516939958613,
+      "Support transition": 0.5207449749669146,
+      "Support interface": 1.1000565450873871,
+      "Sparse infill": 16.51991302060759,
+      "Overhang wall": 0.3096651431424165,
+      "Bridge": 2.4703069342927333,
+      "Floating vertical shell": 1.1566535838362766,
+      "Top surface": 1.4694632587689302
+    },
+    "support_seconds": 1449.9860305786133,
+    "warnings": [
+      ""
+    ]
+  },
+  "narrow40-front-bridge": {
+    "plates": 1,
+    "total_g": 93.05209350585938,
+    "seconds": 12954.298828125,
+    "support_g": 10.875990381943645,
+    "brim_g": 0.38668116332532504,
+    "extrusion_g_by_feature": {
+      "Brim": 0.38668116332532504,
+      "Outer wall": 10.812423900416428,
+      "Inner wall": 38.42430981987998,
+      "Bottom surface": 0.2137509733540436,
+      "Support": 9.454758707014491,
+      "Gap infill": 1.2202007682679816,
+      "Internal solid infill": 7.875702351917157,
+      "Support transition": 0.44831775635646837,
+      "Support interface": 0.9729139185726855,
+      "Sparse infill": 17.58375729853654,
+      "Overhang wall": 0.3076842530495592,
+      "Bridge": 2.6015724881440025,
+      "Floating vertical shell": 1.1646599397825286,
+      "Top surface": 1.5145424070622224
+    },
+    "support_seconds": 1346.8848724365234,
+    "warnings": [
+      ""
+    ]
+  },
+  "narrow44-before-lips-front-bridge": {
+    "plates": 1,
+    "total_g": 96.25855255126953,
+    "seconds": 13282.0048828125,
+    "support_g": 11.300346931922096,
+    "brim_g": 0.38668116332532504,
+    "extrusion_g_by_feature": {
+      "Brim": 0.38668116332532504,
+      "Outer wall": 11.061415754373607,
+      "Inner wall": 39.501086253597876,
+      "Bottom surface": 0.2137509733540436,
+      "Support": 9.7833265928886,
+      "Gap infill": 1.2201939680550635,
+      "Internal solid infill": 8.163491210101972,
+      "Support transition": 0.474050686629078,
+      "Support interface": 1.0429696524044194,
+      "Sparse infill": 18.62499021235215,
+      "Overhang wall": 0.3076623014850516,
+      "Bridge": 2.6853680223513607,
+      "Floating vertical shell": 1.167063844874588,
+      "Top surface": 1.5556908533358589
+    },
+    "support_seconds": 1389.6135864257812,
+    "warnings": [
+      ""
+    ]
+  },
+  "retention-baseline-normal": {
+    "plates": 1,
+    "total_g": 117.99964904785156,
+    "seconds": 15375.9697265625,
+    "support_g": 27.381024894593633,
+    "brim_g": 0.3255076707590054,
+    "extrusion_g_by_feature": {
+      "Support": 25.039743887887973,
+      "Brim": 0.3255076707590054,
+      "Outer wall": 12.109258176890812,
+      "Inner wall": 46.453909251794116,
+      "Bottom surface": 0.44238984969804823,
+      "Gap infill": 0.7472479879447254,
+      "Internal solid infill": 6.141967995878384,
+      "Support transition": 0.5985880561332492,
+      "Support interface": 1.7426929505724107,
+      "Sparse infill": 19.32051536328606,
+      "Overhang wall": 0.32864632692667195,
+      "Bridge": 1.8104542388796663,
+      "Floating vertical shell": 1.501710673715132,
+      "Top surface": 1.366194420105621
+    },
+    "support_seconds": 2742.040840148926,
+    "warnings": [
+      ""
+    ]
+  },
+  "selected44-front-bridge": {
+    "plates": 1,
+    "total_g": 96.67524719238281,
+    "seconds": 13361.38671875,
+    "support_g": 11.300346931922096,
+    "brim_g": 0.377326068658141,
+    "extrusion_g_by_feature": {
+      "Brim": 0.377326068658141,
+      "Outer wall": 11.06269878752848,
+      "Inner wall": 39.60518952014192,
+      "Bottom surface": 0.2391749114958114,
+      "Support": 9.7833265928886,
+      "Gap infill": 1.1715705965096284,
+      "Internal solid infill": 8.370197699731786,
+      "Support transition": 0.474050686629078,
+      "Support interface": 1.0429696524044194,
+      "Sparse infill": 18.67592860901371,
+      "Overhang wall": 0.30627714583441795,
+      "Bridge": 2.7222480823480577,
+      "Floating vertical shell": 1.173301310348259,
+      "Top surface": 1.6001667213366277
+    },
+    "support_seconds": 1390.21630859375,
+    "warnings": [
+      ""
+    ]
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "description": "CalculiX-screened parametric shape refinement informed by prior topology trials; not a global density/topology optimum",
+  "source_baseline": "585a0d3",
+  "selected_parameters": {
+    "clamp_w_mm": 44,
+    "spine_depth_mm": 12,
+    "spine_window_width_mm": 10,
+    "spine_window_height_mm": 14,
+    "jaw_boss_diameter_mm": 28,
+    "upright_window_width_mm": 6,
+    "side_window_height_mm": 7,
+    "side_lip_height_mm": 10
+  },
+  "selected_slice": {
+    "plates": 1,
+    "total_g": 93.12773895263672,
+    "seconds": 13568.5986328125,
+    "support_g": 13.092609467876922,
+    "brim_g": 0.3457388112239041,
+    "extrusion_g_by_feature": {
+      "Brim": 0.3457388112239041,
+      "Outer wall": 10.674892367918112,
+      "Inner wall": 38.46189074918772,
+      "Bottom surface": 0.2391749114958114,
+      "Support": 11.16035870320504,
+      "Gap infill": 0.882854284724434,
+      "Internal solid infill": 7.336900664217077,
+      "Support transition": 0.6065438876905386,
+      "Support interface": 1.3257068769813445,
+      "Sparse infill": 16.58411621680791,
+      "Overhang wall": 0.37141513270652,
+      "Bridge": 2.265303062885096,
+      "Floating vertical shell": 1.388576038429389,
+      "Top surface": 1.4134539910550277
+    },
+    "support_seconds": 1678.5498428344727,
+    "warnings": [
+      ""
+    ]
+  },
+  "selected_fem": {
+    "1.5": {
+      "restraint": "top",
+      "discarded_isolated_voxels": 0,
+      "pitch_mm": 1.5,
+      "nodes": 29484,
+      "elements": 22769,
+      "voxel_volume_mm3": 76845.375,
+      "results": [
+        {
+          "case": "preload",
+          "energy_work_relative_error": 3.939417956258856e-09,
+          "max_displacement_mm": 1.5159306207942234,
+          "max_von_mises_MPa": 6.008465699934952,
+          "p99_von_mises_MPa": 3.2474592725098805,
+          "strain_energy_Nmm": 41.6418980889672
+        },
+        {
+          "case": "camera",
+          "energy_work_relative_error": 6.82001300685215e-09,
+          "max_displacement_mm": 0.1122431246334732,
+          "max_von_mises_MPa": 0.7093650878589397,
+          "p99_von_mises_MPa": 0.23107277225378522,
+          "strain_energy_Nmm": 0.12143798262543719
+        },
+        {
+          "case": "side",
+          "energy_work_relative_error": 3.991094854993836e-09,
+          "max_displacement_mm": 0.09419167660486852,
+          "max_von_mises_MPa": 0.6813962696420344,
+          "p99_von_mises_MPa": 0.23083390393480988,
+          "strain_energy_Nmm": 0.10477530803952712
+        },
+        {
+          "case": "preload_camera",
+          "max_displacement_mm": 1.4982059301558694,
+          "max_von_mises_MPa": 6.009760301753509,
+          "p99_von_mises_MPa": 3.247532714925375
+        },
+        {
+          "case": "preload_side",
+          "max_displacement_mm": 1.5140490436031933,
+          "max_von_mises_MPa": 5.998491808505644,
+          "p99_von_mises_MPa": 3.246835348185599
+        }
+      ]
+    },
+    "1.0": {
+      "restraint": "top",
+      "discarded_isolated_voxels": 0,
+      "pitch_mm": 1.0,
+      "nodes": 91362,
+      "elements": 76411,
+      "voxel_volume_mm3": 76411.0,
+      "results": [
+        {
+          "case": "preload",
+          "energy_work_relative_error": 9.799360222617551e-09,
+          "max_displacement_mm": 1.4477895195962966,
+          "max_von_mises_MPa": 6.601102557472238,
+          "p99_von_mises_MPa": 3.2482672298223543,
+          "strain_energy_Nmm": 41.04425178643727
+        },
+        {
+          "case": "camera",
+          "energy_work_relative_error": 2.3705907360917314e-09,
+          "max_displacement_mm": 0.14130923324456085,
+          "max_von_mises_MPa": 1.0209590199477745,
+          "p99_von_mises_MPa": 0.27358927540811667,
+          "strain_energy_Nmm": 0.15460598662919273
+        },
+        {
+          "case": "side",
+          "energy_work_relative_error": 1.0721942898368817e-09,
+          "max_displacement_mm": 0.10499017329409006,
+          "max_von_mises_MPa": 1.0866381766215423,
+          "p99_von_mises_MPa": 0.25731357584501785,
+          "strain_energy_Nmm": 0.1235501812802617
+        },
+        {
+          "case": "preload_camera",
+          "max_displacement_mm": 1.4261288859760297,
+          "max_von_mises_MPa": 6.602585404421592,
+          "p99_von_mises_MPa": 3.2533069636475767
+        },
+        {
+          "case": "preload_side",
+          "max_displacement_mm": 1.4458212542346656,
+          "max_von_mises_MPa": 6.5275692992940035,
+          "p99_von_mises_MPa": 3.252552495894276
+        }
+      ]
+    }
+  },
+  "rejected_large_spine_window": {
+    "restraint": "top",
+    "discarded_isolated_voxels": 0,
+    "pitch_mm": 1.0,
+    "nodes": 85806,
+    "elements": 71005,
+    "voxel_volume_mm3": 71005.0,
+    "results": [
+      {
+        "case": "preload",
+        "energy_work_relative_error": 1.3269506788247458e-08,
+        "max_displacement_mm": 2.291475680096729,
+        "max_von_mises_MPa": 10.081915080934438,
+        "p99_von_mises_MPa": 5.417362210474304,
+        "strain_energy_Nmm": 65.80382112315274
+      },
+      {
+        "case": "camera",
+        "energy_work_relative_error": 4.741564095893146e-09,
+        "max_displacement_mm": 0.14872695289626456,
+        "max_von_mises_MPa": 1.0508464263826651,
+        "p99_von_mises_MPa": 0.2871199262442268,
+        "strain_energy_Nmm": 0.16569927899706322
+      },
+      {
+        "case": "side",
+        "energy_work_relative_error": 3.072479521535954e-10,
+        "max_displacement_mm": 0.11097367329505782,
+        "max_von_mises_MPa": 1.189793759447855,
+        "p99_von_mises_MPa": 0.26825259655772193,
+        "strain_energy_Nmm": 0.12973254794937605
+      },
+      {
+        "case": "preload_camera",
+        "max_displacement_mm": 2.269084610115801,
+        "max_von_mises_MPa": 10.085027407349301,
+        "p99_von_mises_MPa": 5.427136013792503
+      },
+      {
+        "case": "preload_side",
+        "max_displacement_mm": 2.2893778332373618,
+        "max_von_mises_MPa": 10.106066920988571,
+        "p99_von_mises_MPa": 5.419436587641639
+      }
+    ]
+  },
+  "solid_CAD_volume_mm3": 76196.94795891792,
+  "artifact_sha256": {
+    "mount.scad": "5bf745e9cca6f07d3dd1c0757f8677decdd1e85dec5199fe7f42d09ba2d6ac9d",
+    "stl/clamp.stl": "9078fc71ed83a6e90fb205e6ddbdd571a95663e40c4937e7ae8f59584b5728c4",
+    "slicer/mount/mount-a1mini-pla.3mf": "3639e00b85a45c78556c30e42ccb72a2a68632bf1a96085cd40a8670672f2510",
+    "optimization/decks/sculpted-rejected-1.0mm.inp.gz": "906b8b4d9c9522cc309e6553f6c0e830855dbcbc58a07fbe58c2630b00431347",
+    "optimization/decks/sculpted-1.0mm.inp.gz": "57fef789f48ccc2fba4dd81d9ba6efe35c6c5fd723c838fc803da8ecb21f63a0",
+    "optimization/decks/sculpted-1.0mm.log": "ceec7c1603556f31b714923ea5a0e4a09f168b71caef66eff0703d2edc4acd5e",
+    "optimization/decks/sculpted-1.5mm.log": "965cc0dd1b90ab170cdfa7584bd8fa8665c8970f9f055a8774c5c7c946fce8af",
+    "optimization/decks/sculpted-1.5mm.inp.gz": "d3f97b8c122084e3f10ea11e7546fdb248728261afe20d3115aad77f4bf9aa39",
+    "optimization/decks/sculpted-rejected-1.0mm.log": "fb9ef98e934c0e1c96630bb0f40a9212c0a712a81fc0d5b3424b69c52111245e"
+  },
+  "analyzed_vs_delivered_symmetric_difference_mm3": 0.0,
+  "software": {
+    "CalculiX": "2.21",
+    "OpenSCAD": "2021.01",
+    "Bambu Studio": "02.08.02.61"
+  }
+}

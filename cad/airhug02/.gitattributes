@@ -1,0 +1,2 @@
+# Exported CAD meshes are generated artifacts; review mount.scad instead.
+stl/*.stl binary

@@ -1,0 +1,281 @@
+{
+  "source_comment": "https://github.com/sgbaird/balloon-pop-game/pull/14#issuecomment-6549291320",
+  "coordinate_system": "Coordinates are in a 2048 x 1152 display of the full 4032 x 2268 images; uniform scale factor 4032/2048. No crops or EXIF rotation before annotation.",
+  "photos": [
+    {
+      "number": 1,
+      "url": "https://github.com/user-attachments/assets/4b604880-ec1a-43a1-bd5a-766c04b43d62",
+      "sha256": "613f9d39ed6c361fe0766cf0f5a5dfb3223c11a7dacc1319b206b376c348bd48"
+    },
+    {
+      "number": 2,
+      "url": "https://github.com/user-attachments/assets/dc4781fc-5120-4368-8214-95ac7e7f8a12",
+      "sha256": "a2a2f4fc41234082e2a432ec2843a0bddef350a662ca8f2889c9ecee1b6df798"
+    },
+    {
+      "number": 3,
+      "url": "https://github.com/user-attachments/assets/d0d0b630-5961-4a8e-9f21-e1bf7a0145c5",
+      "sha256": "deb022830e98c1c64d4b8cdef62981c03f058f1923d6a8d42ead6c048d661db4"
+    },
+    {
+      "number": 4,
+      "url": "https://github.com/user-attachments/assets/4acd13db-bcf6-454e-ade5-9da161846886",
+      "sha256": "75155cd437f823fb322aa187f5f9a6e007e03df216f7b281d820a3e59f4ccd21"
+    },
+    {
+      "number": 5,
+      "url": "https://github.com/user-attachments/assets/b7cb5d9c-d10a-4401-be35-386e17c4a23d",
+      "sha256": "ea246ddde88c86ca0620c64ecab92a9e6f3568041d3dd1ae93bc66cd878ed3c6"
+    }
+  ],
+  "measurements": [
+    {
+      "photo": 1,
+      "feature": "width",
+      "ticks": [
+        [
+          50,
+          719,
+          446
+        ],
+        [
+          60,
+          861,
+          452
+        ],
+        [
+          70,
+          1005,
+          458
+        ],
+        [
+          80,
+          1148,
+          464
+        ],
+        [
+          90,
+          1292,
+          470
+        ],
+        [
+          100,
+          1436,
+          476
+        ],
+        [
+          110,
+          1581,
+          482
+        ]
+      ],
+      "endpoints": [
+        [
+          627,
+          624
+        ],
+        [
+          1627,
+          646
+        ]
+      ],
+      "crop": [
+        570,
+        300,
+        1680,
+        830
+      ],
+      "note": "Widest housing ends; folded clip is excluded."
+    },
+    {
+      "photo": 3,
+      "feature": "depth",
+      "ticks": [
+        [
+          60,
+          800,
+          563
+        ],
+        [
+          70,
+          955,
+          572
+        ],
+        [
+          80,
+          1110,
+          580
+        ],
+        [
+          90,
+          1265,
+          588
+        ],
+        [
+          100,
+          1418,
+          596
+        ]
+      ],
+      "endpoints": [
+        [
+          824,
+          712
+        ],
+        [
+          1232,
+          734
+        ]
+      ],
+      "crop": [
+        710,
+        400,
+        1390,
+        920
+      ],
+      "note": "Rigid front bezel to rear shell at mid-height; projecting thin cover and cable excluded."
+    },
+    {
+      "photo": 4,
+      "feature": "depth",
+      "ticks": [
+        [
+          60,
+          800,
+          411
+        ],
+        [
+          70,
+          955,
+          417
+        ],
+        [
+          80,
+          1110,
+          423
+        ],
+        [
+          90,
+          1263,
+          429
+        ],
+        [
+          100,
+          1417,
+          435
+        ]
+      ],
+      "endpoints": [
+        [
+          866,
+          700
+        ],
+        [
+          1240,
+          714
+        ]
+      ],
+      "crop": [
+        740,
+        250,
+        1360,
+        890
+      ],
+      "note": "Front bezel to rear shell; vertical housing length extends outside crop. Not the clip behind it."
+    },
+    {
+      "photo": 5,
+      "feature": "width",
+      "ticks": [
+        [
+          50,
+          777,
+          452
+        ],
+        [
+          60,
+          900,
+          457
+        ],
+        [
+          70,
+          1023,
+          462
+        ],
+        [
+          80,
+          1145,
+          468
+        ],
+        [
+          90,
+          1266,
+          473
+        ],
+        [
+          100,
+          1388,
+          478
+        ],
+        [
+          110,
+          1509,
+          483
+        ]
+      ],
+      "endpoints": [
+        [
+          718,
+          541
+        ],
+        [
+          1566,
+          578
+        ]
+      ],
+      "crop": [
+        650,
+        330,
+        1650,
+        830
+      ],
+      "note": "Widest ends, not cover length. Body is pitched relative to photo 2."
+    }
+  ],
+  "front_ratio": {
+    "photo": 2,
+    "width_endpoints": [
+      [
+        178,
+        444
+      ],
+      [
+        1774,
+        405
+      ]
+    ],
+    "height_endpoints": [
+      [
+        1000,
+        228
+      ],
+      [
+        1010,
+        623
+      ]
+    ],
+    "crop": [
+      100,
+      150,
+      1840,
+      730
+    ],
+    "note": "Nearly frontal silhouette, including outer bezel. Height is measured perpendicular to the long axis. Residual out-of-plane pose is not corrected."
+  },
+  "endpoint_selection_sensitivity_px": 3,
+  "systematic_scale_scenarios": [
+    0.95,
+    1.0,
+    1.05
+  ]
+}

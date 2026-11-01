@@ -1,0 +1,185 @@
+{
+  "method": "Independent per-photo 1D projective metric ruler fit; endpoints projected onto tape image axis. No 3D pose fit or physical-fit acceptance.",
+  "measurements": [
+    {
+      "coefficients": [
+        14.06427441003339,
+        80.0562150354493,
+        0.001954574107002663
+      ],
+      "origin_px": [
+        1148.857142857143,
+        464.0
+      ],
+      "axis": [
+        0.9991292068649578,
+        0.04172323081210904
+      ],
+      "tick_rms_mm": 0.019072792941055457,
+      "leave_one_tick_out_error_mm": [
+        0.04952754962504713,
+        -0.049085270745678145,
+        0.041638136787156554,
+        -0.005007676561135099,
+        0.007049724658671153,
+        -0.020580682119330618,
+        0.027193927662494843
+      ],
+      "photo": 1,
+      "feature": "width",
+      "endpoint_reads_mm": [
+        44.08165302081733,
+        113.6455742415256
+      ],
+      "apparent_span_mm": 69.56392122070827,
+      "endpoint_selection_sensitivity_mm": [
+        69.14653759871422,
+        69.98130520160043
+      ],
+      "affine_comparison_span_mm": 69.54199454152143,
+      "scale_scenarios_mm": [
+        66.08572515967285,
+        69.56392122070827,
+        73.04211728174369
+      ]
+    },
+    {
+      "coefficients": [
+        12.72270146333919,
+        79.96211012706817,
+        -0.002447392522558931
+      ],
+      "origin_px": [
+        1109.6,
+        579.8
+      ],
+      "axis": [
+        0.9985962607947011,
+        0.05296704566842937
+      ],
+      "tick_rms_mm": 0.019213082112185725,
+      "leave_one_tick_out_error_mm": [
+        0.09339941919120065,
+        -0.02797341356890115,
+        -0.02225697972080809,
+        0.052258077308124484,
+        -0.12616222231604013
+      ],
+      "photo": 3,
+      "feature": "depth",
+      "endpoint_reads_mm": [
+        62.0537841287729,
+        88.39809016687845
+      ],
+      "apparent_span_mm": 26.34430603810555,
+      "endpoint_selection_sensitivity_mm": [
+        25.957446890916792,
+        26.73116539793631
+      ],
+      "affine_comparison_span_mm": 26.39173558971068,
+      "scale_scenarios_mm": [
+        25.02709073620027,
+        26.34430603810555,
+        27.66152134001083
+      ]
+    },
+    {
+      "coefficients": [
+        12.768964585805824,
+        79.96307322802976,
+        -0.002392921496764668
+      ],
+      "origin_px": [
+        1109.0,
+        423.0
+      ],
+      "axis": [
+        0.999243854938683,
+        0.03888082261578571
+      ],
+      "tick_rms_mm": 0.01959763435716801,
+      "leave_one_tick_out_error_mm": [
+        -0.01595475489730802,
+        -0.008833259279782624,
+        0.0540076162226768,
+        -0.05007885674848467,
+        0.09775280778710282
+      ],
+      "photo": 4,
+      "feature": "depth",
+      "endpoint_reads_mm": [
+        64.96774755936927,
+        89.19455057121513
+      ],
+      "apparent_span_mm": 24.22680301184586,
+      "endpoint_selection_sensitivity_mm": [
+        23.838405524727236,
+        24.615200686043522
+      ],
+      "affine_comparison_span_mm": 24.252660477895745,
+      "scale_scenarios_mm": [
+        23.015462861253564,
+        24.22680301184586,
+        25.438143162438156
+      ]
+    },
+    {
+      "coefficients": [
+        16.165500506442164,
+        79.93350136006501,
+        -0.002723664141450359
+      ],
+      "origin_px": [
+        1144.0,
+        467.57142857142856
+      ],
+      "axis": [
+        0.9990873536910989,
+        0.04271369446110871
+      ],
+      "tick_rms_mm": 0.02200029527961281,
+      "leave_one_tick_out_error_mm": [
+        -0.02923539091170113,
+        -0.009024368689232176,
+        0.03856638349043351,
+        0.025241214654229793,
+        -0.06469249736312577,
+        0.008439252422121513,
+        0.03861932474221419
+      ],
+      "photo": 5,
+      "feature": "width",
+      "endpoint_reads_mm": [
+        45.524000154015,
+        115.06086026317902
+      ],
+      "apparent_span_mm": 69.53686010916402,
+      "endpoint_selection_sensitivity_mm": [
+        69.0452890022099,
+        70.0284319126045
+      ],
+      "affine_comparison_span_mm": 69.53049757553524,
+      "scale_scenarios_mm": [
+        66.06001710370582,
+        69.53686010916402,
+        73.01370311462223
+      ]
+    }
+  ],
+  "frontal_height_to_width_ratio": 0.2474990554145053,
+  "conditional_height_estimates_mm": [
+    17.217004793054354,
+    17.21030719350869
+  ],
+  "interpretation": "Working envelope near 70 x 17-18 x 25 mm (width x height x depth); rounded photo estimates, not caliper measurements. Existing 65 x 16.1 x 10 mm print geometry is obsolete as a claimed camera fit.",
+  "limitations": [
+    "Tape plane and housing plane are not coincident; no 3D correction.",
+    "Out-of-plane housing rotations and lens distortion are not corrected.",
+    "5% scale scenarios are illustrative, not confidence limits or guaranteed error bounds.",
+    "Endpoint perturbations and tick residuals measure annotation/fit consistency only.",
+    "Front photo has no ruler: face height transfers width from other views and assumes near-frontal pose.",
+    "User reports a distant, zoomed phone view; phone model, lens, zoom and intrinsics are not established by these attachments.",
+    "Clip, hinge, cover travel and mounting envelope still require clearance checks."
+  ],
+  "artifacts_changed": "Photo evidence, report and documentation only; existing CAD, STL and sliced 3MFs are not regenerated."
+}

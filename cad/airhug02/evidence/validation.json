@@ -1,0 +1,305 @@
+{
+  "watertight_print_meshes": true,
+  "thread_interference_mm3": 0.0,
+  "camera_interference_mm3": 0.0,
+  "slices": {
+    "mount": {
+      "grams": 93.13,
+      "estimated_seconds": 13569,
+      "slicer_warning": ""
+    },
+    "a2l-petg/mount": {
+      "grams": 92.35,
+      "estimated_seconds": 16288,
+      "slicer_warning": ""
+    },
+    "fit-check": {
+      "grams": 19.43,
+      "estimated_seconds": 3837,
+      "slicer_warning": ""
+    },
+    "a2l-petg/fit-check": {
+      "grams": 19.2,
+      "estimated_seconds": 4962,
+      "slicer_warning": ""
+    }
+  },
+  "housing_scenarios": [
+    {
+      "width": 66,
+      "height": 16,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 57.09
+    },
+    {
+      "width": 66,
+      "height": 16,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 64.29
+    },
+    {
+      "width": 66,
+      "height": 16,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 75.09
+    },
+    {
+      "width": 66,
+      "height": 18,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 58.9
+    },
+    {
+      "width": 66,
+      "height": 18,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 66.1
+    },
+    {
+      "width": 66,
+      "height": 18,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 76.91
+    },
+    {
+      "width": 66,
+      "height": 20,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 60.65
+    },
+    {
+      "width": 66,
+      "height": 20,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 67.85
+    },
+    {
+      "width": 66,
+      "height": 20,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 78.65
+    },
+    {
+      "width": 70,
+      "height": 16,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 57.23
+    },
+    {
+      "width": 70,
+      "height": 16,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 64.43
+    },
+    {
+      "width": 70,
+      "height": 16,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 75.24
+    },
+    {
+      "width": 70,
+      "height": 18,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 59.2
+    },
+    {
+      "width": 70,
+      "height": 18,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 66.4
+    },
+    {
+      "width": 70,
+      "height": 18,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 77.2
+    },
+    {
+      "width": 70,
+      "height": 20,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 61.12
+    },
+    {
+      "width": 70,
+      "height": 20,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 68.32
+    },
+    {
+      "width": 70,
+      "height": 20,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 79.11
+    },
+    {
+      "width": 74,
+      "height": 16,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 57.26
+    },
+    {
+      "width": 74,
+      "height": 16,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 64.46
+    },
+    {
+      "width": 74,
+      "height": 16,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 75.26
+    },
+    {
+      "width": 74,
+      "height": 18,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 59.25
+    },
+    {
+      "width": 74,
+      "height": 18,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 66.45
+    },
+    {
+      "width": 74,
+      "height": 18,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 77.25
+    },
+    {
+      "width": 74,
+      "height": 20,
+      "depth": 23,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 61.23
+    },
+    {
+      "width": 74,
+      "height": 20,
+      "depth": 25,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 68.43
+    },
+    {
+      "width": 74,
+      "height": 20,
+      "depth": 28,
+      "interference_mm3": 0.0,
+      "keeper_tip_z": 79.24
+    }
+  ],
+  "clip_keepout_interference_mm3": 0.0,
+  "thread_travel_scenarios": [
+    {
+      "advance_mm": -2.6,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": -1.6,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": -0.6000000000000001,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 0.3999999999999999,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 1.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 2.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 3.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 4.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 5.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 6.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 7.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 8.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 9.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 10.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 11.4,
+      "interference_mm3": 0.0
+    },
+    {
+      "advance_mm": 12.4,
+      "interference_mm3": 0.0
+    }
+  ],
+  "seated_pad_interference_mm3": 0.0,
+  "not_validated": [
+    "physical fit",
+    "print quality",
+    "PLA/PETG strength and creep",
+    "clamp holding force",
+    "camera view on site"
+  ],
+  "artifact_sha256": {
+    "slicer/a2l-petg/fit-check/fit-check-a2l-petg.3mf": "5d0b0c529968086a4cb99f8651bbc9e6b1f5c85a1c9c1779e9916031d18e8f5a",
+    "slicer/a2l-petg/mount/mount-a2l-petg.3mf": "e3dde493fc2305813ee043c00045e74ce338afa405183aef09c31ca05c95931d",
+    "slicer/fit-check/fit-check-a1mini-pla.3mf": "7b961990ac7b552bd08ff839617b4c4340a16b36fa6ee1a7884efcc989a91775",
+    "slicer/mount/mount-a1mini-pla.3mf": "3639e00b85a45c78556c30e42ccb72a2a68632bf1a96085cd40a8670672f2510",
+    "stl/camera.stl": "dd974b5827002b4d849d883132df6e6f1caaa55ac15e189d6b3b84bdbf12080a",
+    "stl/clamp.stl": "9078fc71ed83a6e90fb205e6ddbdd571a95663e40c4937e7ae8f59584b5728c4",
+    "stl/coupon.stl": "e4594c6cbb3553a73ae80574d4ec161ab7452bcaa9b59a268b60cc4fbd9f1243",
+    "stl/key.stl": "14128c20e8c916fb06af480cb88838674ae8b57581985a0e726998ad1fd0bbe4",
+    "stl/pad.stl": "f9007206684c5cb07bf129fac2442280ac12d7df60eb756c74be5a2e6f77af2c",
+    "stl/screw.stl": "4f7c8e21ab1d5508134b81733ab4206856ae00642026e54825964dd21d5db104"
+  }
+}
