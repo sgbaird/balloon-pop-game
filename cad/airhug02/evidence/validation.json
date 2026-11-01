@@ -8,9 +8,19 @@
       "estimated_seconds": 13569,
       "slicer_warning": ""
     },
+    "a2l-petg/mount": {
+      "grams": 92.35,
+      "estimated_seconds": 16288,
+      "slicer_warning": ""
+    },
     "fit-check": {
       "grams": 19.43,
       "estimated_seconds": 3837,
+      "slicer_warning": ""
+    },
+    "a2l-petg/fit-check": {
+      "grams": 19.2,
+      "estimated_seconds": 4962,
       "slicer_warning": ""
     }
   },
@@ -276,11 +286,13 @@
   "not_validated": [
     "physical fit",
     "print quality",
-    "PLA creep",
+    "PLA/PETG strength and creep",
     "clamp holding force",
     "camera view on site"
   ],
   "artifact_sha256": {
+    "slicer/a2l-petg/fit-check/fit-check-a2l-petg.3mf": "5d0b0c529968086a4cb99f8651bbc9e6b1f5c85a1c9c1779e9916031d18e8f5a",
+    "slicer/a2l-petg/mount/mount-a2l-petg.3mf": "e3dde493fc2305813ee043c00045e74ce338afa405183aef09c31ca05c95931d",
     "slicer/fit-check/fit-check-a1mini-pla.3mf": "7b961990ac7b552bd08ff839617b4c4340a16b36fa6ee1a7884efcc989a91775",
     "slicer/mount/mount-a1mini-pla.3mf": "3639e00b85a45c78556c30e42ccb72a2a68632bf1a96085cd40a8670672f2510",
     "stl/camera.stl": "dd974b5827002b4d849d883132df6e6f1caaa55ac15e189d6b3b84bdbf12080a",

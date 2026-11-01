@@ -62,7 +62,7 @@ Balloon Pop Game combines a projector and camera setup to create an engaging phy
 
 ## Calibration
 
-For the AIRHUG 02, see the [printable corner-ledge mount](cad/airhug02/README.md) for editable CAD, video comparisons, and A1 mini PLA print files.
+For the AIRHUG 02, see the [printable corner-ledge mount](cad/airhug02/README.md) for editable CAD, video comparisons, and A2L PETG or A1 mini PLA print files.
 
 Before playing, you'll need to calibrate the system using the Calibration Wizard, which guides you through:
 

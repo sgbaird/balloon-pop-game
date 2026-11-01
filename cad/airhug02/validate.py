@@ -98,22 +98,42 @@ def main():
     clip_clash=volume(clamp,clip)
     assert clip_clash<0.01,('clip keepout',clip_clash)
     reports={}
-    for name in ['mount','fit-check']:
-        folder=ROOT/'slicer'/name
+    for name,(variant,model,material,width,depth,height,bed_temp) in itertools.product(['mount','fit-check'], [
+        ('a1mini-pla','A1 mini','PLA',180,180,180,65),
+        ('a2l-petg','A2L','PETG',330,320,325,70),
+    ]):
+        folder=ROOT/'slicer'/name if variant=='a1mini-pla' else ROOT/'slicer'/variant/name
         result=json.loads((folder/'result.json').read_text());assert result['return_code']==0
         assert not result['sliced_plates'][0].get('warning_message'),result
-        with zipfile.ZipFile(folder/f'{name}-a1mini-pla.3mf') as z:
+        with zipfile.ZipFile(folder/f'{name}-{variant}.3mf') as z:
             cfg=json.loads(z.read('Metadata/project_settings.config'))
-            assert cfg['printer_model']=='Bambu Lab A1 mini'
-            assert cfg['printable_area']==['0x0','180x0','180x180','0x180']
-            assert cfg['filament_type']==['PLA']
+            assert cfg['printer_model']==f'Bambu Lab {model}'
+            assert cfg['printable_area']==['0x0',f'{width}x0',f'{width}x{depth}',f'0x{depth}']
+            assert cfg['filament_type']==[material]
             assert cfg['nozzle_diameter']==['0.4']
             assert cfg['enable_support']=='1'
             assert cfg['bridge_no_support']=='1'
+            assert cfg['wall_loops']=='5'
+            assert cfg['sparse_infill_density']=='30%'
+            assert cfg['sparse_infill_pattern']=='gyroid'
+            assert cfg['curr_bed_type']=='Textured PEI Plate'
+            if material=='PETG':
+                assert cfg['nozzle_temperature']==['255']
+                assert cfg['nozzle_temperature_initial_layer']==['255']
+                assert cfg['filament_max_volumetric_speed']==['8']
+                assert cfg['textured_plate_temp']==['70']
             gcode=z.read('Metadata/plate_1.gcode').decode()
-            assert 'machine: A1 mini' in gcode
-            assert 'M140 S65' in gcode
-            assert '; layer num/total_layer_count: 1/' in gcode
+            executable=gcode.split('; EXECUTABLE_BLOCK_START',1)[1]
+            marker='A2L start gcode' if model=='A2L' else f'machine: {model}'
+            assert marker in executable
+            assert f'M140 S{bed_temp}' in executable
+            assert f'; filament_type = {material}' in gcode
+            if model=='A2L':
+                assert '; CHANGE_LAYER\n; Z_HEIGHT: 0.2' in executable
+                assert 'M109 S255' in executable
+                assert 'M1002 set_filament_type:PETG' in executable
+            else:
+                assert '; layer num/total_layer_count: 1/' in executable
         assert len(result['sliced_plates'])==1,('expected one plate',name)
         p=result['sliced_plates'][0]
         expected=['clamp.stl','screw.stl','pad.stl','key.stl','key.stl'] if name=='mount' else ['coupon.stl','screw.stl']
@@ -121,18 +141,19 @@ def main():
         for obj in p['objects']:
             b=obj['bbox']
             assert b['x']>=0 and b['y']>=0 and b['z']>=-0.001
-            assert b['x']+b['width']<=180 and b['y']+b['depth']<=180
-            assert b['z']+b['height']<=180
+            assert b['x']+b['width']<=width and b['y']+b['depth']<=depth
+            assert b['z']+b['height']<=height
 
-        reports[name]={'grams':round(p['filaments'][0]['total_used_g'],2),
+        key=name if variant=='a1mini-pla' else f'{variant}/{name}'
+        reports[key]={'grams':round(p['filaments'][0]['total_used_g'],2),
                        'estimated_seconds':round(p['total_predication']),
                        'slicer_warning':p.get('warning_message','')}
     report={'watertight_print_meshes':True,'thread_interference_mm3':float(clash.volume),
             'camera_interference_mm3':camera_clash,'slices':reports,
             'housing_scenarios':sweep,'clip_keepout_interference_mm3':clip_clash,
             'thread_travel_scenarios':thread_checks,'seated_pad_interference_mm3':pad_clash,
-            'not_validated':['physical fit','print quality','PLA creep','clamp holding force','camera view on site']}
-    report['artifact_sha256']={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(list((ROOT/'stl').glob('*.stl'))+list((ROOT/'slicer').glob('*/*.3mf')))}
+            'not_validated':['physical fit','print quality','PLA/PETG strength and creep','clamp holding force','camera view on site']}
+    report['artifact_sha256']={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(list((ROOT/'stl').glob('*.stl'))+list((ROOT/'slicer').rglob('*.3mf')))}
     (ROOT/'evidence/validation.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report,indent=2))
 

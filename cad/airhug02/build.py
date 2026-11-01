@@ -13,7 +13,9 @@ PARTS=['clamp','screw','pad','key','coupon','camera']
 def run(args):
     subprocess.run([str(a) for a in args],check=True,cwd=ROOT)
 
-def presets(app):
+def presets(app, output=None, names=None):
+    output = ROOT/'slicer' if output is None else Path(output)
+    output.mkdir(parents=True, exist_ok=True)
     base=app.parent/'resources/profiles/BBL'
     index={}
     for p in base.rglob('*.json'):
@@ -27,7 +29,7 @@ def presets(app):
         for inc in j.get('include',[]):r.update(resolve(inc))
         r.update(j);r.pop('inherits',None);r.pop('include',None)
         return r
-    names={'machine':'Bambu Lab A1 mini 0.4 nozzle',
+    names=names or {'machine':'Bambu Lab A1 mini 0.4 nozzle',
            'process':'0.20mm Standard @BBL A1M','filament':'Generic PLA @BBL A1M'}
     for kind,name in names.items():
         j=resolve(name)
@@ -37,8 +39,8 @@ def presets(app):
                      top_shell_layers='5',bottom_shell_layers='5',enable_support='1',
                      bridge_no_support='1',support_type='normal(auto)',support_on_build_plate_only='0',
                      brim_type='outer_only',brim_width='5',curr_bed_type='Textured PEI Plate',
-                     print_settings_id='AIRHUG clamp 0.20mm A1 mini')
-        (ROOT/'slicer'/f'{kind}.json').write_text(json.dumps(j,indent=2)+'\n')
+                     print_settings_id='AIRHUG clamp '+names['process'])
+        (output/f'{kind}.json').write_text(json.dumps(j,indent=2)+'\n')
 
 def main():
     app=Path(sys.argv[1]).resolve()

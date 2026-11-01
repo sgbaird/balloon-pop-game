@@ -1,17 +1,28 @@
 # AIRHUG 02: revised single-plate corner mount
 
-Download [mount-a1mini-pla.3mf](slicer/mount/mount-a1mini-pla.3mf) for the
-**curved-frame and side-lip revision**. It contains sliced G-code for one A1 mini plate:
-**one clamp, one screw, one pressure pad and two tapered keepers**. No separate
-fit-check print or metal hardware is required. Bambu estimates **93 g / 3 h 46 min**,
-including supports and brims. Assembly and support removal are
-required after printing; this is not a print-in-place mechanism.
+Download **[mount-a2l-petg.3mf](slicer/a2l-petg/mount/mount-a2l-petg.3mf)**
+for the **curved-frame and side-lip revision**, resliced for **Bambu Lab A2L /
+0.4 mm nozzle / Generic PETG / Textured PEI plate**. It contains sliced G-code
+for one plate: **one clamp, one screw, one pressure pad and two tapered
+keepers**. Bambu Studio estimates **92.35 g / 4 h 31 min**, including
+supports and brims. No separate fit-check print or metal hardware is required.
+Assembly and support removal are required after printing; this is not a
+print-in-place mechanism. Do not scale the project.
 
-Use **A1 mini / 0.4 mm nozzle / Generic PLA / Textured PEI plate**. Open the project
-in Bambu Studio and confirm those match your setup. Normal removable PLA supports
-and 5 mm outer brims are enabled; detected bridges are left unsupported. The clamp
-prints front down. No AMS is needed. All five parts are included
-even if you keep using the screw you already printed. Do not scale the project.
+The official A2L Generic PETG preset uses **255°C nozzle, 70°C bed and an
+8 mm³/s maximum volumetric flow**. The project retains 0.20 mm layers, five
+walls, 30% gyroid, five top/bottom layers, normal removable supports and 5 mm
+outer brims; detected bridges are left unsupported. Supports use the same PETG,
+with the preset's 0.20 mm contact gaps. The clamp prints front down. No AMS is
+needed. Confirm printer, nozzle, filament and plate in Bambu Studio before
+printing; use your filament manufacturer's drying guidance and check support
+removal and thread fit after printing.
+
+The geometry and clearances are unchanged from the latest PLA revision. The
+previous [A1 mini / PLA project](slicer/mount/mount-a1mini-pla.3mf) remains
+available (**93.1 g / 3 h 46 min**). The weight comparisons and CalculiX study
+below describe that earlier PLA slicing and assumed material model; they do
+**not establish PETG strength, stiffness, creep life or a tested load rating**.
 
 ![Revised cradle and nominal camera on an example ledge](previews/assembly.png)
 
@@ -120,7 +131,7 @@ not measured print results.
 
 ## Print and assemble
 
-![Actual extrusion paths from the revised single plate](previews/toolpaths.png)
+![Actual A2L PETG extrusion paths and first layer](previews/toolpaths-a2l-petg.png)
 
 1. Print the complete mount plate. Let it cool, then remove brims and supports,
    especially from the female thread, keeper slots, cradle and pressure-pad
@@ -151,7 +162,7 @@ not measured print results.
 
 The goal is one print job with enough adjustment to accommodate the photo
 uncertainty. **A first-print physical fit cannot be guaranteed remotely.** The
-real camera, ledge, clamp holding force, print quality and PLA creep have not
+real camera, ledge, clamp holding force, print quality and PLA/PETG creep have not
 been tested. Keep it away from projector exhaust.
 
 `corner_side=-1` selects the supplied left stop; `+1` selects right; `0` removes
@@ -163,9 +174,10 @@ previous commits describe the superseded prototype, not proof of this fit.
 
 Your original printed gauges have **65.6 mm width and 10.6 mm depth openings**;
 they describe the rejected dimensions. Keep the screw; do not force those gauges
-onto the housing. The newly regenerated [optional fit-check plate](slicer/fit-check/fit-check-a1mini-pla.3mf)
+onto the housing. The [optional A2L / PETG fit-check plate](slicer/a2l-petg/fit-check/fit-check-a2l-petg.3mf)
 has **70.6 mm width and 25.6 mm depth openings**, and the revised female thread.
-It is not required before this complete plate and does not represent the larger
+It estimates **19.20 g / 1 h 23 min**. It is not required before the complete
+plate and does not represent the larger
 adjustable cradle openings. Its depth gauge may be too small for the upper end
 of the 24–26 mm photo estimates.
 
@@ -179,7 +191,11 @@ extracted under `/tmp`. Scripts do not download installers automatically.
 
 ```bash
 python -m pip install numpy scipy pillow matplotlib opencv-python-headless trimesh manifold3d shapely mapbox-earcut
-python cad/airhug02/build.py /tmp/squashfs-root/AppRun
+# Reslice existing meshes for A2L / PETG (no CAD regeneration):
+python cad/airhug02/reslice_a2l_petg.py /tmp/squashfs-root/AppRun
+python cad/airhug02/preview_toolpaths.py --project cad/airhug02/slicer/a2l-petg/mount/mount-a2l-petg.3mf --output cad/airhug02/previews/toolpaths-a2l-petg.png
+# Optional: regenerate CAD and the historical A1 mini / PLA artifacts:
+# python cad/airhug02/build.py /tmp/squashfs-root/AppRun
 python cad/airhug02/validate.py
 python cad/airhug02/check_retention.py
 python cad/airhug02/preview_retention.py
@@ -192,11 +208,12 @@ python -m py_compile *.py cad/airhug02/*.py
 
 [Validation report](evidence/validation.json) records mesh topology, independent
 housing scenarios, clip keepout, nominal reference-camera intersection, modeled
-thread clearance over 15 mm of travel, seated-pad clearance, single-plate object inventory/bounds, embedded machine/PLA
-settings, slice estimates and artifact hashes. Slicer success is not a print
-or hardware test. Profile snapshots are in `slicer/`: 0.20 mm layers, five walls,
+thread clearance over 15 mm of travel, seated-pad clearance, single-plate object inventory/bounds, embedded machine/material
+settings for both A1 mini / PLA and A2L / PETG, slice estimates and artifact hashes. Slicer success is not a print
+or hardware test. A2L / PETG profile snapshots are in `slicer/a2l-petg/`
+(the earlier PLA snapshots remain in `slicer/`): 0.20 mm layers, five walls,
 30% gyroid infill, five top/bottom layers and normal supports (except detected bridges), using manufacturer
-PLA temperatures/cooling/motion. Actual extrusion paths are plotted because GUI
+material-specific temperatures/cooling/motion. Actual extrusion paths are plotted because GUI
 thumbnails are unavailable headlessly. No game or camera/projector calibration
 was run.
 
