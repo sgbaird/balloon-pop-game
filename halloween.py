@@ -9,6 +9,12 @@ Adds, on top of the normal game:
   with a green cap);
 * bats flapping across, spiders dangling on threads, cobwebs in the top corners,
   and a spiky shell that rolls by now and then for a big coin bonus;
+* "?" boxes: hit one and it bumps and pays out a coin (sometimes five), then
+  turns brown for a few seconds;
+* balloons drawn as the costume characters: Mario and Peach on the red side,
+  Bluigey (blue heeler face, green cap), Luigi and Bowser on the green side.
+  To use your own character images instead, put PNGs named mario.png, luigi.png,
+  bluigey.png, peach.png and bowser.png in png/characters/ (git ignores that folder);
 * pennants in the costume colours (red, green, pink, yellow) and the occasional
   shout ("Wahoo!", "For real life!", ...).
 
@@ -19,6 +25,7 @@ the same reason (the detector's ball hue is yellow).
 """
 import io
 import math
+import os
 import random
 import struct
 import wave
@@ -175,10 +182,10 @@ def _web_surface():
 # --------------------------------------------------------------------------- actors
 
 class Coin:
-    def __init__(self, x, y, delay=0.0):
+    def __init__(self, x, y, delay=0.0, vx=None, vy=None):
         self.x, self.y = x, y
-        self.vx = random.uniform(-7, 7)
-        self.vy = random.uniform(-17, -11)
+        self.vx = random.uniform(-7, 7) if vx is None else vx
+        self.vy = random.uniform(-17, -11) if vy is None else vy
         self.spin = random.uniform(0, math.pi)
         self.age = -delay
         self.flying = False
@@ -221,6 +228,228 @@ def draw_coin(surface, x, y, size, spin=0.0):
     if w > size // 3:
         pygame.draw.line(surface, COIN_SHINE, (rect.centerx, rect.top + size // 4),
                          (rect.centerx, rect.bottom - size // 4), max(2, w // 8))
+
+
+# --------------------------------------------------------------------------- character balloons
+
+SKIN = (255, 205, 165)
+SKIN_LINE = (205, 125, 85)
+MUSTACHE = (110, 55, 25)
+PUPIL = (40, 70, 170)
+CHARACTERS = {
+    (255, 0, 0): [("mario", 0.5), ("peach", 0.5)],
+    (0, 255, 0): [("bluigey", 0.4), ("luigi", 0.2), ("bowser", 0.4)],
+}
+_char_cache = {}
+_custom_dir = os.path.join("png", "characters")
+
+
+def _letter(surf, ch, center, size, color):
+    f = pygame.font.Font(None, size)
+    img = f.render(ch, True, color)
+    surf.blit(img, img.get_rect(center=center))
+
+
+def _cap(surf, color, dark, letter):
+    dome = pygame.Surface((200, 200), pygame.SRCALPHA)
+    pygame.draw.ellipse(dome, color, (26, 6, 148, 110))
+    dome.fill((0, 0, 0, 0), (0, 64, 200, 136))           # flat bottom of the dome
+    surf.blit(dome, (0, 0))
+    pygame.draw.ellipse(surf, dark, (70, 52, 112, 24))  # brim, pointing right
+    pygame.draw.circle(surf, (255, 255, 255), (96, 34), 19)
+    _letter(surf, letter, (96, 36), 40, color)
+
+
+def _face(surf, head=SKIN, line=SKIN_LINE):
+    pygame.draw.circle(surf, head, (34, 108), 12)
+    pygame.draw.circle(surf, head, (166, 108), 12)
+    pygame.draw.ellipse(surf, head, (32, 30, 136, 148))
+    pygame.draw.ellipse(surf, line, (32, 30, 136, 148), 3)
+    for ex in (80, 118):
+        pygame.draw.ellipse(surf, (255, 255, 255), (ex - 10, 82, 20, 30))
+        pygame.draw.ellipse(surf, PUPIL, (ex - 5, 90, 11, 17))
+    pygame.draw.ellipse(surf, MUSTACHE, (60, 128, 42, 18))
+    pygame.draw.ellipse(surf, MUSTACHE, (98, 128, 42, 18))
+    pygame.draw.ellipse(surf, (240, 160, 130), (84, 106, 34, 28))  # nose
+    pygame.draw.arc(surf, (170, 60, 60), (78, 138, 44, 22), math.pi * 1.1, math.pi * 1.9, 3)
+
+
+def _knot(surf, color):
+    pygame.draw.polygon(surf, color, [(100, 174), (90, 188), (110, 188)])
+    pygame.draw.lines(surf, (150, 150, 165), False, [(100, 188), (94, 194), (104, 198)], 2)
+
+
+def _draw_mario(surf, cap=(225, 30, 30), dark=(170, 20, 20), letter="M"):
+    _face(surf)
+    _cap(surf, cap, dark, letter)
+    _knot(surf, cap)
+
+
+def _draw_luigi(surf):
+    _draw_mario(surf, (40, 170, 60), (25, 125, 45), "L")
+
+
+def _draw_bluigey(surf):
+    blue, light, navy = (95, 145, 230), (190, 215, 248), (45, 50, 110)
+    for side in (-1, 1):  # pointy dog ears poking out under the cap
+        pygame.draw.polygon(surf, blue, [(100 + side * 40, 60), (100 + side * 80, 6), (100 + side * 68, 80)])
+        pygame.draw.polygon(surf, (235, 190, 120), [(100 + side * 50, 58), (100 + side * 74, 22), (100 + side * 66, 66)])
+    pygame.draw.ellipse(surf, blue, (32, 30, 136, 148))
+    pygame.draw.ellipse(surf, (70, 115, 200), (32, 30, 136, 148), 3)
+    pygame.draw.ellipse(surf, light, (58, 100, 84, 70))  # muzzle
+    for ex in (76, 124):
+        pygame.draw.ellipse(surf, navy, (ex - 7, 84, 14, 20))
+        pygame.draw.circle(surf, (255, 255, 255), (ex - 2, 89), 3)
+    pygame.draw.ellipse(surf, navy, (88, 106, 24, 16))  # nose
+    pygame.draw.ellipse(surf, MUSTACHE, (70, 124, 32, 12))
+    pygame.draw.ellipse(surf, MUSTACHE, (98, 124, 32, 12))
+    pygame.draw.arc(surf, navy, (82, 132, 36, 20), math.pi * 1.1, math.pi * 1.9, 3)
+    pygame.draw.ellipse(surf, (255, 120, 150), (93, 146, 14, 12))  # tongue
+    _cap(surf, (40, 170, 60), (25, 125, 45), "L")
+    _knot(surf, blue)
+
+
+def _draw_peach(surf):
+    hair, gold = (245, 170, 60), (250, 175, 35)
+    pygame.draw.ellipse(surf, hair, (22, 26, 156, 150))
+    pygame.draw.ellipse(surf, hair, (16, 90, 44, 92))
+    pygame.draw.ellipse(surf, hair, (140, 90, 44, 92))
+    pygame.draw.ellipse(surf, SKIN, (46, 52, 108, 120))
+    pygame.draw.ellipse(surf, SKIN_LINE, (46, 52, 108, 120), 2)
+    pygame.draw.ellipse(surf, hair, (46, 44, 108, 40))  # fringe
+    for ex in (80, 120):
+        pygame.draw.ellipse(surf, (255, 255, 255), (ex - 10, 94, 20, 26))
+        pygame.draw.ellipse(surf, PUPIL, (ex - 5, 100, 11, 16))
+        pygame.draw.line(surf, MUSTACHE, (ex - 10, 95), (ex - 15, 89), 3)  # lashes
+        pygame.draw.circle(surf, (255, 170, 190), (ex + (-8 if ex < 100 else 8), 132), 9)  # blush
+    pygame.draw.ellipse(surf, (230, 70, 120), (88, 140, 24, 12))  # lips
+    crown = [(62, 52), (138, 52), (146, 14), (122, 34), (100, 6), (78, 34), (54, 14)]
+    pygame.draw.polygon(surf, gold, crown)
+    pygame.draw.polygon(surf, (200, 120, 20), crown, 2)
+    pygame.draw.circle(surf, (220, 30, 70), (100, 38), 7)
+    pygame.draw.circle(surf, (60, 120, 230), (75, 44), 5)
+    pygame.draw.circle(surf, (60, 120, 230), (125, 44), 5)
+    for ex in (42, 158):
+        pygame.draw.circle(surf, (60, 120, 230), (ex, 150), 7)  # earrings
+    _knot(surf, (255, 105, 180))
+
+
+def _draw_bowser(surf):
+    head, snout, horn, red = (235, 165, 55), (250, 220, 165), (245, 235, 205), (215, 50, 30)
+    for side in (-1, 1):
+        h = [(100 + side * 30, 52), (100 + side * 52, 48), (100 + side * 84, 2)]
+        pygame.draw.polygon(surf, horn, h)
+        pygame.draw.polygon(surf, (190, 180, 160), h, 2)
+    pygame.draw.ellipse(surf, head, (30, 38, 140, 140))
+    pygame.draw.ellipse(surf, (190, 120, 30), (30, 38, 140, 140), 3)
+    pygame.draw.polygon(surf, red, [(64, 52), (72, 14), (86, 40), (100, 6), (114, 40), (128, 14), (136, 52), (100, 62)])
+    for ex in (78, 122):
+        pygame.draw.ellipse(surf, (255, 255, 255), (ex - 11, 82, 22, 24))
+        pygame.draw.ellipse(surf, (200, 60, 20), (ex - 5, 88, 11, 14))
+    pygame.draw.line(surf, red, (60, 74), (94, 86), 8)   # angry eyebrows
+    pygame.draw.line(surf, red, (140, 74), (106, 86), 8)
+    pygame.draw.ellipse(surf, snout, (52, 108, 96, 62))
+    pygame.draw.ellipse(surf, (130, 70, 25), (80, 116, 10, 8))
+    pygame.draw.ellipse(surf, (130, 70, 25), (110, 116, 10, 8))
+    pygame.draw.arc(surf, (150, 70, 30), (62, 124, 76, 36), math.pi * 1.05, math.pi * 1.95, 3)
+    for fx in (78, 122):
+        pygame.draw.polygon(surf, (255, 255, 255), [(fx - 6, 145), (fx + 6, 145), (fx, 160)])
+    _knot(surf, head)
+
+
+_DRAW = {"mario": _draw_mario, "luigi": _draw_luigi, "bluigey": _draw_bluigey,
+         "peach": _draw_peach, "bowser": _draw_bowser}
+
+
+def character_image(name, size):
+    """Balloon image (size x size) for a character: png/characters/<name>.png if present, else drawn."""
+    key = (name, size)
+    if key not in _char_cache:
+        surf = None
+        path = os.path.join(_custom_dir, name + ".png")
+        if os.path.exists(path):
+            try:
+                img = pygame.image.load(path)
+                img = img.convert_alpha() if pygame.display.get_surface() else img
+                w, h = img.get_size()
+                k = size * 0.92 / max(w, h)
+                img = pygame.transform.smoothscale(img, (max(1, int(w * k)), max(1, int(h * k))))
+                surf = pygame.Surface((size, size), pygame.SRCALPHA)
+                surf.blit(img, img.get_rect(center=(size // 2, size // 2)))
+            except pygame.error:
+                surf = None
+        if surf is None:
+            base = pygame.Surface((200, 200), pygame.SRCALPHA)
+            _DRAW[name](base)
+            surf = pygame.transform.smoothscale(base, (size, size)) if size != 200 else base
+        _char_cache[key] = surf
+    return _char_cache[key].copy()
+
+
+def balloon_skin(color, balloon_type, size):
+    """Character image for a new balloon of the given team colour."""
+    options = CHARACTERS.get(tuple(color), CHARACTERS[(0, 255, 0)])
+    r, acc = random.random(), 0.0
+    name = options[-1][0]
+    for n, p in options:
+        acc += p
+        if r < acc:
+            name = n
+            break
+    img = character_image(name, size)
+    if balloon_type == "bonus":  # gold star badge instead of a ring over the face
+        cx, cy, R = int(size * 0.84), int(size * 0.16), size * 0.13
+        pts = []
+        for i in range(10):
+            a = -math.pi / 2 + i * math.pi / 5
+            rr = R if i % 2 == 0 else R * 0.45
+            pts.append((cx + math.cos(a) * rr, cy + math.sin(a) * rr))
+        pygame.draw.polygon(img, COIN_FACE, pts)
+        pygame.draw.polygon(img, COIN_EDGE, pts, 3)
+    return img
+
+
+# --------------------------------------------------------------------------- "?" boxes
+
+BOX_SIZE = 110
+BOX_FACE = (240, 160, 30)      # orange-yellow, outside the beach-ball detector's yellow
+BOX_EDGE = (150, 80, 10)
+BOX_USED = (175, 110, 60)
+BOX_REFRESH = 8.0              # seconds a used box stays brown
+
+
+class QuestionBox:
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+        self.used_until = -1.0
+        self.bump_at = -10.0
+        self.font = pygame.font.Font(None, 120)
+
+    def active(self, now):
+        return now >= self.used_until
+
+    def rect(self, now):
+        t = now - self.bump_at
+        lift = math.sin(math.pi * t / 0.25) * 28 if 0 <= t < 0.25 else 0
+        r = pygame.Rect(0, 0, BOX_SIZE, BOX_SIZE)
+        r.center = (int(self.x), int(self.y - lift))
+        return r
+
+    def draw(self, surface, now):
+        r = self.rect(now)
+        on = self.active(now)
+        pygame.draw.rect(surface, BOX_FACE if on else BOX_USED, r, border_radius=8)
+        pygame.draw.rect(surface, BOX_EDGE, r, 5, border_radius=8)
+        for dx, dy in ((12, 12), (r.width - 12, 12), (12, r.height - 12), (r.width - 12, r.height - 12)):
+            pygame.draw.circle(surface, BOX_EDGE, (r.x + dx, r.y + dy), 5)
+        if on:
+            q_shadow = self.font.render("?", True, BOX_EDGE)
+            q = self.font.render("?", True, (255, 250, 235))
+            surface.blit(q_shadow, q_shadow.get_rect(center=(r.centerx + 5, r.centery + 9)))
+            surface.blit(q, q.get_rect(center=(r.centerx, r.centery + 4)))
+
+    def contains(self, x, y, pad, now):
+        return self.rect(now).inflate(2 * pad, 2 * pad).collidepoint(x, y)
 
 
 class Ghost:
@@ -392,6 +621,7 @@ class HalloweenLayer:
         self.coins = []
         self.coin_count = 0
         self.ghosts = [Ghost(first=True) for _ in range(N_GHOSTS)]
+        self.boxes = [QuestionBox(WIDTH * f, HEIGHT * 0.40) for f in (0.22, 0.41, 0.59, 0.78)]
         self.respawns = []        # times at which a popped ghost comes back
         self.bats, self.spiders, self.shells, self.shouts = [], [], [], []
         self.next_bat = 3.0
@@ -484,6 +714,20 @@ class HalloweenLayer:
         """A ball landed at (x, y) without popping a balloon. True if it hit a ghost or shell."""
         if game_state != "playing":
             return False
+        for box in self.boxes:
+            if box.contains(x, y, radius, self.now):
+                box.bump_at = self.now
+                if box.active(self.now):
+                    box.used_until = self.now + BOX_REFRESH
+                    n = 5 if random.random() < 0.3 else 1
+                    for i in range(n):
+                        self.coins.append(Coin(box.x, box.y - BOX_SIZE * 0.6, delay=i * 0.12,
+                                               vx=random.uniform(-1.5, 1.5), vy=-17))
+                    if n > 1:
+                        self.shout("5 coins!", box.x, box.y - 180, COIN_EDGE)
+                else:
+                    self._play(self.bonk_sound)
+                return True
         for sh in self.shells:
             if not sh.hit and sh.contains(x, y, radius):
                 sh.hit = True
@@ -506,7 +750,7 @@ class HalloweenLayer:
                 g.shy = 1.5
         return False
 
-    def draw_back(self, surface):
+    def draw_back(self, surface, game_state=None):
         surface.blit(self.web, (0, 0))
         surface.blit(self.web_flipped, (WIDTH - self.web.get_width(), 0))
         # pennants in the costume colours along the top
@@ -520,6 +764,9 @@ class HalloweenLayer:
         for group in (self.spiders, self.ghosts, self.bats):
             for a in group:
                 a.draw(surface)
+        if game_state in ("playing", "paused"):
+            for box in self.boxes:
+                box.draw(surface, self.now)
 
     def draw_front(self, surface, game_state):
         for sh in self.shells:

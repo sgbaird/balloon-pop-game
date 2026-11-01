@@ -707,6 +707,10 @@ class PowerUp(pygame.sprite.Sprite):
             self.kill()
 
 
+# Set by Game for --theme halloween: f(color, balloon_type, size) -> character image
+BALLOON_SKIN = None
+
+
 class Balloon(pygame.sprite.Sprite):
     """Standard balloon that moves upward"""
     def __init__(self, color, speed_range, balloon_type="normal"):
@@ -753,6 +757,11 @@ class Balloon(pygame.sprite.Sprite):
                 BALLOON_SIZE//2
             )
         
+
+        if BALLOON_SKIN is not None:
+            self.image = BALLOON_SKIN(color, balloon_type, BALLOON_SIZE)
+            if balloon_type == "bonus":
+                glow_color = None  # the skin draws its own star badge
 
         # Add special effects for bonus/penalty balloons
         if glow_color:
@@ -1448,8 +1457,10 @@ class Game:
         # --theme halloween: coins, ghosts, bats and spiders; music comes from elsewhere
         self.halloween = None
         if theme() == "halloween":
-            from halloween import HalloweenLayer
+            from halloween import HalloweenLayer, balloon_skin
+            global BALLOON_SKIN
             self.halloween = HalloweenLayer()
+            BALLOON_SKIN = balloon_skin
         try:
             if self.halloween is not None:
                 raise FileNotFoundError("Halloween theme: game music off")
@@ -2775,7 +2786,7 @@ class Game:
         # Use white background for all screens
         surface.fill((255, 255, 255))  # White background can be changed to black
         if self.halloween is not None:
-            self.halloween.draw_back(surface)
+            self.halloween.draw_back(surface, self.game_state)
         
         # Call appropriate draw method based on game state
         if self.game_state == "mode_select":
@@ -2928,9 +2939,10 @@ class Game:
                             break # Only pop one balloon per hit
                             
             # A near miss still gets a reaction: nearby balloons are pushed away (no points)
-            if not popped_balloons:
-                if self.halloween is None or not self.halloween.hit(x, y, calibrated_radius, self.game_state):
-                    self.nudge_nearby_balloons(x, y, calibrated_radius)
+            # Halloween theme: "?" boxes, ghosts and the shell count too, balloon or not
+            extra = self.halloween is not None and self.halloween.hit(x, y, calibrated_radius, self.game_state)
+            if not popped_balloons and not extra:
+                self.nudge_nearby_balloons(x, y, calibrated_radius)
 
             # Pop all the balloons that were hit
             for balloon in popped_balloons:
