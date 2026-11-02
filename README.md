@@ -88,6 +88,25 @@ Balloons get progressively faster and more numerous over time. How long can you 
 ### Cooperative
 Work together to reach a target score before time runs out.
 
+## Halloween theme
+
+`python main.py --theme halloween` (or `BALLOON_THEME=halloween`) adds, on top of any mode:
+
+- **Coins**: popped balloons throw out coins that fly to a counter in the bottom-left, each with a "ching".
+- **"?" boxes**: four boxes across the middle; a hit pays out a coin (sometimes five), then the box turns brown
+  for 8 seconds.
+- **Character balloons**: Mario and Peach on the red side; Bluigey (blue heeler face, green cap), Luigi and
+  Bowser on the green side. They are drawn by `halloween.py`; to use your own pictures instead, put
+  `mario.png`, `luigi.png`, `bluigey.png`, `peach.png` and `bowser.png` in `png/characters/` (git ignores that
+  folder, so they stay on your computer).
+- **Decorations**: shy ghosts that hide their eyes after a near miss (hit one for coins), bats, dangling
+  spiders, cobwebs, costume-colour pennants, a spiky shell that rolls by now and then for a coin bonus, and the
+  occasional shout ("Wahoo!", "For real life!").
+
+The game's own background music is off with this theme, so music can play from elsewhere. Everything is drawn
+on the normal white background, with nothing near-black and no true yellow (coins and boxes are orange-gold),
+so the beach-ball detector does not mistake the decorations for a ball and its shadow.
+
 ## Power-ups
 
 The game features several power-ups that appear during gameplay:

@@ -7,3 +7,6 @@ __pycache__/
 out.txt
 err.txt
 game_stats.json
+
+# Your own character images for --theme halloween (kept out of the public repo)
+png/characters/
