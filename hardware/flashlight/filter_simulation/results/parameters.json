@@ -1,0 +1,44 @@
+{
+  "video_spacing_mm": 18,
+  "extension_mm": 24,
+  "focal_mm": 42,
+  "lens_mm": 32,
+  "led_mm": 3,
+  "wall_mm": 3000,
+  "filter_gap_mm": 50,
+  "scatter_fraction": 0.65,
+  "scatter_sigma_deg": 4,
+  "rays": 400000,
+  "output": "results",
+  "spot_spacing_mm": 42,
+  "seed": 5,
+  "bands": "illustrative equal-energy R,G,B; not spectral or camera prediction",
+  "filter_transmissions": {
+    "Unfiltered": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Blue": [
+      0.02,
+      0.08,
+      0.75
+    ],
+    "Yellow": [
+      0.8,
+      0.8,
+      0.02
+    ],
+    "Cyan": [
+      0.02,
+      0.8,
+      0.8
+    ],
+    "Magenta": [
+      0.8,
+      0.02,
+      0.8
+    ]
+  },
+  "sweep_sample_count": 30000
+}
