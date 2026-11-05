@@ -15,6 +15,10 @@ Adds, on top of the normal game:
   Bluigey (blue heeler face, green cap), Luigi and Bowser on the green side.
   To use your own character images instead, put PNGs named mario.png, luigi.png,
   bluigey.png, peach.png and bowser.png in png/characters/ (git ignores that folder);
+* power-ups out of the "?" boxes: a mushroom (coins x2 for 12 s), a star (coins x3
+  for 10 s) or a green 1-UP mushroom; hit them as they run off;
+* green pipes along the bottom with jack-o'-lanterns peeking out (hit one for coins);
+* combos (three pops within 1.5 s of each other) and a "1-UP!" every 50 coins;
 * pennants in the costume colours (red, green, pink, yellow) and the occasional
   shout ("Wahoo!", "For real life!", ...).
 
@@ -612,6 +616,175 @@ class Shout:
         surface.blit(img, r)
 
 
+# --------------------------------------------------------------------------- power-ups and pipes
+
+MUSHROOM_CAP = (230, 40, 40)
+ONEUP_CAP = (40, 170, 60)
+STEM = (250, 232, 205)
+STAR = (255, 150, 20)          # orange-gold: the detector's yellow is OpenCV hue 22-40
+STAR_EDGE = (215, 95, 10)
+PIPE = (45, 165, 70)
+PIPE_DARK = (25, 115, 45)
+PIPE_SHINE = (140, 225, 150)
+PUMPKIN = (235, 115, 20)
+PUMPKIN_DARK = (190, 80, 10)
+POWER_TIME = {"mushroom": 12.0, "star": 10.0}
+POWER_MULT = {"mushroom": 2, "star": 3}
+COMBO_GAP = 1.5                # seconds between pops that keep a combo going
+ONE_UP_EVERY = 50              # coins
+
+
+def _mushroom_surface(size, cap=MUSHROOM_CAP):
+    surf = pygame.Surface((size, size), pygame.SRCALPHA)
+    s = size
+    stem = pygame.Rect(0, 0, int(s * 0.50), int(s * 0.42))
+    stem.midbottom = (s // 2, int(s * 0.96))
+    pygame.draw.ellipse(surf, STEM, stem)
+    pygame.draw.ellipse(surf, (215, 180, 150), stem, 3)
+    for ex in (-1, 1):
+        pygame.draw.ellipse(surf, EYE, (s // 2 + ex * s * 0.09 - s * 0.035, stem.top + s * 0.08, s * 0.07, s * 0.15))
+    dome = pygame.Surface((s, s), pygame.SRCALPHA)
+    pygame.draw.ellipse(dome, cap, (int(s * 0.04), int(s * 0.04), int(s * 0.92), int(s * 0.80)))
+    dome.fill((0, 0, 0, 0), (0, int(s * 0.58), s, s))   # flat underside of the cap
+    surf.blit(dome, (0, 0))
+    for cx, cy, r in ((0.50, 0.24, 0.13), (0.20, 0.42, 0.09), (0.80, 0.42, 0.09)):
+        pygame.draw.circle(surf, (255, 255, 255), (int(s * cx), int(s * cy)), int(s * r))
+    return surf
+
+
+def _star_surface(size):
+    surf = pygame.Surface((size, size), pygame.SRCALPHA)
+    c, R = size / 2, size * 0.48
+    pts = []
+    for i in range(10):
+        a = -math.pi / 2 + i * math.pi / 5
+        r = R if i % 2 == 0 else R * 0.48
+        pts.append((c + math.cos(a) * r, c + 4 + math.sin(a) * r))
+    pygame.draw.polygon(surf, STAR, pts)
+    pygame.draw.polygon(surf, STAR_EDGE, pts, 4)
+    for ex in (-1, 1):
+        pygame.draw.ellipse(surf, EYE, (c + ex * size * 0.08 - size * 0.03, c - size * 0.06, size * 0.06, size * 0.14))
+    return surf
+
+
+def _pumpkin_surface(size):
+    surf = pygame.Surface((size, size), pygame.SRCALPHA)
+    s = size
+    pygame.draw.rect(surf, PIPE_DARK, (s // 2 - 6, int(s * 0.04), 12, int(s * 0.18)), border_radius=4)  # stem
+    for dx, w in ((-0.22, 0.46), (0.22, 0.46), (0.0, 0.52)):  # three lobes
+        r = pygame.Rect(0, 0, int(s * w), int(s * 0.74))
+        r.center = (int(s * (0.5 + dx)), int(s * 0.56))
+        pygame.draw.ellipse(surf, PUMPKIN, r)
+        pygame.draw.ellipse(surf, PUMPKIN_DARK, r, 3)
+    for ex in (-1, 1):  # friendly carved face, in dark purple rather than black
+        cx = s // 2 + ex * int(s * 0.15)
+        pygame.draw.polygon(surf, EYE, [(cx - s * 0.07, s * 0.50), (cx + s * 0.07, s * 0.50), (cx, s * 0.38)])
+    pygame.draw.arc(surf, EYE, (s * 0.30, s * 0.52, s * 0.40, s * 0.22), math.pi * 1.05, math.pi * 1.95, 6)
+    return surf
+
+
+class PowerItem:
+    """A mushroom, 1-UP mushroom or star that pops out of a "?" box and runs off."""
+    SIZE = 120
+
+    def __init__(self, kind, x, y):
+        self.kind = kind
+        self.img = (_star_surface(self.SIZE) if kind == "star" else
+                    _mushroom_surface(self.SIZE, ONEUP_CAP if kind == "oneup" else MUSHROOM_CAP))
+        self.x0, self.x, self.y0 = x, x, y
+        self.y = y
+        self.vx = random.choice((-1, 1)) * (4.5 if kind == "star" else 3.0)
+        self.vy = 0.0
+        self.age = 0.0
+        self.hit = False
+        self.floor = HEIGHT - 170
+
+    def update(self, dt, now):
+        self.age += dt
+        if self.age < 0.45:          # rising out of the box
+            self.y = self.y0 - (BOX_SIZE * 0.5 + self.SIZE * 0.5) * (self.age / 0.45)
+            return
+        self.x += self.vx * dt * 60
+        if abs(self.x - self.x0) > BOX_SIZE * 0.5 + self.SIZE * 0.2 or self.kind == "star":
+            self.vy += 0.55 * dt * 60    # off the edge of the box (a star jumps straight away)
+        self.y += self.vy * dt * 60
+        if self.y > self.floor:
+            self.y = self.floor
+            self.vy = -15.0 if self.kind == "star" else 0.0
+        if self.x < self.SIZE or self.x > WIDTH - self.SIZE:  # bounce off the side walls
+            self.vx = -self.vx
+            self.x = min(max(self.x, self.SIZE), WIDTH - self.SIZE)
+
+    @property
+    def gone(self):
+        return self.hit or self.age > 14.0
+
+    def draw(self, surface):
+        if self.age > 11.0 and int(self.age * 8) % 2:  # blink before vanishing
+            return
+        img = self.img
+        if self.age < 0.45:
+            k = 0.4 + 0.6 * self.age / 0.45
+            img = pygame.transform.smoothscale(img, (int(self.SIZE * k), int(self.SIZE * k)))
+        if self.kind == "star":
+            img = pygame.transform.rotate(img, math.sin(self.age * 5) * 15)
+        surface.blit(img, img.get_rect(center=(int(self.x), int(self.y))))
+
+    def contains(self, x, y, pad):
+        return self.age >= 0.3 and math.hypot(x - self.x, y - self.y) <= self.SIZE * 0.5 + pad
+
+
+class Pipe:
+    """A green pipe along the bottom edge; a jack-o'-lantern peeks out now and then."""
+    W, H = 150, 120
+
+    def __init__(self, x):
+        self.x = x
+        self.top = HEIGHT - self.H
+        self.pumpkin = _pumpkin_surface(130)
+        self.t = random.uniform(-6.0, -2.0)    # < 0: hidden; 0..0.5 up; 0.5..3.5 out; 3.5..4 down
+        self.hit = False
+
+    def update(self, dt, now):
+        self.t += dt
+        if self.t > 4.0:
+            self.t = -random.uniform(4.0, 9.0)
+            self.hit = False
+
+    def out(self):
+        """0 (inside the pipe) .. 1 (all the way out)."""
+        t = self.t
+        if t < 0:
+            return 0.0
+        if t < 0.5:
+            return t / 0.5
+        if t < 3.5:
+            return 1.0
+        return max(0.0, (4.0 - t) / 0.5)
+
+    def pumpkin_center(self):
+        return self.x, self.top + 50 - self.out() * 115
+
+    def draw(self, surface):
+        if self.out() > 0:
+            px, py = self.pumpkin_center()
+            surface.blit(self.pumpkin, self.pumpkin.get_rect(center=(int(px), int(py))))
+        body = pygame.Rect(0, 0, self.W - 24, self.H)
+        body.midtop = (self.x, self.top + 30)
+        rim = pygame.Rect(0, 0, self.W, 40)
+        rim.midtop = (self.x, self.top)
+        for r in (body, rim):
+            pygame.draw.rect(surface, PIPE, r, border_radius=6)
+            pygame.draw.rect(surface, PIPE_DARK, r, 4, border_radius=6)
+            pygame.draw.line(surface, PIPE_SHINE, (r.x + 20, r.y + 8), (r.x + 20, r.bottom - 8), 8)
+
+    def contains(self, x, y, pad):
+        if self.hit or self.out() < 0.5:
+            return False
+        px, py = self.pumpkin_center()
+        return math.hypot(x - px, y - py) <= 65 + pad
+
+
 # --------------------------------------------------------------------------- the layer
 
 class HalloweenLayer:
@@ -639,6 +812,18 @@ class HalloweenLayer:
         self.coin_sound = _make_sound([(988, 988, 0.07, "square"), (1319, 1319, 0.45, "square")], 0.22)
         self.boo_sound = _make_sound([(620, 280, 0.7, "warble")], 0.4)
         self.bonk_sound = _make_sound([(200, 90, 0.25, "square")], 0.35)
+        self.items = []           # mushrooms and stars out of "?" boxes
+        self.pipes = [Pipe(WIDTH * 0.33), Pipe(WIDTH * 0.67)]
+        self.power, self.power_until = None, 0.0
+        self.combo, self.last_pop = 0, -10.0
+        self.small_font = pygame.font.Font(None, 48)
+        self.power_icons = {"mushroom": _mushroom_surface(70), "star": _star_surface(70)}
+        notes = [(523, 0.06), (659, 0.06), (784, 0.06), (1047, 0.06), (1319, 0.16)]
+        self.power_sound = _make_sound([(f, f * 1.02, d, "square") for f, d in notes], 0.2)
+        self.sprout_sound = _make_sound([(330, 660, 0.3, "square")], 0.18)
+        self.oneup_sound = _make_sound([(f, f, d, "square") for f, d in
+                                        ((880, 0.07), (1175, 0.07), (1480, 0.07), (1760, 0.22))], 0.2)
+        self.pumpkin_sound = _make_sound([(260, 620, 0.22, "sine")], 0.45)
 
     # ---- game hooks
     def update(self, game_state):
@@ -650,6 +835,8 @@ class HalloweenLayer:
         if game_state == "playing" and self.prev_state == "start":
             self.coin_count = 0
             self.coins.clear()
+            self.items.clear()
+            self.power, self.combo = None, 0
         self.prev_state = game_state
         self.now += dt
         now = self.now
@@ -674,7 +861,11 @@ class HalloweenLayer:
                 self.shells.append(Shell())
                 self.next_shell = random.uniform(*SHELL_EVERY)
 
-        for group in (self.bats, self.spiders, self.shells):
+        for p in self.pipes:
+            p.update(dt, now)
+        if self.power is not None and now >= self.power_until:
+            self.power = None
+        for group in (self.bats, self.spiders, self.shells, self.items):
             for a in group:
                 a.update(dt, now)
             group[:] = [a for a in group if not a.gone]
@@ -684,7 +875,11 @@ class HalloweenLayer:
         arrived = [c for c in self.coins if c.done]
         if arrived:
             self.coins = [c for c in self.coins if not c.done]
+            before = self.coin_count
             self.coin_count += len(arrived)
+            if self.coin_count // ONE_UP_EVERY > before // ONE_UP_EVERY:
+                self.shout("1-UP!", COUNTER_POS[0] + 200, COUNTER_POS[1] - 90, ONEUP_CAP)
+                self.pending_sounds.append((now + 0.2, self.oneup_sound))
             for _ in arrived:
                 self._play(self.coin_sound)
 
@@ -706,20 +901,44 @@ class HalloweenLayer:
         n = 3 + (3 if getattr(balloon, "balloon_type", "") == "bonus" else 0)
         if getattr(balloon, "size_scale", 1.0) > 1.0:
             n += 2
-        self.burst(x, y, n)
-        if random.random() < 0.15:
+        self.combo = self.combo + 1 if self.now - self.last_pop < COMBO_GAP else 1
+        self.last_pop = self.now
+        if self.combo >= 3:
+            n += self.combo
+            self.shout("Combo x%d!" % self.combo, x, y - 110, (235, 115, 20))
+        elif random.random() < 0.15:
             self.shout(random.choice(SHOUTS), x, y - 110)
+        self.burst(x, y, n)
 
     def hit(self, x, y, radius, game_state):
         """A ball landed at (x, y) without popping a balloon. True if it hit a ghost or shell."""
         if game_state != "playing":
             return False
+        for it in self.items:
+            if not it.hit and it.contains(x, y, radius):
+                it.hit = True
+                if it.kind == "oneup":
+                    self.burst(it.x, it.y, 10)
+                    self.shout("1-UP!", it.x, it.y - 110, ONEUP_CAP)
+                    self._play(self.oneup_sound)
+                else:
+                    self.power, self.power_until = it.kind, self.now + POWER_TIME[it.kind]
+                    self.shout("Super!" if it.kind == "mushroom" else "Star power!", it.x, it.y - 110,
+                               MUSHROOM_CAP if it.kind == "mushroom" else STAR_EDGE)
+                    self._play(self.power_sound)
+                return True
         for box in self.boxes:
             if box.contains(x, y, radius, self.now):
                 box.bump_at = self.now
                 if box.active(self.now):
                     box.used_until = self.now + BOX_REFRESH
-                    n = 5 if random.random() < 0.3 else 1
+                    r = random.random()
+                    if r < 0.30 and len(self.items) < 2:
+                        kind = "star" if r < 0.07 else "oneup" if r < 0.12 else "mushroom"
+                        self.items.append(PowerItem(kind, box.x, box.y))
+                        self._play(self.sprout_sound)
+                        return True
+                    n = 5 if r < 0.50 else 1
                     for i in range(n):
                         self.coins.append(Coin(box.x, box.y - BOX_SIZE * 0.6, delay=i * 0.12,
                                                vx=random.uniform(-1.5, 1.5), vy=-17))
@@ -727,6 +946,15 @@ class HalloweenLayer:
                         self.shout("5 coins!", box.x, box.y - 180, COIN_EDGE)
                 else:
                     self._play(self.bonk_sound)
+                return True
+        for p in self.pipes:
+            if p.contains(x, y, radius):
+                p.hit = True
+                p.t = max(p.t, 3.5)        # duck back down
+                px, py = p.pumpkin_center()
+                self.burst(px, py, 6)
+                self.shout(random.choice(("Pumpkin!", "Got it!", "Wahoo!")), px, py - 130, PUMPKIN)
+                self._play(self.pumpkin_sound)
                 return True
         for sh in self.shells:
             if not sh.hit and sh.contains(x, y, radius):
@@ -764,9 +992,13 @@ class HalloweenLayer:
         for group in (self.spiders, self.ghosts, self.bats):
             for a in group:
                 a.draw(surface)
+        for p in self.pipes:
+            p.draw(surface)
         if game_state in ("playing", "paused"):
             for box in self.boxes:
                 box.draw(surface, self.now)
+            for it in self.items:
+                it.draw(surface)
 
     def draw_front(self, surface, game_state):
         for sh in self.shells:
@@ -779,12 +1011,23 @@ class HalloweenLayer:
             draw_coin(surface, COUNTER_POS[0], COUNTER_POS[1], 64, math.sin(self.now * 3) * 0.6)
             txt = self.counter_font.render("x %d" % self.coin_count, True, COIN_EDGE)
             surface.blit(txt, txt.get_rect(midleft=(COUNTER_POS[0] + 45, COUNTER_POS[1] + 4)))
+            if self.power is not None:  # which power is on, and its time left as a shrinking bar
+                icon = self.power_icons[self.power]
+                x0 = COUNTER_POS[0] + 45 + txt.get_width() + 40
+                surface.blit(icon, icon.get_rect(midleft=(x0, COUNTER_POS[1])))
+                label = self.small_font.render("coins x%d" % POWER_MULT[self.power], True, COIN_EDGE)
+                surface.blit(label, label.get_rect(midleft=(x0 + 80, COUNTER_POS[1] - 12)))
+                left = max(0.0, (self.power_until - self.now) / POWER_TIME[self.power])
+                pygame.draw.rect(surface, COIN_EDGE, (x0 + 80, COUNTER_POS[1] + 14, int(150 * left), 12),
+                                 border_radius=6)
         if game_state == "mode_select":
             title = self.title_font.render("Happy Halloween!", True, (235, 115, 20))
             surface.blit(title, title.get_rect(midtop=(WIDTH // 2, 80)))
 
     # ---- helpers
     def burst(self, x, y, n):
+        if self.power is not None:
+            n *= POWER_MULT[self.power]
         for i in range(n):
             self.coins.append(Coin(x, y, delay=i * 0.04))
 

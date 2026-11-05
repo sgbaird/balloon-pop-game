@@ -95,6 +95,11 @@ Work together to reach a target score before time runs out.
 - **Coins**: popped balloons throw out coins that fly to a counter in the bottom-left, each with a "ching".
 - **"?" boxes**: four boxes across the middle; a hit pays out a coin (sometimes five), then the box turns brown
   for 8 seconds.
+- **Power-ups**: some "?" boxes send out a mushroom (coins x2 for 12 s), a star (coins x3 for 10 s) or a green
+  1-UP mushroom instead; hit it as it runs off. The power and its time left show next to the coin counter.
+- **Pipes**: two green pipes along the bottom; a jack-o'-lantern peeks out now and then, and a hit pays coins.
+- **Combos and 1-UPs**: three or more pops within 1.5 s of each other pay extra coins, and every 50 coins
+  shouts "1-UP!".
 - **Character balloons**: Mario and Peach on the red side; Bluigey (blue heeler face, green cap), Luigi and
   Bowser on the green side. They are drawn by `halloween.py`; to use your own pictures instead, put
   `mario.png`, `luigi.png`, `bluigey.png`, `peach.png` and `bowser.png` in `png/characters/` (git ignores that
