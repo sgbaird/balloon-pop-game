@@ -22,6 +22,8 @@ BALL_RADIUS = (4.0, 12.0)   # processing pixels
 MIN_AREA, MAX_AREA = 8, 1500
 MEAN_SAT = 92.0             # mean saturation of a blob's yellow pixels (ball is vivid; hair is dull)
 MEAN_VAL = 130.0            # and their mean brightness (hair and camo are darker)
+MEDIAN_HUE = 24.0           # median hue of those pixels: the ball reads ~25-33 to the camera, projected
+                            # gold pictures (coins, Bowser, Peach's hair) ~21-24
 MIN_FILL = 0.3              # blob area / enclosing-circle area (hair and shirts are ragged)
 MATCH_DISTANCE = 45.0       # max jump between frames for the same ball (processing px)
 TRACK_GAP = 0.25            # seconds without a sighting before a track is dropped
@@ -68,7 +70,7 @@ class BounceImpactDetector:
                         continue
                     px = hsv[by:by + bh, bx:bx + bw][sel]
                     sat, val = float(px[:, 1].mean()), float(px[:, 2].mean())
-                    if sat >= MEAN_SAT and val >= MEAN_VAL:
+                    if sat >= MEAN_SAT and val >= MEAN_VAL and np.median(px[:, 0]) >= MEDIAN_HUE:
                         out.append((x, y, r, sat, val))
         return out
 

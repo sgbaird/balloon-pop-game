@@ -52,6 +52,9 @@ ys = [s[1] for _, _, s in hits]
 print("hits: %d in %d frames" % (len(hits), len(rows)))
 print("by screen fifth, top to bottom:", np.histogram(ys, bins=[-1e9, 216, 432, 648, 864, 1e9])[0].tolist())
 print("frames:", " ".join(str(i) for i, _, _ in hits))
+if os.environ.get("HITS_CSV"):
+    with open(os.environ["HITS_CSV"], "w") as fh:  # index,x,y,r in camera pixels
+        fh.writelines("%d,%.1f,%.1f,%.1f\n" % ((i,) + tuple(h)) for i, h, _ in hits)
 
 if a.sheet and hits:
     src = a.frames or a.recording
