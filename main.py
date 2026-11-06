@@ -5,6 +5,7 @@ import time
 import os
 from camera_select import camera_index, ball_type, beach_mode
 from beach_ball import BeachBallImpactDetector, DebugRecorder
+from bounce_ball import BounceImpactDetector
 import yaml
 import pygame
 import logging
@@ -531,9 +532,12 @@ def camera_processing(game_instance, event_queue):
     # --ball beach: one pale/banded ball, detected by its impact with the wall
     beach_detector = None
     if ball_type() == "beach" and SCREEN_COORDS is not None:
-        strict = beach_mode() != "loose"
-        beach_detector = BeachBallImpactDetector(SCREEN_COORDS, init_frame.shape, strict=strict)
-        logger.info(f"Ball type: beach ({'strict' if strict else 'loose'}; blue/yellow trackers off)")
+        mode = beach_mode()
+        if mode == "bounce":  # no shadow needed: the ball's own bounce (bounce_ball.py)
+            beach_detector = BounceImpactDetector(SCREEN_COORDS, init_frame.shape)
+        else:
+            beach_detector = BeachBallImpactDetector(SCREEN_COORDS, init_frame.shape, strict=mode != "loose")
+        logger.info(f"Ball type: beach ({mode}; blue/yellow trackers off)")
     beach_debug = None
     if beach_detector is not None and os.environ.get("BALLOON_DEBUG_DIR"):
         beach_debug = DebugRecorder(os.environ["BALLOON_DEBUG_DIR"])

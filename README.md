@@ -167,6 +167,8 @@ The game uses YAML files for configuration:
 
 By default (`--beach-mode loose`) a ball pressed onto the wall or landing right next to someone counts, at the cost of some pops while the ball is carried near the wall. `--beach-mode strict` ignores a ball joined to a person, which suits players throwing from a line a metre or two from the wall.
 
+Both modes find a hit when the ball meets its own shadow, so they need the projector's light to reach the wall at an angle. If the projector shines almost straight at the wall, the ball hides its shadow and hits are missed; use `--beach-mode bounce` (`bounce_ball.py`) instead. It finds the moment a fast-moving yellow ball turns or stops at the wall, and it ignores duller yellows such as hair and khaki clothes. It errs on the side of popping, so pushing the ball onto the wall counts too.
+
 A hit that misses but lands near a balloon pushes the balloon away (no points).
 
 Play with the room lights off. The detector relies on the ball's shadow on the projection being much darker than the wall; with the lights on, shadows wash out and lit clothing or hair near the wall can be mistaken for the ball and its shadow.
