@@ -24,8 +24,10 @@ Adds, on top of the normal game:
 
 Everything stays on the normal white background, and nothing is near-black, so the
 beach-ball detector, which looks for a dark unsaturated shadow next to a yellow ball,
-does not mistake the decorations for a ball and its shadow. Coins are orange-gold for
-the same reason (the detector's ball hue is yellow).
+does not mistake the decorations for a ball and its shadow. Coins, boxes, the star,
+Bowser and Peach's hair are orange-gold rather than yellow for the same reason: the
+camera reads gold a few hue steps yellower than it is drawn, and the bounce detector
+(--beach-mode bounce) took projected gold balloons for the ball.
 """
 import io
 import math
@@ -39,7 +41,7 @@ import pygame
 WIDTH, HEIGHT = 1920, 1080
 
 COSTUME_COLORS = [(230, 40, 40), (40, 170, 60), (255, 105, 180), (250, 200, 0)]  # red, green, pink, yellow
-COIN_FACE = (255, 165, 20)
+COIN_FACE = (255, 145, 25)   # orange-gold: this camera reads gold ~4 hue steps yellower
 COIN_EDGE = (225, 120, 0)
 COIN_SHINE = (255, 225, 150)
 COIN_SIZE = 44
@@ -297,7 +299,7 @@ def _draw_bluigey(surf):
     blue, light, navy = (95, 145, 230), (190, 215, 248), (45, 50, 110)
     for side in (-1, 1):  # pointy dog ears poking out under the cap
         pygame.draw.polygon(surf, blue, [(100 + side * 40, 60), (100 + side * 80, 6), (100 + side * 68, 80)])
-        pygame.draw.polygon(surf, (235, 190, 120), [(100 + side * 50, 58), (100 + side * 74, 22), (100 + side * 66, 66)])
+        pygame.draw.polygon(surf, (235, 175, 130), [(100 + side * 50, 58), (100 + side * 74, 22), (100 + side * 66, 66)])
     pygame.draw.ellipse(surf, blue, (32, 30, 136, 148))
     pygame.draw.ellipse(surf, (70, 115, 200), (32, 30, 136, 148), 3)
     pygame.draw.ellipse(surf, light, (58, 100, 84, 70))  # muzzle
@@ -314,7 +316,7 @@ def _draw_bluigey(surf):
 
 
 def _draw_peach(surf):
-    hair, gold = (245, 170, 60), (250, 175, 35)
+    hair, gold = (245, 145, 70), (250, 145, 35)
     pygame.draw.ellipse(surf, hair, (22, 26, 156, 150))
     pygame.draw.ellipse(surf, hair, (16, 90, 44, 92))
     pygame.draw.ellipse(surf, hair, (140, 90, 44, 92))
@@ -339,7 +341,7 @@ def _draw_peach(surf):
 
 
 def _draw_bowser(surf):
-    head, snout, horn, red = (235, 165, 55), (250, 220, 165), (245, 235, 205), (215, 50, 30)
+    head, snout, horn, red = (235, 135, 40), (250, 230, 200), (245, 235, 205), (215, 50, 30)
     for side in (-1, 1):
         h = [(100 + side * 30, 52), (100 + side * 52, 48), (100 + side * 84, 2)]
         pygame.draw.polygon(surf, horn, h)
@@ -416,7 +418,7 @@ def balloon_skin(color, balloon_type, size):
 # --------------------------------------------------------------------------- "?" boxes
 
 BOX_SIZE = 110
-BOX_FACE = (240, 160, 30)      # orange-yellow, outside the beach-ball detector's yellow
+BOX_FACE = (240, 140, 35)      # orange-gold, outside the beach-ball detectors' yellow
 BOX_EDGE = (150, 80, 10)
 BOX_USED = (175, 110, 60)
 BOX_REFRESH = 8.0              # seconds a used box stays brown
@@ -621,7 +623,7 @@ class Shout:
 MUSHROOM_CAP = (230, 40, 40)
 ONEUP_CAP = (40, 170, 60)
 STEM = (250, 232, 205)
-STAR = (255, 150, 20)          # orange-gold: the detector's yellow is OpenCV hue 22-40
+STAR = (255, 140, 25)          # orange-gold: the detectors' yellow is OpenCV hue 22-40 (bounce: median >= 24)
 STAR_EDGE = (215, 95, 10)
 PIPE = (45, 165, 70)
 PIPE_DARK = (25, 115, 45)
@@ -1032,7 +1034,7 @@ class HalloweenLayer:
             self.coins.append(Coin(x, y, delay=i * 0.04))
 
     def shout(self, text, x, y, color=None):
-        color = color or random.choice(COSTUME_COLORS)
+        color = color or random.choice(COSTUME_COLORS[:3])  # not the yellow: moving yellow text looks like the ball
         x = min(max(x, 250), WIDTH - 250)
         y = min(max(y, 120), HEIGHT - 120)
         for other in self.shouts:  # stack instead of overlapping
