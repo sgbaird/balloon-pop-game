@@ -88,6 +88,30 @@ Balloons get progressively faster and more numerous over time. How long can you 
 ### Cooperative
 Work together to reach a target score before time runs out.
 
+## Halloween theme
+
+`python main.py --theme halloween` (or `BALLOON_THEME=halloween`) adds, on top of any mode:
+
+- **Coins**: popped balloons throw out coins that fly to a counter in the bottom-left, each with a "ching".
+- **"?" boxes**: four boxes across the middle; a hit pays out a coin (sometimes five), then the box turns brown
+  for 8 seconds.
+- **Power-ups**: some "?" boxes send out a mushroom (coins x2 for 12 s), a star (coins x3 for 10 s) or a green
+  1-UP mushroom instead; hit it as it runs off. The power and its time left show next to the coin counter.
+- **Pipes**: two green pipes along the bottom; a jack-o'-lantern peeks out now and then, and a hit pays coins.
+- **Combos and 1-UPs**: three or more pops within 1.5 s of each other pay extra coins, and every 50 coins
+  shouts "1-UP!".
+- **Character balloons**: Mario and Peach on the red side; Bluigey (blue heeler face, green cap), Luigi and
+  Bowser on the green side. They are drawn by `halloween.py`; to use your own pictures instead, put
+  `mario.png`, `luigi.png`, `bluigey.png`, `peach.png` and `bowser.png` in `png/characters/` (git ignores that
+  folder, so they stay on your computer).
+- **Decorations**: shy ghosts that hide their eyes after a near miss (hit one for coins), bats, dangling
+  spiders, cobwebs, costume-colour pennants, a spiky shell that rolls by now and then for a coin bonus, and the
+  occasional shout ("Wahoo!", "For real life!").
+
+The game's own background music is off with this theme, so music can play from elsewhere. Everything is drawn
+on the normal white background, with nothing near-black and no true yellow (coins and boxes are orange-gold),
+so the beach-ball detector does not mistake the decorations for a ball and its shadow.
+
 ## Power-ups
 
 The game features several power-ups that appear during gameplay:
@@ -142,6 +166,8 @@ The game uses YAML files for configuration:
 `python main.py --ball beach` (or `BALLOON_BALL=beach`) replaces the blue/yellow colour trackers with `beach_ball.py`, which detects the moment a pale or banded ball (e.g. a white/yellow beach ball) hits the wall: the ball and its shadow on the projection meet only at the wall. Only the projector calibration is needed, not the colour or ball-size calibration. All balls count as one player. It was tuned on one room and one camera position, so expect to adjust the constants at the top of `beach_ball.py`.
 
 By default (`--beach-mode loose`) a ball pressed onto the wall or landing right next to someone counts, at the cost of some pops while the ball is carried near the wall. `--beach-mode strict` ignores a ball joined to a person, which suits players throwing from a line a metre or two from the wall.
+
+Both modes find a hit when the ball meets its own shadow, so they need the projector's light to reach the wall at an angle. If the projector shines almost straight at the wall, the ball hides its shadow and hits are missed; use `--beach-mode bounce` (`bounce_ball.py`) instead. It finds the moment a fast-moving yellow ball turns or stops at the wall, and it ignores duller yellows such as hair and khaki clothes. It errs on the side of popping, so pushing the ball onto the wall counts too.
 
 A hit that misses but lands near a balloon pushes the balloon away (no points).
 

@@ -22,8 +22,15 @@ def beach_mode(default="loose"):
     """`--beach-mode loose` (default) counts a ball touching the wall even while someone
     holds it or stands next to it, at the cost of some pops from carrying the ball along
     the wall. `--beach-mode strict` (or BALLOON_BEACH_MODE=strict) ignores a ball joined
-    to a person."""
+    to a person. `--beach-mode bounce` finds hits from the ball's bounce alone (bounce_ball.py),
+    for when the projector shines straight at the wall and the ball hides its own shadow."""
     return str(_option("--beach-mode", "BALLOON_BEACH_MODE", default)).lower()
+
+
+def theme(default="normal"):
+    """`--theme halloween` (or BALLOON_THEME=halloween) adds coins, ghosts, bats and
+    spiders (halloween.py) and leaves out the game's own background music."""
+    return str(_option("--theme", "BALLOON_THEME", default)).lower()
 
 
 def ball_type(default="color"):
